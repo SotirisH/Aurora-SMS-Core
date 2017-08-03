@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Dbconnection.cs" />
+    <Compile Remove="DbFactory.cs" />
+    <Compile Remove="DbServiceBase.cs" />
+    <Compile Remove="Disposable.cs" />
+    <Compile Remove="GenericRepository.cs" />
+    <Compile Remove="IDbFactory.cs" />
+    <Compile Remove="IRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.2" />
+  </ItemGroup>
+
+</Project>
