@@ -57,7 +57,7 @@ namespace Aurora.SMS.Data.Migrations
 
                     b.HasKey("Name");
 
-                    b.ToTable("Providers");
+                    b.ToTable("Provider");
                 });
 
             modelBuilder.Entity("Aurora.SMS.EFModel.SMSHistory", b =>
@@ -117,7 +117,7 @@ namespace Aurora.SMS.Data.Migrations
 
                     b.HasIndex("TemplateId");
 
-                    b.ToTable("SMSHistoryRecords");
+                    b.ToTable("SMSHistory");
                 });
 
             modelBuilder.Entity("Aurora.SMS.EFModel.Template", b =>
@@ -156,7 +156,7 @@ namespace Aurora.SMS.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Templates");
+                    b.ToTable("Template");
                 });
 
             modelBuilder.Entity("Aurora.SMS.EFModel.TemplateField", b =>
@@ -191,7 +191,7 @@ namespace Aurora.SMS.Data.Migrations
 
                     b.HasKey("Name");
 
-                    b.ToTable("TemplateFields");
+                    b.ToTable("TemplateField");
                 });
 
             modelBuilder.Entity("Aurora.SMS.EFModel.SMSHistory", b =>

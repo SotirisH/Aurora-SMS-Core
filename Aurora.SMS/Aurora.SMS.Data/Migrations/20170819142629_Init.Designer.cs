@@ -12,7 +12,7 @@ using System;
 namespace Aurora.SMS.Data.Migrations
 {
     [DbContext(typeof(SMSDb))]
-    [Migration("20170819052905_Init")]
+    [Migration("20170819142629_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,7 +58,7 @@ namespace Aurora.SMS.Data.Migrations
 
                     b.HasKey("Name");
 
-                    b.ToTable("Providers");
+                    b.ToTable("Provider");
                 });
 
             modelBuilder.Entity("Aurora.SMS.EFModel.SMSHistory", b =>
@@ -118,7 +118,7 @@ namespace Aurora.SMS.Data.Migrations
 
                     b.HasIndex("TemplateId");
 
-                    b.ToTable("SMSHistoryRecords");
+                    b.ToTable("SMSHistory");
                 });
 
             modelBuilder.Entity("Aurora.SMS.EFModel.Template", b =>
@@ -157,7 +157,7 @@ namespace Aurora.SMS.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Templates");
+                    b.ToTable("Template");
                 });
 
             modelBuilder.Entity("Aurora.SMS.EFModel.TemplateField", b =>
@@ -192,7 +192,7 @@ namespace Aurora.SMS.Data.Migrations
 
                     b.HasKey("Name");
 
-                    b.ToTable("TemplateFields");
+                    b.ToTable("TemplateField");
                 });
 
             modelBuilder.Entity("Aurora.SMS.EFModel.SMSHistory", b =>

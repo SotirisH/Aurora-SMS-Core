@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Aurora.SMS.Data.Migrations
 {
@@ -10,7 +11,7 @@ namespace Aurora.SMS.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Providers",
+                name: "Provider",
                 columns: table => new
                 {
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -27,30 +28,11 @@ namespace Aurora.SMS.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Providers", x => x.Name);
+                    table.PrimaryKey("PK_Provider", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TemplateFields",
-                columns: table => new
-                {
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DataFormat = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    GroupName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TemplateFields", x => x.Name);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Templates",
+                name: "Template",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -67,11 +49,30 @@ namespace Aurora.SMS.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Templates", x => x.Id);
+                    table.PrimaryKey("PK_Template", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "SMSHistoryRecords",
+                name: "TemplateField",
+                columns: table => new
+                {
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DataFormat = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    GroupName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TemplateField", x => x.Name);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SMSHistory",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -97,51 +98,56 @@ namespace Aurora.SMS.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SMSHistoryRecords", x => x.Id);
+                    table.PrimaryKey("PK_SMSHistory", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SMSHistoryRecords_Providers_ProviderName",
+                        name: "FK_SMSHistory_Provider_ProviderName",
                         column: x => x.ProviderName,
-                        principalTable: "Providers",
+                        principalTable: "Provider",
                         principalColumn: "Name",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SMSHistoryRecords_Templates_TemplateId",
+                        name: "FK_SMSHistory_Template_TemplateId",
                         column: x => x.TemplateId,
-                        principalTable: "Templates",
+                        principalTable: "Template",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_SMSHistoryRecords_ProviderName",
-                table: "SMSHistoryRecords",
+                name: "IX_SMSHistory_ProviderName",
+                table: "SMSHistory",
                 column: "ProviderName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SMSHistoryRecords_TemplateId",
-                table: "SMSHistoryRecords",
+                name: "IX_SMSHistory_TemplateId",
+                table: "SMSHistory",
                 column: "TemplateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Templates_Name",
-                table: "Templates",
+                name: "IX_Template_Name",
+                table: "Template",
                 column: "Name",
                 unique: true);
+
+            // FROM FILE
+            var sqlFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Migrations\Init.sql");
+            migrationBuilder.Sql(File.ReadAllText(sqlFile));
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SMSHistoryRecords");
+                name: "SMSHistory");
 
             migrationBuilder.DropTable(
-                name: "TemplateFields");
+                name: "TemplateField");
 
             migrationBuilder.DropTable(
-                name: "Providers");
+                name: "Provider");
 
             migrationBuilder.DropTable(
-                name: "Templates");
+                name: "Template");
         }
     }
 }

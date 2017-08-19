@@ -25,6 +25,7 @@ namespace Aurora.SMS.Data
 
         public void Configure(EntityTypeBuilder<Provider> builder)
         {
+            builder.ToTable("Provider");
             builder.HasKey(p => p.Name);
             builder.Property(p => p.Name).IsRequired().HasMaxLength(50);
             builder.Property(p => p.Url).IsRequired().HasMaxLength(255);
@@ -37,6 +38,7 @@ namespace Aurora.SMS.Data
     {
         public void Configure(EntityTypeBuilder<SMSHistory> builder)
         {
+            builder.ToTable("SMSHistory");
             builder.Property(p => p.SessionName).IsRequired().HasMaxLength(255);
             builder.Property(p => p.Message).IsRequired();
             builder.Property(p => p.MobileNumber).HasMaxLength(50);
@@ -60,6 +62,7 @@ namespace Aurora.SMS.Data
     {
         public void Configure(EntityTypeBuilder<Template> builder)
         {
+            builder.ToTable("Template");
             builder.Property(p => p.Name).IsRequired().HasMaxLength(50);
             //https://docs.microsoft.com/en-us/ef/core/modeling/indexes
             builder.HasIndex(p => p.Name).IsUnique();
@@ -73,6 +76,7 @@ namespace Aurora.SMS.Data
     {
         public void Configure(EntityTypeBuilder<TemplateField> builder)
         {
+            builder.ToTable("TemplateField");
             builder.HasKey(t => t.Name);
             builder.Property(p => p.Name).IsRequired().HasMaxLength(50);
             builder.Property(p => p.Description).HasMaxLength(255);

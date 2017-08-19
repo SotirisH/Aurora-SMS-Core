@@ -18,4 +18,10 @@
     <ProjectReference Include="..\Aurora.SMS.EFModel\Aurora.SMS.EFModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Migrations\Init.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
