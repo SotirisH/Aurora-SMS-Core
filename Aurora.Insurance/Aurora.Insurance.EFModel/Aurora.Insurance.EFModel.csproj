@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aurora.SMS.Data\Aurora.SMS.Data.csproj" />
+    <ProjectReference Include="..\..\Aurora.Core\Aurora.Core.Data\Aurora.Core.Data.csproj" />
   </ItemGroup>
 
 </Project>

@@ -11,7 +11,10 @@ namespace Aurora.SMS.Data
     /// </summary>
     public class SMSDb: AuditableDbContext
     {
-        public SMSDb():base()
+        /// <summary>
+        /// Internal costructor for Migration commands
+        /// </summary>
+        internal SMSDb():base()
         {
 
         }
@@ -24,6 +27,7 @@ namespace Aurora.SMS.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
+                // When we run the migration commands these are executed in the dev DB
                 optionsBuilder.UseSqlServer(@"Server=.\SQL16;Database=SMSDbCore;Trusted_Connection=True;");
             }
         }

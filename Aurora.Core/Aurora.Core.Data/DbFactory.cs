@@ -1,7 +1,8 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+ ;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace Aurora.Core.Data
     /// Factory responsible for managing the instance of DbContext.
     /// Supports Init and dispose funtionality and also can generate Generic repositories
     /// </summary>
-    public abstract class DbFactory<DB> : Disposable where DB : DbContext , IAuditableDBContext ,new()
+    public abstract class DbFactory<DB> : Disposable where DB : AuditableDbContext
     {
         internal DB dbContext;
         /// <summary>

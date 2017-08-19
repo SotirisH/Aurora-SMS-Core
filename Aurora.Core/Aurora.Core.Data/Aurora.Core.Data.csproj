@@ -7,8 +7,6 @@
   <ItemGroup>
     <Compile Remove="Dbconnection.cs" />
     <Compile Remove="DbFactory.cs" />
-    <Compile Remove="DbServiceBase.cs" />
-    <Compile Remove="Disposable.cs" />
     <Compile Remove="GenericRepository.cs" />
     <Compile Remove="IDbFactory.cs" />
     <Compile Remove="IRepository.cs" />

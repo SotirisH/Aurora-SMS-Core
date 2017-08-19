@@ -12,8 +12,8 @@ using System;
 namespace Aurora.SMS.Data.Migrations
 {
     [DbContext(typeof(SMSDb))]
-    [Migration("20170819042427_Initial")]
-    partial class Initial
+    [Migration("20170819052905_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
