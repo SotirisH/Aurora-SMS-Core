@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.Service", "Auror
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Core.Data.Tests", "..\Aurora.Core\Aurora.Core.Data.Tests\Aurora.Core.Data.Tests.csproj", "{92DF12F7-6049-452A-B5D8-DF054397C79B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.SMS.Providers", "Aurora.SMS.Providers\Aurora.SMS.Providers.csproj", "{4292F568-73FE-4921-ADD3-99E9D54171C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.SMS.Common", "Aurora.SMS.Common\Aurora.SMS.Common.csproj", "{62E45F08-6D79-448E-96E9-0486CCA44C1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{92DF12F7-6049-452A-B5D8-DF054397C79B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92DF12F7-6049-452A-B5D8-DF054397C79B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92DF12F7-6049-452A-B5D8-DF054397C79B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4292F568-73FE-4921-ADD3-99E9D54171C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4292F568-73FE-4921-ADD3-99E9D54171C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4292F568-73FE-4921-ADD3-99E9D54171C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4292F568-73FE-4921-ADD3-99E9D54171C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62E45F08-6D79-448E-96E9-0486CCA44C1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62E45F08-6D79-448E-96E9-0486CCA44C1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62E45F08-6D79-448E-96E9-0486CCA44C1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62E45F08-6D79-448E-96E9-0486CCA44C1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
