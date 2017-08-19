@@ -29,7 +29,7 @@ namespace Aurora.Insurance.Data
             if (!optionsBuilder.IsConfigured)
             {
                 // When we run the migration commands these are executed in the dev DB
-                optionsBuilder.UseSqlServer(@"Server=.\SQL16;Database=SMSDbCore;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(@"Server=.\SQL16;Database=InsuranceCore;Trusted_Connection=True;");
             }
         }
         // Remember to setup the entities here or the tables will not be created!

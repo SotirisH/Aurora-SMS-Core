@@ -13,13 +13,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.Service", "Auror
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Core.Data.Tests", "..\Aurora.Core\Aurora.Core.Data.Tests\Aurora.Core.Data.Tests.csproj", "{92DF12F7-6049-452A-B5D8-DF054397C79B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.SMS.Providers", "Aurora.SMS.Providers\Aurora.SMS.Providers.csproj", "{4292F568-73FE-4921-ADD3-99E9D54171C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.Providers", "Aurora.SMS.Providers\Aurora.SMS.Providers.csproj", "{4292F568-73FE-4921-ADD3-99E9D54171C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Insurance.EFModel", "..\Aurora.Insurance\Aurora.Insurance.EFModel\Aurora.Insurance.EFModel.csproj", "{39F260D8-ACF5-49DB-AEAD-99E283E2BB21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Insurance.EFModel", "..\Aurora.Insurance\Aurora.Insurance.EFModel\Aurora.Insurance.EFModel.csproj", "{39F260D8-ACF5-49DB-AEAD-99E283E2BB21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Insurance.Services", "..\Aurora.Insurance\Aurora.Insurance.Services\Aurora.Insurance.Services.csproj", "{391CA0F5-52FA-4623-8F78-CE427C19C78D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Insurance.Services", "..\Aurora.Insurance\Aurora.Insurance.Services\Aurora.Insurance.Services.csproj", "{391CA0F5-52FA-4623-8F78-CE427C19C78D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Insurance.Data", "..\Aurora.Insurance\Aurora.Insurance.Data\Aurora.Insurance.Data.csproj", "{A45B7DC9-4A85-4037-B183-BEFFDC3F54A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Insurance.Data", "..\Aurora.Insurance\Aurora.Insurance.Data\Aurora.Insurance.Data.csproj", "{A45B7DC9-4A85-4037-B183-BEFFDC3F54A8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.Web", "Aurora.SMS.Web\Aurora.SMS.Web.csproj", "{539EDA0F-CEDA-4930-8DE2-E888DF029179}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{A45B7DC9-4A85-4037-B183-BEFFDC3F54A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A45B7DC9-4A85-4037-B183-BEFFDC3F54A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A45B7DC9-4A85-4037-B183-BEFFDC3F54A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{539EDA0F-CEDA-4930-8DE2-E888DF029179}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{539EDA0F-CEDA-4930-8DE2-E888DF029179}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{539EDA0F-CEDA-4930-8DE2-E888DF029179}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{539EDA0F-CEDA-4930-8DE2-E888DF029179}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

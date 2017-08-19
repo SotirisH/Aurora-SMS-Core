@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Aurora.Core.Data;
+using Aurora.SMS.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Aurora.SMS.Data;
 
 namespace Aurora.SMS.Web
 {
@@ -30,7 +29,18 @@ namespace Aurora.SMS.Web
         {
             // Add framework services.
             services.AddMvc();
-            services.AddDbContext<SMSDb>();
+
+            var insuranceDbconnection = @"Server =.\SQL16; Database = InsuranceCore; Trusted_Connection = True;";
+            var sMSDbconnection = @"Server =.\SQL16; Database = SMSDbCore; Trusted_Connection = True;";
+
+            // This registration is used for the CurrentUserService class
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddDbContext<SMSDb>(options=>options.UseSqlServer(sMSDbconnection));
+            services.AddDbContext<Insurance.Data.InsuranceDb>(options => options.UseSqlServer(insuranceDbconnection));
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,6 +11,7 @@ namespace Aurora.Insurance.Data
     {
         public void Configure(EntityTypeBuilder<Company> builder)
         {
+            builder.ToTable("Company");
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Id).IsRequired().HasMaxLength(7);
             builder.Property(p => p.Description).IsRequired().HasMaxLength(50);
@@ -21,6 +22,7 @@ namespace Aurora.Insurance.Data
     {
         public void Configure(EntityTypeBuilder<Contract> builder)
         {
+            builder.ToTable("Contract");
             builder.Property(p => p.ContractNumber).IsRequired().HasMaxLength(15);
             builder.Property(p => p.ReceiptNumber).IsRequired().HasMaxLength(15);
             // Composite index
@@ -29,8 +31,8 @@ namespace Aurora.Insurance.Data
             builder.Property(p => p.NetAmount).IsRequired();
             builder.Property(p => p.TaxAmount).IsRequired();
             builder.Property(p => p.PlateNumber).IsRequired().HasMaxLength(15);
-            // Because the company's PK is string the Required attribute must be set
-            builder.Property(p => p.Company).IsRequired();
+            // Single Navigation Property
+            builder.HasOne(p => p.Company);
         }
     }
 
@@ -38,6 +40,7 @@ namespace Aurora.Insurance.Data
     {
         public void Configure(EntityTypeBuilder<Person> builder)
         {
+            builder.ToTable("Person");
             builder.Property(p => p.FirstName).HasMaxLength(50);
             builder.Property(p => p.LastName).IsRequired().HasMaxLength(50);
             builder.Property(p => p.DrivingLicenceNum).HasMaxLength(50);
@@ -50,8 +53,9 @@ namespace Aurora.Insurance.Data
     {
         public void Configure(EntityTypeBuilder<Phone> builder)
         {
+            builder.ToTable("Phone");
             builder.Property(p => p.Number).IsRequired().HasMaxLength(50);
-            builder.Property(p => p.Person).IsRequired();
+            builder.HasOne(p => p.Person).WithMany(p => p.Phones).IsRequired();
         }
     }
 }
