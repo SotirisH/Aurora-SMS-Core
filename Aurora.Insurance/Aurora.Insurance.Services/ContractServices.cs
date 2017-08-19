@@ -1,14 +1,9 @@
-﻿using Aurora.Insurance.Services.DTO;
-using System;
+﻿using Aurora.Core.Data;
+using Aurora.Insurance.Data;
+using Aurora.Insurance.Services.DTO;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq.Expressions;
-
-using Aurora.Core.Data;
-using Aurora.Insurance.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace Aurora.Insurance.Services
 {
@@ -21,10 +16,10 @@ namespace Aurora.Insurance.Services
         /// <returns></returns>
         IEnumerable<ContractDTO> GetContracts(QueryCriteriaDTO criteria);
     }
-    public class ContractServices :DbServiceBase<InsuranceDb>, IContractServices
+    public class ContractServices : DbServiceBase<InsuranceDb>, IContractServices
     {
 
-        public ContractServices(InsuranceDb db):base(db)
+        public ContractServices(InsuranceDb db) : base(db)
         {
 
         }
@@ -45,109 +40,107 @@ namespace Aurora.Insurance.Services
         */
         public IEnumerable<ContractDTO> GetContracts(QueryCriteriaDTO criteria)
         {
-            
 
-                // create a dynamic query
-                IQueryable<EFModel.Contract> queryableData = DbContext.Contracts.AsQueryable();
-                queryableData.Include(c => c.Person).Include(c=>c.Company).Include(c=>c.Person.Phones);
 
-                //get only mobiles
-                if (!string.IsNullOrWhiteSpace(criteria.ContractNumber))
-                {
-                    queryableData = queryableData.Where(c=> c.ContractNumber== criteria.ContractNumber);
-                 }
-                if (!string.IsNullOrWhiteSpace(criteria.PlateNumber))
-                {
-                    queryableData = queryableData.Where(c => c.PlateNumber == criteria.PlateNumber);
-                }
-                if (!string.IsNullOrWhiteSpace(criteria.CompanyId))
-                {
-                    queryableData = queryableData.Where(c => c.Company.Id == criteria.CompanyId);
-                }
-                // TODO: Refactor to use date ranges
-                if (criteria.ExpireDateFrom.HasValue)
-                {
-                    queryableData = queryableData.Where(c => c.ExpireDate >= criteria.ExpireDateFrom);
-                }
-                if (criteria.ExpireDateTo.HasValue)
-                {
-                    queryableData = queryableData.Where(c => c.ExpireDate <= criteria.ExpireDateTo);
-                }
+            // create a dynamic query
+            IQueryable<EFModel.Contract> queryableData = DbContext.Contracts.AsQueryable();
+            queryableData.Include(c => c.Person).Include(c => c.Company).Include(c => c.Person.Phones);
 
-                if (criteria.IssueDateFrom.HasValue)
-                {
-                    queryableData = queryableData.Where(c => c.IssueDate >= criteria.IssueDateFrom);
-                }
-                if (criteria.IssueDateTo.HasValue)
-                {
-                    queryableData = queryableData.Where(c => c.IssueDate <= criteria.IssueDateTo);
-                }
-
-                if (criteria.StartDateFrom.HasValue)
-                {
-                    queryableData = queryableData.Where(c => c.StartDate >= criteria.StartDateFrom);
-                }
-                if (criteria.StartDateTo.HasValue)
-                {
-                    queryableData = queryableData.Where(c => c.StartDate <= criteria.StartDateTo);
-                }
-
-                if (criteria.IsCanceled.HasValue)
-                {
-                    queryableData = queryableData.Where(c => c.IsCanceled == criteria.IsCanceled);
-                }
-
-                if (!string.IsNullOrWhiteSpace(criteria.FirstNameStartsWith))
-                {
-                    queryableData = queryableData.Where(c => c.Person.FirstName.StartsWith(criteria.FirstNameStartsWith));
-                }
-
-                if (!string.IsNullOrWhiteSpace(criteria.LastNameStartsWith))
-                {
-                    queryableData = queryableData.Where(c => c.Person.LastName.StartsWith(criteria.LastNameStartsWith));
-                }
-
-                if (!string.IsNullOrWhiteSpace(criteria.CompanyId))
-                {
-                    queryableData = queryableData.Where(c => c.Company.Id == criteria.CompanyId);
-                }
-
-                // Can we use AutoMapper here?
-                var t = queryableData.Select( s=>
-                    new ContractDTO() {
-                        Address=s.Person.Address,
-                        BirthDate=s.Person.BirthDate,
-                        CanceledDate=s.CanceledDate,
-                        CompanyDescription=s.Company.Description,
-                        CompanyId=s.Company.Id,
-                        Contractid=s.Id,
-                        ContractNumber=s.ContractNumber,
-                        DrivingLicenceNum=s.Person.DrivingLicenceNum,
-                        ExpireDate=s.ExpireDate,
-                        FatherName=s.Person.FatherName,
-                        FirstName=s.Person.FirstName,
-                        GrossAmount=s.GrossAmount,
-                        IsCanceled=s.IsCanceled,
-                        IssueDate=s.IssueDate,
-                        LastName=s.Person.LastName,
-                        MobileNumber=s.Person.Phones.FirstOrDefault(p=>p.PhoneType==EFModel.PhoneType.Mobile).Number,
-                        NetAmount=s.NetAmount,
-                        PersonId=s.PersonId,
-                        PlateNumber=s.PlateNumber,
-                        ReceiptNumber=s.ReceiptNumber,
-                        StartDate=s.StartDate,
-                        TaxAmount=s.TaxAmount,
-                        TaxId=s.Person.TaxId,
-                        ZipCode=s.Person.ZipCode
-                        });
-
-                return t.ToArray();
+            //get only mobiles
+            if (!string.IsNullOrWhiteSpace(criteria.ContractNumber))
+            {
+                queryableData = queryableData.Where(c => c.ContractNumber == criteria.ContractNumber);
+            }
+            if (!string.IsNullOrWhiteSpace(criteria.PlateNumber))
+            {
+                queryableData = queryableData.Where(c => c.PlateNumber == criteria.PlateNumber);
+            }
+            if (!string.IsNullOrWhiteSpace(criteria.CompanyId))
+            {
+                queryableData = queryableData.Where(c => c.Company.Id == criteria.CompanyId);
+            }
+            // TODO: Refactor to use date ranges
+            if (criteria.ExpireDateFrom.HasValue)
+            {
+                queryableData = queryableData.Where(c => c.ExpireDate >= criteria.ExpireDateFrom);
+            }
+            if (criteria.ExpireDateTo.HasValue)
+            {
+                queryableData = queryableData.Where(c => c.ExpireDate <= criteria.ExpireDateTo);
             }
 
+            if (criteria.IssueDateFrom.HasValue)
+            {
+                queryableData = queryableData.Where(c => c.IssueDate >= criteria.IssueDateFrom);
+            }
+            if (criteria.IssueDateTo.HasValue)
+            {
+                queryableData = queryableData.Where(c => c.IssueDate <= criteria.IssueDateTo);
+            }
 
+            if (criteria.StartDateFrom.HasValue)
+            {
+                queryableData = queryableData.Where(c => c.StartDate >= criteria.StartDateFrom);
+            }
+            if (criteria.StartDateTo.HasValue)
+            {
+                queryableData = queryableData.Where(c => c.StartDate <= criteria.StartDateTo);
+            }
+
+            if (criteria.IsCanceled.HasValue)
+            {
+                queryableData = queryableData.Where(c => c.IsCanceled == criteria.IsCanceled);
+            }
+
+            if (!string.IsNullOrWhiteSpace(criteria.FirstNameStartsWith))
+            {
+                queryableData = queryableData.Where(c => c.Person.FirstName.StartsWith(criteria.FirstNameStartsWith));
+            }
+
+            if (!string.IsNullOrWhiteSpace(criteria.LastNameStartsWith))
+            {
+                queryableData = queryableData.Where(c => c.Person.LastName.StartsWith(criteria.LastNameStartsWith));
+            }
+
+            if (!string.IsNullOrWhiteSpace(criteria.CompanyId))
+            {
+                queryableData = queryableData.Where(c => c.Company.Id == criteria.CompanyId);
+            }
+
+            // Can we use AutoMapper here?
+            var t = queryableData.Select(s =>
+               new ContractDTO()
+               {
+                   Address = s.Person.Address,
+                   BirthDate = s.Person.BirthDate,
+                   CanceledDate = s.CanceledDate,
+                   CompanyDescription = s.Company.Description,
+                   CompanyId = s.Company.Id,
+                   Contractid = s.Id,
+                   ContractNumber = s.ContractNumber,
+                   DrivingLicenceNum = s.Person.DrivingLicenceNum,
+                   ExpireDate = s.ExpireDate,
+                   FatherName = s.Person.FatherName,
+                   FirstName = s.Person.FirstName,
+                   GrossAmount = s.GrossAmount,
+                   IsCanceled = s.IsCanceled,
+                   IssueDate = s.IssueDate,
+                   LastName = s.Person.LastName,
+                   MobileNumber = s.Person.Phones.FirstOrDefault(p => p.PhoneType == EFModel.PhoneType.Mobile).Number,
+                   NetAmount = s.NetAmount,
+                   PersonId = s.PersonId,
+                   PlateNumber = s.PlateNumber,
+                   ReceiptNumber = s.ReceiptNumber,
+                   StartDate = s.StartDate,
+                   TaxAmount = s.TaxAmount,
+                   TaxId = s.Person.TaxId,
+                   ZipCode = s.Person.ZipCode
+               });
+
+            return t.ToArray();
         }
 
-     
+
+
     }
 }
-

@@ -8,8 +8,12 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Aurora.SMS.EFModel;
 using Aurora.SMS.Service.DTO;
-using LinqKit;
 using System.Web;
+using Aurora.Insurance.Services.DTO;
+using Aurora.SMS.Data;
+using Aurora.SMS.EFModel.Enumerators;
+using Aurora.SMS.Providers;
+using LinqKit;
 
 namespace Aurora.SMS.Service
 {
@@ -35,19 +39,13 @@ namespace Aurora.SMS.Service
 
     public class SMSServices : DbServiceBase<SMSDb>, ISMSServices
     {
-        // TODO:Create a generic repository
-        private readonly GenericRepository<Template, SMSDb> _templateRepository;
-        private readonly GenericRepository<TemplateField, SMSDb> _templatefieldsRepository;
-        private readonly GenericRepository<Provider, SMSDb> _providerRepository;
-        private readonly GenericRepository<SMSHistory, SMSDb> _smsHistoryRepository;
-        private readonly GenericRepository<SMSHistory, SMSDb> _uoW;
-
-        public SMSServices(IUnitOfWork<SMSDb> uoW) :base(uoW)
+        /// <summary>
+        /// Primary constructor.
+        /// </summary>
+        /// <param name="db">It is fine to pass the dbcontext here</param>
+        public SMSServices(SMSDb db):base(db)
         {
-            _templateRepository = uoW.DbFactory.GetGenericRepositoryOf<Template>();
-            _templatefieldsRepository = uoW.DbFactory.GetGenericRepositoryOf<TemplateField>();
-            _providerRepository = uoW.DbFactory.GetGenericRepositoryOf<Provider>();
-            _smsHistoryRepository = uoW.DbFactory.GetGenericRepositoryOf<SMSHistory>();
+
         }
 
         /// <summary>
@@ -59,8 +57,9 @@ namespace Aurora.SMS.Service
         /// <returns>Returns the session ID</returns>
         public Guid SendBulkSMS(IEnumerable<DTO.SMSMessageDTO> messagesToSent, string providerName)
         {
+            DbContext.Database.BeginTransaction();
             // get the provider data
-            EFModel.Provider provider = _providerRepository.GetById(providerName, true);
+            Provider provider =  DbContext.Providers.Single(x=>x.Name==providerName);
             Guid sessionId = Guid.NewGuid();
             // First job is to save the messages into the history table in order to populate the id
             foreach (var msg in messagesToSent)
@@ -72,19 +71,19 @@ namespace Aurora.SMS.Service
                 smsHistory.PersonId = msg.PersonId;
                 smsHistory.ProviderName = providerName;
                 smsHistory.TemplateId = msg.TemplateId;
-                smsHistory.Status = Common.MessageStatus.Pending;
+                smsHistory.Status = MessageStatus.Pending;
                 smsHistory.SessionId = sessionId;
                 smsHistory.SessionName = providerName + "|" + DateTime.Now;
                 smsHistory.SendDateTime = DateTime.Now;
                 if (string.IsNullOrWhiteSpace(msg.MobileNumber))
                 {
                     smsHistory.ProviderFeedback = "The mobile number is not present!";
-                    smsHistory.Status = Common.MessageStatus.Skipped;
+                    smsHistory.Status = MessageStatus.Skipped;
                 }
-                
-                _smsHistoryRepository.Add(smsHistory);
+
+                DbContext.Add(smsHistory);
             }
-            UoW.Commit();
+            DbContext.SaveChanges();
 
             List<Task> serverRequests = new List<Task>();
             // TODO:Need to abstract the ClientProviderFactory
@@ -97,16 +96,8 @@ namespace Aurora.SMS.Service
                 serverRequests.Add(SendSMSToProvider(smsProviderProxy, provider, historysms));
 
             }
-            //foreach (var task in await Task.WhenAll(tasks))
-            //{
-            //    if (task.Item2)
-            //    {
-            //        Console.WriteLine("Ending Process {0}", task.Item1);
-            //    }
-            //}
-
             Task.WaitAll(serverRequests.ToArray());
-            UoW.Commit();
+            DbContext.SaveChanges();
             return sessionId;
         }
 
@@ -117,12 +108,12 @@ namespace Aurora.SMS.Service
         /// <param name="recepients"></param>
         /// <param name="templateId">The templateId that will be used</param>
         /// <returns></returns>
-        public IEnumerable<DTO.SMSMessageDTO> ConstructSMSMessages(IEnumerable<ContractDTO> recepients, int templateId)
+        public IEnumerable<SMSMessageDTO> ConstructSMSMessages(IEnumerable<ContractDTO> recepients, int templateId)
         {
-            var template = _templateRepository.GetById(templateId);
-            var templateFields = _templatefieldsRepository.GetAll();
+            var template = DbContext.Find<Template>(templateId);
+            var templateFields = DbContext.TemplateFields.ToArray();
 
-            var smsList = new List<DTO.SMSMessageDTO>();
+            var smsList = new List<SMSMessageDTO>();
             if (template == null)
             {
                 throw new NullReferenceException(string.Format("The template with id:{0} cannot be found in the db!",templateId));
@@ -189,13 +180,13 @@ namespace Aurora.SMS.Service
             smsHistory.ProviderFeedback = result.ReturnedMessage;
             smsHistory.ProviderFeedBackDateTime = result.TimeStamp;
             smsHistory.ProviderMsgId = result.ProviderId;
-            if (result.MessageStatus == Common.MessageStatus.Delivered)
+            if (result.MessageStatus == MessageStatus.Delivered)
             {
-                smsHistory.Status = Common.MessageStatus.Delivered;
+                smsHistory.Status = MessageStatus.Delivered;
             }
             else
             {
-                smsHistory.Status = Common.MessageStatus.Error;
+                smsHistory.Status = MessageStatus.Error;
             }
 
            // _smsHistoryRepository.Update(smsHistory);
@@ -204,7 +195,7 @@ namespace Aurora.SMS.Service
 
         public string GetAvailableCredits(string smsGateWayName)
         {
-            Provider provider = _providerRepository.GetById(smsGateWayName, true);
+            Provider provider = DbContext.Providers.Find(smsGateWayName);
             return GetAvailableCredits(smsGateWayName, provider.UserName, provider.PassWord);
         }
 
@@ -218,13 +209,13 @@ namespace Aurora.SMS.Service
 
         public IEnumerable<Provider> GetAllProviders()
         {
-            return _providerRepository.GetAll();
+            return DbContext.Providers.ToArray();
         }
 
         public IEnumerable<SMSHistory> GetHistory(SmsHistoryCriteriaDTO smsHistoryCriteriaDTO)
         {
-            var query = _smsHistoryRepository.GetAsQueryable().AsExpandable();
-            var finalExpression = PredicateBuilder.New<EFModel.SMSHistory>(true);
+            var query = DbContext.SMSHistoryRecords.AsQueryable().AsExpandable();
+            var finalExpression = PredicateBuilder.New<SMSHistory>(true);
             if (smsHistoryCriteriaDTO.SessionId.HasValue)
             {
                 finalExpression = finalExpression.And(c => c.SessionId == smsHistoryCriteriaDTO.SessionId);
@@ -254,8 +245,8 @@ namespace Aurora.SMS.Service
 
         public void SaveProxy(Provider smsProxy)
         {
-            _providerRepository.Update(smsProxy);
-            UoW.Commit();
+            DbContext.Update(smsProxy);
+            DbContext.SaveChanges();
         }
     }
 }

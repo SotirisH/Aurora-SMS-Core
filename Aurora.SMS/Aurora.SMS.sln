@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Core.Data.Tests", ".
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.SMS.Providers", "Aurora.SMS.Providers\Aurora.SMS.Providers.csproj", "{4292F568-73FE-4921-ADD3-99E9D54171C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.SMS.Common", "Aurora.SMS.Common\Aurora.SMS.Common.csproj", "{62E45F08-6D79-448E-96E9-0486CCA44C1F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Insurance.EFModel", "..\Aurora.Insurance\Aurora.Insurance.EFModel\Aurora.Insurance.EFModel.csproj", "{39F260D8-ACF5-49DB-AEAD-99E283E2BB21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Insurance.Services", "..\Aurora.Insurance\Aurora.Insurance.Services\Aurora.Insurance.Services.csproj", "{391CA0F5-52FA-4623-8F78-CE427C19C78D}"
@@ -53,10 +51,6 @@ Global
 		{4292F568-73FE-4921-ADD3-99E9D54171C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4292F568-73FE-4921-ADD3-99E9D54171C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4292F568-73FE-4921-ADD3-99E9D54171C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62E45F08-6D79-448E-96E9-0486CCA44C1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62E45F08-6D79-448E-96E9-0486CCA44C1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62E45F08-6D79-448E-96E9-0486CCA44C1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62E45F08-6D79-448E-96E9-0486CCA44C1F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{39F260D8-ACF5-49DB-AEAD-99E283E2BB21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{39F260D8-ACF5-49DB-AEAD-99E283E2BB21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39F260D8-ACF5-49DB-AEAD-99E283E2BB21}.Release|Any CPU.ActiveCfg = Release|Any CPU

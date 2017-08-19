@@ -1,12 +1,7 @@
 ﻿using Aurora.Core.Data;
 using Aurora.SMS.Data;
-using Aurora.SMS.Service.Data;
-using Aurora.SMS.Service.DTO;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aurora.SMS.Service
 {

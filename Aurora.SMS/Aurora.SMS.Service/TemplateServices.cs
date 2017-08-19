@@ -85,6 +85,7 @@ namespace Aurora.SMS.Service
             {
                 DbContext.Update(template);
             }
+            DbContext.SaveChanges();
         }
     }
 }
