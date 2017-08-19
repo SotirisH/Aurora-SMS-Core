@@ -13,9 +13,12 @@ namespace Aurora.Core.Data
     /// <summary>
     /// Extended DbContext that adds timestamps on the EntityBase classes when they are saved
     /// </summary>
-    public abstract class AuditableDbContext: DbContext,ISupportsUnitOfWork
+    public abstract class AuditableDbContext : DbContext, ISupportsUnitOfWork
     {
         private readonly ICurrentUserService _currentUserService;
+        protected AuditableDbContext():base()
+        { }
+
         protected AuditableDbContext(DbContextOptions options,
                                     ICurrentUserService currentUserService) :base(options)
         {

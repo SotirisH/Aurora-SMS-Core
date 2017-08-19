@@ -43,7 +43,7 @@ namespace Aurora.Core.Data.Tests
                 var mock = new MockEntity();
                 mock.Description = "dddddddddddddddddddddddddddddddddddddddddddddd";
                 context.MockEntity.Add(mock);
-                context.Commit();
+                context.SaveChanges();
             }
         }
     }
