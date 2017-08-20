@@ -3,10 +3,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Common;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aurora.Core.Data
 {
@@ -16,18 +13,22 @@ namespace Aurora.Core.Data
     public abstract class AuditableDbContext : DbContext, ISupportsUnitOfWork
     {
         private readonly ICurrentUserService _currentUserService;
-        protected AuditableDbContext():base()
+        private ICurrentUserService currentUserService;
+
+        protected AuditableDbContext() : base()
         { }
 
         protected AuditableDbContext(DbContextOptions options,
-                                    ICurrentUserService currentUserService) :base(options)
+                                    ICurrentUserService currentUserService) : base(options)
         {
-            _currentUserService = currentUserService??throw new ArgumentNullException("currentUserService");
+            _currentUserService = currentUserService ?? throw new ArgumentNullException("currentUserService");
         }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-              base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace Aurora.Core.Data
         /// </summary>
         /// <param name="acceptAllChangesOnSuccess"></param>
         /// <returns></returns>
-        
+
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             ValidateModel();
@@ -54,7 +55,7 @@ namespace Aurora.Core.Data
         {
             var currentUser = _currentUserService.GetCurrentUser();
             var changeSet = ChangeTracker.Entries<EntityBase>();
-         
+
 
             if (changeSet != null)
             {
@@ -88,20 +89,20 @@ namespace Aurora.Core.Data
                 var entity = entry.Entity;
                 var context = new ValidationContext(entity, serviceProvider, items);
                 var results = new List<ValidationResult>();
-                
+
                 if (Validator.TryValidateObject(entity, context, results, true) == false)
                 {
                     foreach (var result in results)
                     {
                         if (result != ValidationResult.Success)
                         {
-                            throw new ValidationException(result,null, result.ErrorMessage);
+                            throw new ValidationException(result, null, result.ErrorMessage);
                         }
                     }
                 }
             }
         }
 
-       
+
     }
 }

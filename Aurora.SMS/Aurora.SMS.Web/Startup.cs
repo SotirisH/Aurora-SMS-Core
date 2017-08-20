@@ -37,7 +37,7 @@ namespace Aurora.SMS.Web
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
-            services.AddDbContext<SMSDb>(options=>options.UseSqlServer(sMSDbconnection));
+            services.AddDbContext<SMSDb>(options => options.UseSqlServer(sMSDbconnection));
             services.AddDbContext<Insurance.Data.InsuranceDb>(options => options.UseSqlServer(insuranceDbconnection));
 
 
@@ -57,6 +57,13 @@ namespace Aurora.SMS.Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+            }
+
+            // Migrations take place here
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                serviceScope.ServiceProvider.GetService<SMSDb>().Database.Migrate();
+                serviceScope.ServiceProvider.GetService<Insurance.Data.InsuranceDb>().Database.Migrate();
             }
 
             app.UseStaticFiles();

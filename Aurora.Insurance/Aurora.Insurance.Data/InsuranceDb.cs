@@ -1,26 +1,20 @@
 ﻿using Aurora.Core.Data;
 using Aurora.Insurance.EFModel;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
- 
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Aurora.Insurance.Data 
+namespace Aurora.Insurance.Data
 {
     public class InsuranceDb : AuditableDbContext
     {
         /// <summary>
         /// Internal costructor for Migration commands
         /// </summary>
-        internal InsuranceDb():base()
+        internal InsuranceDb() : base()
         {
 
         }
-        public InsuranceDb(DbContextOptions options,
-                                 ICurrentUserService currentUserService) :base(options,currentUserService)
+        public InsuranceDb(DbContextOptions<InsuranceDb> options,
+                                 ICurrentUserService currentUserService) : base(options, currentUserService)
         {
         }
 
@@ -50,5 +44,5 @@ namespace Aurora.Insurance.Data
         }
     }
 
-  
+
 }

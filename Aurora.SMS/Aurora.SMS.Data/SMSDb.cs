@@ -1,26 +1,25 @@
 ﻿using Aurora.Core.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Aurora.SMS.Data
 {
     /// <summary>
     /// The DBContext to the database
     /// </summary>
-    public class SMSDb: AuditableDbContext
+    public class SMSDb : AuditableDbContext
     {
         /// <summary>
         /// Internal costructor for Migration commands
         /// </summary>
-        internal SMSDb():base()
+        internal SMSDb() : base()
         {
 
         }
-        public SMSDb(DbContextOptions options,
-                                 ICurrentUserService currentUserService) :base(options,currentUserService)
+
+        public SMSDb(DbContextOptions<SMSDb> options,
+                                 ICurrentUserService currentUserService) : base(options, currentUserService)
         {
+            //https://stackoverflow.com/questions/41513296/can-i-safely-use-the-non-generic-dbcontextoptions-in-asp-net-core-and-ef-core
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
