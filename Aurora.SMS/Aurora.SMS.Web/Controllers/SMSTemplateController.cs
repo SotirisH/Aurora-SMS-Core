@@ -7,13 +7,10 @@ namespace Aurora.SMS.Web.Controllers
     public class SMSTemplateController : Controller
     {
         private readonly ITemplateServices _templateServices;
-        private readonly ITemplateFieldServices _templateFieldServices;
 
-        public SMSTemplateController(ITemplateServices templateServices,
-                                   ITemplateFieldServices templateFieldServices)
+        public SMSTemplateController(ITemplateServices templateServices)
         {
             _templateServices = templateServices;
-            _templateFieldServices = templateFieldServices;
         }
 
         // GET: SMSTemplate
@@ -68,9 +65,5 @@ namespace Aurora.SMS.Web.Controllers
             return View("CreateEdit", AutoMapper.Mapper.Map<Models.SmsTemplate.SmsTemplateViewModel>(_templateServices.GetById(id)));
         }
 
-        public ViewResult GetTemplateFields()
-        {
-            return View("TemplateFields", _templateFieldServices.GetAllTemplateFields());
-        }
     }
 }

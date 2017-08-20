@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Aurora.SMS.EFModel.TemplateField>
+
+@{
+    var groups = Model.GroupBy(p => p.GroupName).OrderBy(p => p.Key);
+    foreach (var groupItem in groups)
+    {
+        // Create a panel
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">@groupItem.Key</h3>
+            </div>
+            <div class="panel-body">
+                <!--Panel content-->
+                @foreach (var templateField in groupItem)
+                {
+                    <!--HTML5 Custom Data Attributes (data-*)
+                        http://html5doctor.com/html5-custom-data-attributes/
+                        -->
+                    <a class="list-group-item" href="#" data-templatefield="@templateField.Name">
+                        <div class="container-fluid">
+                            <span class="glyphicon glyphicon-info-sign col-sm-1" data-toggle="tooltip" data-placement="top" data-original-title="@templateField.Description"></span>
+                            <span class="list-group-item-heading col-sm-11">@templateField.Name</span>
+
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+
+    }
+}
