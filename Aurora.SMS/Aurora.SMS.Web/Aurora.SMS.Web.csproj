@@ -9,7 +9,9 @@
     <PackageReference Include="AutoMapper" Version="6.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.0.1" />
     <PackageReference Include="Bogus" Version="15.0.6" />
+    <PackageReference Include="bootstrap.TypeScript.DefinitelyTyped" Version="0.9.8" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="7.1.1" />
+    <PackageReference Include="jquery.TypeScript.DefinitelyTyped" Version="2.9.9" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0.0" />
@@ -22,6 +24,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" />
+    <PackageReference Include="moment.TypeScript.DefinitelyTyped" Version="1.8.3" />
   </ItemGroup>
 
   <ItemGroup>
