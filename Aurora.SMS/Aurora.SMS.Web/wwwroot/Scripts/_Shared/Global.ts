@@ -18,7 +18,7 @@ interface GenericJsonResult extends JsonResult {
 $(function (): void {
     $ProgressModalWindow = $("#divProgressModalWindow")
 
-    BindDatetimepickerHandlers()
+    //BindDatetimepickerHandlers()
     //specify static for a backdrop which doesn't close the modal on click.
     // The modal should be initialized only once!
     $ProgressModalWindow.modal({

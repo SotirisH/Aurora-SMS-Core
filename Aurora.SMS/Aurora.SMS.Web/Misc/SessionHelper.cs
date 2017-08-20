@@ -39,8 +39,30 @@ namespace Aurora.SMS.Web
         /// <summary>
         /// The selected Template Id when we run the wizzard to send SMS
         /// </summary>
-        public int SelectedTemplateId { get; set; }
-        public QueryCriteriaDTO Criteria { get; set; }
+        public int SelectedTemplateId
+        {
+            get
+            {
+                return _context.Session.GetInt32("SelectedTemplateId").GetValueOrDefault();
+            }
+            set
+            {
+                _context.Session.SetInt32("SelectedTemplateId",value);
+            }
+
+        }
+        public QueryCriteriaDTO Criteria
+        {
+            get
+            {
+                return _context.Session.Get<QueryCriteriaDTO>("Criteria");
+            }
+            set
+            {
+                _context.Session.Set("Criteria", value);
+            }
+
+        }
 
         private IHttpContextAccessor _contextAccessor;
         private HttpContext _context { get { return _contextAccessor.HttpContext; } }
@@ -48,21 +70,6 @@ namespace Aurora.SMS.Web
         {
             _contextAccessor = contextAccessor;
         }
-        // Gets the current session.
-        public SessionHelper Current()
-        {
-            {
-                var session = _context.Session.Get<SessionHelper>("__MySession__");
-                if (session == null)
-                {
-                    session = new SessionHelper(_contextAccessor);
-                    session.Criteria = new QueryCriteriaDTO();
-                    _context.Session.Set("__MySession__", session);
-                }
-                return session;
-            }
-        }
-
 
     }
 

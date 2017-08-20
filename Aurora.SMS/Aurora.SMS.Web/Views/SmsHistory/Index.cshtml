@@ -18,8 +18,8 @@
                     <div class="form-group col-md-6">
                         <label class="control-label">Status</label>
                         @*OLD:@Html.EnumDropDownListFor(m => m.Criteria.MessageStatus, htmlAttributes: new { @class = "form-control" })*@
-                        @Html.DropDownListFor(m =>m.Criteria.MessageStatus, Html.GetEnumSelectList(Aurora.SMS.EFModel.Enumerators.MessageStatus.Error.GetType()), htmlAttributes: new { @class = "form-control" })
-                        
+                        @Html.DropDownListFor(m => m.Criteria.MessageStatus, Html.GetEnumSelectList(Aurora.SMS.EFModel.Enumerators.MessageStatus.Error.GetType()), htmlAttributes: new { @class = "form-control" })
+
                     </div>
                 </div>
                 <div class="row">
@@ -27,7 +27,7 @@
                         <label class="control-label">Send Date(From)</label>
                         <div class="input-group">
 
-                            @Html.EditorFor(m => m.Criteria.SendDateFrom, new { htmlAttributes = new { id= "datepickerSendDateFrom", @class = "form-control datepicker" } })
+                            @Html.EditorFor(m => m.Criteria.SendDateFrom, new { htmlAttributes = new { id = "datepickerSendDateFrom", @class = "form-control datepicker" ,type="date" } })
                             <label for="datepickerSendDateFrom" class="input-group-addon btn">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </label>
@@ -37,7 +37,7 @@
                     <div class="form-group col-md-6">
                         <label class="control-label">Send Date(To)</label>
                         <div class="input-group">
-                            @Html.EditorFor(m => m.Criteria.SendDateTo, new { htmlAttributes = new { id = "datepickerSendDateTo", @class = "form-control datepicker" } })
+                            @Html.EditorFor(m => m.Criteria.SendDateTo, new { htmlAttributes = new { id = "datepickerSendDateTo", @class = "form-control datepicker", type = "date" } })
 
                             <label for="datepickerSendDateTo" class="input-group-addon btn">
                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -59,7 +59,7 @@
 
 @if (Model.NumberOfResults != 0)
 {
-   <div class="clearfix">
+    <div class="clearfix">
         <div class="clearfix">
             @Html.Partial("_smsHistoryList", Model.HistoryResults)
         </div>
@@ -78,11 +78,3 @@ else
     </div>
 }
 
-@section scripts
-{
-<script>
-  $( function() {
-    $( ".datepicker" ).datepicker();
-  } );
-</script>
-}

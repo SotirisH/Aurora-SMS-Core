@@ -56,7 +56,7 @@ namespace Aurora.SMS.Web.Controllers
         public ActionResult AdvancedToSelectTemplate(Models.CustomerSelectionViewModel vm)
         {
             // Store Criteria into the session
-            _sessionHelper.Current().Criteria = vm.Criteria;
+            _sessionHelper.Criteria = vm.Criteria;
             return RedirectToAction("SelectTemplate");
         }
 
@@ -70,14 +70,14 @@ namespace Aurora.SMS.Web.Controllers
         [HttpPost]
         public ActionResult SelectTemplate(Models.SelectedTemplateViewModel vm)
         {
-            _sessionHelper.Current().SelectedTemplateId = vm.SelectedTemplateId;
+            _sessionHelper.SelectedTemplateId = vm.SelectedTemplateId;
             return RedirectToAction("Preview");
         }
 
         public ViewResult Preview()
         {
-            Insurance.Services.DTO.QueryCriteriaDTO criteria = _sessionHelper.Current().Criteria as Insurance.Services.DTO.QueryCriteriaDTO;
-            int selectedTemplateId = _sessionHelper.Current().SelectedTemplateId;
+            Insurance.Services.DTO.QueryCriteriaDTO criteria = _sessionHelper.Criteria as Insurance.Services.DTO.QueryCriteriaDTO;
+            int selectedTemplateId = _sessionHelper.SelectedTemplateId;
 
             var recepients = _contractServices.GetContracts(criteria);
             var previewMessages = _smsServices.ConstructSMSMessages(recepients, selectedTemplateId);
@@ -86,8 +86,8 @@ namespace Aurora.SMS.Web.Controllers
 
         public ViewResult BulkSmsResult()
         {
-            Insurance.Services.DTO.QueryCriteriaDTO criteria = _sessionHelper.Current().Criteria as Insurance.Services.DTO.QueryCriteriaDTO;
-            int selectedTemplateId = _sessionHelper.Current().SelectedTemplateId;
+            Insurance.Services.DTO.QueryCriteriaDTO criteria = _sessionHelper.Criteria as Insurance.Services.DTO.QueryCriteriaDTO;
+            int selectedTemplateId = _sessionHelper.SelectedTemplateId;
             var recepients = _contractServices.GetContracts(criteria);
             var previewMessages = _smsServices.ConstructSMSMessages(recepients, selectedTemplateId);
             var sessionId = _smsServices.SendBulkSMS(previewMessages, _cookieHelper.GetDefaultSmsGateWay());

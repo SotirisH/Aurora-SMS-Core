@@ -57,7 +57,7 @@ namespace Aurora.SMS.Service
         /// <returns>Returns the session ID</returns>
         public Guid SendBulkSMS(IEnumerable<DTO.SMSMessageDTO> messagesToSent, string providerName)
         {
-            DbContext.Database.BeginTransaction();
+           
             // get the provider data
             Provider provider =  DbContext.Providers.Single(x=>x.Name==providerName);
             Guid sessionId = Guid.NewGuid();

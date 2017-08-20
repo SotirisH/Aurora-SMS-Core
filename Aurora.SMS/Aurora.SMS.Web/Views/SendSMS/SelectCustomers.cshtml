@@ -2,46 +2,48 @@
 
 <h2>Customer selection</h2>
 <div class="well container" id="divCriteria">
-    @using (@Html.BeginForm())
-    { 
+    <form asp-action="SelectCustomers">
         <fieldset>
             <legend>Criteria</legend>
             <div class="row">
                 <div class="col-md-6 form-group">
                     <label class="control-label">Company</label>
-                    @Html.DropDownListFor(m => m.Criteria.CompanyId, new SelectList(Model.Companies, "Id", "Description"))
+                    <select asp-for="Criteria.CompanyId" asp-items="@(new SelectList(Model.Companies, "Id", "Description"))" class="form-control"></select>
+                    @* @Html.DropDownListFor(m => m.Criteria.CompanyId, new SelectList(Model.Companies, "Id", "Description"))*@
                 </div>
                 <div class="col-md-6 form-group">
                     <label class="control-label">Contract Number</label>
-                    @Html.EditorFor(m => m.Criteria.ContractNumber)
+                    <input asp-for="Criteria.ContractNumber" type="text" class="form-control" />
+                    @*@Html.EditorFor(m => m.Criteria.ContractNumber)*@
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-6">
                     <label class="control-label">Issue Date(From)</label>
-                    @Html.EditorFor(m => m.Criteria.IssueDateFrom)
+                    <input class="form-control" asp-for="Criteria.IssueDateFrom" type="date" />
+                    @*@Html.EditorFor(m => m.Criteria.IssueDateFrom, new { htmlAttributes = new { type = "date" } })*@
                 </div>
                 <div class="form-group col-md-6">
                     <label class="control-label">Issue Date(To)</label>
-                    @Html.EditorFor(m => m.Criteria.IssueDateTo)
+                    <input class="form-control" asp-for="Criteria.IssueDateTo" type="date" />
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="control-label">Start Date(From)</label>
-                    @Html.EditorFor(m => m.Criteria.StartDateFrom)
+                    <input class="form-control" asp-for="Criteria.StartDateFrom" type="date" />
                 </div>
                 <div class="form-group col-md-6">
                     <label class="control-label">Start Date(To)</label>
-                    @Html.EditorFor(m => m.Criteria.StartDateTo)
+                    <input class="form-control" asp-for="Criteria.StartDateTo" type="date" />
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="control-label">Expire Date(From)</label>
-                    @Html.EditorFor(m => m.Criteria.ExpireDateFrom)
+                    <input class="form-control" asp-for="Criteria.ExpireDateFrom" type="date" />
                 </div>
                 <div class="form-group col-md-6">
                     <label class="control-label">Expire Date(To)</label>
-                    @Html.EditorFor(m => m.Criteria.ExpireDateTo)
+                    <input class="form-control" asp-for="Criteria.ExpireDateTo" type="date" />
                 </div>
 
                 <div class="form-group col-md-6">
@@ -50,11 +52,11 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label class="control-label">Canceled Date</label>
-                    @Html.EditorFor(m => m.Criteria.CanceledDate)
+                    <input class="form-control" asp-for="Criteria.CanceledDate" type="date" />
                 </div>
                 <div class="form-group col-md-6">
                     <label class="control-label">Plate Number</label>
-                    @Html.EditorFor(m => m.Criteria.PlateNumber)
+                    <input class="form-control" asp-for="Criteria.PlateNumber" type="text" />
                 </div>
 
                 <div class="form-group col-md-6">
@@ -65,10 +67,10 @@
 
         <h2>Contracts</h2><button type="submit" class="btn btn-primary" value="AdvancedToSelectTemplate" formaction="AdvancedToSelectTemplate">Preview Messages</button>
         <hr />
-    }
+    </form>
 </div>
 
 
 
-@Html.Partial("_CustomerResult", Model.Contracts)
+@await Html.PartialAsync("_CustomerResult", Model.Contracts)
 

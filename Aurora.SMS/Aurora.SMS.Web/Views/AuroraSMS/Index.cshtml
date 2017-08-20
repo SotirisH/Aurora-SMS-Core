@@ -48,12 +48,13 @@
 
 <div class="row">
     <p class="col-md-4">
-        @Html.ActionLink("Manage >>", "Index", "SMSTemplate", null, new { @class = "btn btn-default" })
+        <a asp-action="Index" asp-controller="SMSTemplate" class="btn btn-default">Manage >></a>
+        @*OLD:@Html.ActionLink("Manage >>", "Index", "SMSTemplate", null, new { @class = "btn btn-default" })*@
     </p>
     <p class="col-md-4">
-        @Html.ActionLink("Start  >>", "Index", "SendSMS", null, new { @class = "btn btn-default" })
+        <a asp-action="Index" asp-controller="SendSMS" class="btn btn-default">Start  >></a>
     </p>
     <p class="col-md-4">
-        @Html.ActionLink("View  >>", "Index", "SmsHistory", null, new { @class = "btn btn-default" })
+        <a asp-action="Index" asp-controller="SmsHistory" class="btn btn-default">View  >></a>
     </p>
 </div>
