@@ -42,11 +42,11 @@ namespace Aurora.SMS.Web
         public int SelectedTemplateId { get; set; }
         public QueryCriteriaDTO Criteria { get; set; }
 
-        private HttpContext _context { get; set; }
-
-        public SessionHelper(HttpContext contextAccessor)
+        private IHttpContextAccessor _contextAccessor;
+        private HttpContext _context { get { return _contextAccessor.HttpContext; } }
+        public SessionHelper(IHttpContextAccessor contextAccessor)
         {
-            _context = contextAccessor;
+            _contextAccessor = contextAccessor;
         }
         // Gets the current session.
         public SessionHelper Current()
@@ -55,7 +55,7 @@ namespace Aurora.SMS.Web
                 var session = _context.Session.Get<SessionHelper>("__MySession__");
                 if (session == null)
                 {
-                    session = new SessionHelper(_context);
+                    session = new SessionHelper(_contextAccessor);
                     session.Criteria = new QueryCriteriaDTO();
                     _context.Session.Set("__MySession__", session);
                 }

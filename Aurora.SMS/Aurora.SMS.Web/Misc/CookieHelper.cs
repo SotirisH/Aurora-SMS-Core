@@ -7,8 +7,9 @@ namespace Aurora.SMS.Web
     {
         private const string DefaultSmsGateWayName = "DefaultSmsGateWayName";
 
-        private HttpContext _contextAccessor { get; set; }
-        public CookieHelper(HttpContext contextAccessor)
+        private IHttpContextAccessor _contextAccessor;
+        private HttpContext _context { get { return _contextAccessor.HttpContext; } }
+        public CookieHelper(IHttpContextAccessor contextAccessor)
         {
             _contextAccessor = contextAccessor;
         }
@@ -19,14 +20,19 @@ namespace Aurora.SMS.Web
         /// <returns></returns>
         public void SetDefaultSmsGateWay(string newProvidername)
         {
-            CookieOptions options = new CookieOptions();
-            options.Expires = DateTime.Now.AddDays(1);
-            _contextAccessor.Response.Cookies.Append(DefaultSmsGateWayName, newProvidername, options);
+            CookieOptions options = new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(1)
+            };
+            _context.Response.Cookies.Append(DefaultSmsGateWayName, newProvidername, options);
         }
 
         public string GetDefaultSmsGateWay()
         {
-            return _contextAccessor.Request.Cookies[DefaultSmsGateWayName];
+            var ret=_context.Request.Cookies[DefaultSmsGateWayName];
+            if (string.IsNullOrWhiteSpace(ret))
+                return "SnailAbroad";
+            return ret;
         }
 
     }

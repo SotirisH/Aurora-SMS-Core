@@ -57,7 +57,8 @@
                 </ul>
 
                 @*OLD:@Html.Action("SmsGateWayBlockView", "SmsGateWay")*@
-                @*@await Component.InvokeAsync()*@
+                @await Component.InvokeAsync("SmsGateWay", new { maxPriority = 2, isDone = false })
+
             </div>
         </div>
     </nav>
@@ -72,7 +73,7 @@
                 <label id="labelMsg" style="overflow-y:auto;overflow:auto;max-height:80vh"></label>
             </div>
         </div>
-        
+
         @RenderBody()
         <hr />
         <footer>

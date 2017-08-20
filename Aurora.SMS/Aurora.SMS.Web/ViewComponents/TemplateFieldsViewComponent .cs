@@ -23,7 +23,7 @@ namespace Aurora.SMS.Web.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync(int maxPriority, bool isDone)
         {
             // TODO: Create an async version of GetAllTemplateFields
-            return View( _templateFieldServices.GetAllTemplateFields());
+            return await Task.FromResult<IViewComponentResult>(View( _templateFieldServices.GetAllTemplateFields()));
         }
     }
 }

@@ -55,12 +55,7 @@ namespace Aurora.SMS.Web.Controllers
             return View(vm);
         }
 
-        public PartialViewResult SmsGateWayBlockView()
-        {
-            var smsGateWayName = _cookieHelper.GetDefaultSmsGateWay();
-            ViewBag.SmsGateWayName = smsGateWayName;
-            return PartialView("_SmsGateWay");
-        }
+     
 
         /// <summary>
         /// Sets this proxy as default
