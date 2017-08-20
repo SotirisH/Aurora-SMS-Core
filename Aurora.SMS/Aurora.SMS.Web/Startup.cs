@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 
 namespace Aurora.SMS.Web
 {
@@ -31,8 +32,11 @@ namespace Aurora.SMS.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            //https://github.com/aspnet/Mvc/issues/4842  MVC now serializes JSON with camel case names by default
             services.AddMvc()
-                .AddFluentValidation();
+                .AddFluentValidation()
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
+
             services.AddAutoMapper();
 
             // Adds a default in-memory implementation of IDistributedCache.

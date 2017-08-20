@@ -31,7 +31,7 @@ $(function (): void {
 function BindDatetimepickerHandlers(): void {
     //http://eonasdan.github.io/bootstrap-datetimepicker/
     //custom icons
-    $(".date").datetimepicker(
+    $(".date").dateTimePicker(
         {
             format: "DD/MM/YYYY",
             icons: {
