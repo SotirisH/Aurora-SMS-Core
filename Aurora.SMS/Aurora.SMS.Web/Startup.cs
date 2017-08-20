@@ -1,5 +1,6 @@
 ﻿using Aurora.Core.Data;
 using Aurora.SMS.Data;
+using AutoMapper;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,16 @@ namespace Aurora.SMS.Web
             // Add framework services.
             services.AddMvc()
                 .AddFluentValidation();
+            services.AddAutoMapper();
+
+            // Adds a default in-memory implementation of IDistributedCache.
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.Cookie.HttpOnly = true;
+            });
 
             var insuranceDbconnection = @"Server =.\SQL16; Database = InsuranceCore; Trusted_Connection = True;";
             var sMSDbconnection = @"Server =.\SQL16; Database = SMSDbCore; Trusted_Connection = True;";
@@ -82,7 +93,7 @@ namespace Aurora.SMS.Web
             }
 
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
