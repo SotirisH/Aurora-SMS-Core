@@ -1,7 +1,5 @@
-﻿/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../typings/bootstrap/index.d.ts" />
-/// <reference path="../typings/moment/moment.d.ts" />
-/// <reference path="global-variables.ts" />
+﻿/// <reference path="global-variables.ts" />
+/// <reference path="../../lib/moment/moment.d.ts" />
 
 interface FormData {
     name: string;

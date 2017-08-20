@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Insurance.Data", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.Web", "Aurora.SMS.Web\Aurora.SMS.Web.csproj", "{539EDA0F-CEDA-4930-8DE2-E888DF029179}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{79C8EFAD-EC20-48A9-B0C0-EE7722AC5A67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.SMS.FakeProvider.WebApi", "Aurora.SMS.FakeProvider.WebApi\Aurora.SMS.FakeProvider.WebApi.csproj", "{34B15A2F-B2EE-44CB-9513-22E25A4C132D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,9 +73,16 @@ Global
 		{539EDA0F-CEDA-4930-8DE2-E888DF029179}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{539EDA0F-CEDA-4930-8DE2-E888DF029179}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{539EDA0F-CEDA-4930-8DE2-E888DF029179}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34B15A2F-B2EE-44CB-9513-22E25A4C132D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34B15A2F-B2EE-44CB-9513-22E25A4C132D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34B15A2F-B2EE-44CB-9513-22E25A4C132D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34B15A2F-B2EE-44CB-9513-22E25A4C132D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{34B15A2F-B2EE-44CB-9513-22E25A4C132D} = {79C8EFAD-EC20-48A9-B0C0-EE7722AC5A67}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C365CE61-2D7D-4E1F-894C-D0D427DDA6EA}

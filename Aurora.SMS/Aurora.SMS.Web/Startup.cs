@@ -52,8 +52,8 @@ namespace Aurora.SMS.Web
 
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddSingleton<CookieHelper>();
-
-
+            services.AddSingleton<Aurora.SMS.Web.SessionHelper>();
+            
             services.AddDbContext<SMSDb>(options => options.UseSqlServer(sMSDbconnection));
             services.AddDbContext<Insurance.Data.InsuranceDb>(options => options.UseSqlServer(insuranceDbconnection));
 
