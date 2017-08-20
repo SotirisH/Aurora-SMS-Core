@@ -8,3 +8,5 @@ Aurora SMS is a demo project that simulates the functionality of sending bulk SM
 - Use Web API 2
 - Init Automapper
 - Usage of ViewComponents
+
+Note: The main solution is the Aurora.SMS.sln
