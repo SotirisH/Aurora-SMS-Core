@@ -9,9 +9,8 @@ namespace Aurora.SMS.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController(ICurrentUserService c)
+        public HomeController()
         {
-            c.GetCurrentUser();
         }
         public IActionResult Index()
         {

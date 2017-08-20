@@ -1,5 +1,6 @@
 ﻿using Aurora.Core.Data;
 using Aurora.SMS.Data;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,7 +29,8 @@ namespace Aurora.SMS.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc()
+                .AddFluentValidation();
 
             var insuranceDbconnection = @"Server =.\SQL16; Database = InsuranceCore; Trusted_Connection = True;";
             var sMSDbconnection = @"Server =.\SQL16; Database = SMSDbCore; Trusted_Connection = True;";
@@ -40,7 +42,17 @@ namespace Aurora.SMS.Web
             services.AddDbContext<SMSDb>(options => options.UseSqlServer(sMSDbconnection));
             services.AddDbContext<Insurance.Data.InsuranceDb>(options => options.UseSqlServer(insuranceDbconnection));
 
-
+            /*OLD:
+            *container.RegisterType<Service.ITemplateServices, Service.TemplateServices>();
+            container.RegisterType<Service.ITemplateFieldServices, Service.TemplateFieldServices>();
+            container.RegisterType<Service.IInsuranceServices, Service.InsuranceServices>();
+            container.RegisterType<Service.ISMSServices, Service.SMSServices>();
+            */
+            services.AddTransient<Service.ITemplateServices, Service.TemplateServices>();
+            services.AddTransient<Service.ITemplateFieldServices, Service.TemplateFieldServices>();
+            services.AddTransient<Insurance.Services.ICompanyServices, Insurance.Services.CompanyServices>();
+            services.AddTransient<Insurance.Services.IContractServices, Insurance.Services.ContractServices>();
+            services.AddTransient<Service.ISMSServices, Service.SMSServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,7 +75,10 @@ namespace Aurora.SMS.Web
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 serviceScope.ServiceProvider.GetService<SMSDb>().Database.Migrate();
-                serviceScope.ServiceProvider.GetService<Insurance.Data.InsuranceDb>().Database.Migrate();
+                var insuranceDb = serviceScope.ServiceProvider.GetService<Insurance.Data.InsuranceDb>();
+                insuranceDb.Database.Migrate();
+                var seed = new DbInsuranceSeed();
+                seed.Seed(insuranceDb);
             }
 
             app.UseStaticFiles();

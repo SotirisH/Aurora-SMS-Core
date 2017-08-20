@@ -17,5 +17,6 @@ namespace Aurora.Core.Data
             DbContext = auditableDbContext ?? throw new ArgumentNullException("auditableDbContext");
         }
 
+
     }
 }

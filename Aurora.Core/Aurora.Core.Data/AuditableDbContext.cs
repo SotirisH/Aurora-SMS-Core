@@ -13,7 +13,6 @@ namespace Aurora.Core.Data
     public abstract class AuditableDbContext : DbContext, ISupportsUnitOfWork
     {
         private readonly ICurrentUserService _currentUserService;
-        private ICurrentUserService currentUserService;
 
         protected AuditableDbContext() : base()
         { }

@@ -14,7 +14,7 @@ namespace Aurora.SMS.Service
         IEnumerable<EFModel.TemplateField> GetAllTemplateFields();
     }
 
-    public class TemplateFieldServices : DbServiceBase<SMSDb>
+    public class TemplateFieldServices : DbServiceBase<SMSDb>, ITemplateFieldServices
     {
         /// <summary>
         /// Primary constructor.
