@@ -11,3 +11,6 @@ Aurora SMS is a demo project that simulates the functionality of sending bulk SM
 - Use the new Tag Helpers
 
 Note: The main solution is the Aurora.SMS.sln
+
+## ToDo
+- Use [DbContextScope](https://github.com/SotirisH/DbContextScope)
