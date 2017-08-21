@@ -1,5 +1,5 @@
 # Aurora SMS (ASP.Net Core Version)
-Aurora SMS is a demo project that simulates the functionality of sending bulk SMS through an SMS gateway. This is the ASP.NET implementation
+Aurora SMS is a demo project that simulates the functionality of sending bulk SMS through an SMS gateway. This is the ASP.NET Core implementation of the original project
  and give an insight on  How to:
 ## ASP.NET MVC Core V2.0
 - Init Ef
