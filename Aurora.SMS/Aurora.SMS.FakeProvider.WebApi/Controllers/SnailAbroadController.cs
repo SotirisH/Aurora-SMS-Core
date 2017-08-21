@@ -15,7 +15,6 @@ namespace Aurora.SMS.FakeProvider.Controllers
     /// WEB API 2 EXPLORING PARAMETER BINDING
     /// https://damienbod.com/2014/08/22/web-api-2-exploring-parameter-binding/
     /// </remarks>
-    [Route("api/[controller]")]
     public class SnailAbroadController : Controller
     {
         private readonly CreditCounterSnail _creditCounter;
@@ -28,23 +27,23 @@ namespace Aurora.SMS.FakeProvider.Controllers
         /// <summary>
         /// The credit decrease is created as public function in order to be able to Moq it
         /// </summary>
+        [NonAction]
         public virtual void DecreaseCredit()
         {
             _creditCounter.Credits--;
         }
-
+        [NonAction]
         public virtual void ApplyDelay()
         {
             Thread.Sleep(2000);
         }
 
         /// <summary>
-        /// Test method
+        /// Default get action
         /// http://localhost:8080/api/SnailAbroad/EchoTest?echo=sdsd
         /// </summary>
         /// <param name="echo"></param>
         /// <returns></returns>
-        [HttpGet]
         public IActionResult EchoTest(string echo = "Service Is OK!")
         {
             return Ok(echo);
@@ -59,9 +58,9 @@ namespace Aurora.SMS.FakeProvider.Controllers
         /// <param name="mobileNumber">The mobile number that will be sent</param>
         /// <param name="messageExternalId">The external ID will be returned with the result. It is used to track the incoming message</param>
         /// <returns></returns>
-        [Route("SendSMS")]
+        /// <remarks>The [FromBody] is needed to read the json content from the body of the message</remarks>
         [HttpPost]
-        public IActionResult SendSMS(Models.SmsRequest smsRequest)
+        public IActionResult SendSMS([FromBody] Models.SmsRequest smsRequest)
         {
             return Ok(SendSmsHelper(smsRequest));
         }
@@ -74,24 +73,19 @@ namespace Aurora.SMS.FakeProvider.Controllers
         /// <param name="messageId"></param>
         /// <param name="messageExternalId"></param>
         /// <returns></returns>
-        [Route("ReSendSMS")]
         [HttpPost]
         public IActionResult ReSendSMS(Models.SmsRequest smsRequest)
         {
-            // Suppose the SMS message is retrieved from the providers DB
-
-            return Ok(SendSmsHelper(smsRequest));
-        }
-        [Route("GetMessageStatus")]
-        [HttpGet("{smsId}")]
-        public SMSResult GetMessageStatus(Guid smsId)
-        {
-            ApplyDelay();
             throw new NotImplementedException();
         }
 
-        [Route("GetAvailableCredits")]
-        [HttpGet]
+     
+        public SMSResult GetMessageStatus(Guid smsId)
+        {
+            throw new NotImplementedException();
+        }
+
+        
         public int GetAvailableCredits(string username,
                  string password)
         {

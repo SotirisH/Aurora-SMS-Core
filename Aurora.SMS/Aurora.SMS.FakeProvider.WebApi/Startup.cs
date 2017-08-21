@@ -33,13 +33,13 @@ namespace Aurora.SMS.FakeProvider.WebApi
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            app.UseMvc(routes => routes.MapRoute("default", "{controller=SnailAbroad}/{action=EchoTest}/{id?}"));
         }
     }
 }

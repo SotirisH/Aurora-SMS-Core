@@ -68,7 +68,7 @@ namespace Aurora.SMS.Providers
 
         public async Task<string> GetAvailableCreditsAsync()
         {
-            string path = @"api/snailabroad/GetAvailableCredits?username=" + _userName + "&password=" + _password;
+            string path = @"snailabroad/GetAvailableCredits?username=" + _userName + "&password=" + _password;
             HttpResponseMessage response = await client.GetAsync(path).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
@@ -85,7 +85,7 @@ namespace Aurora.SMS.Providers
                                     string sender, 
                                     DateTime? scheduledDate)
         {
-            string path = @"/api/snailabroad/SendSMS";
+            string path = @"/snailabroad/SendSMS";
             // Create Parameters obj
             var param = new
             {
