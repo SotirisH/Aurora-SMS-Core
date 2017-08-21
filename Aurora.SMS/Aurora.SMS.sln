@@ -25,7 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.Web", "Aurora.SM
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{79C8EFAD-EC20-48A9-B0C0-EE7722AC5A67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.SMS.FakeProvider.WebApi", "Aurora.SMS.FakeProvider.WebApi\Aurora.SMS.FakeProvider.WebApi.csproj", "{34B15A2F-B2EE-44CB-9513-22E25A4C132D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.FakeProvider.WebApi", "Aurora.SMS.FakeProvider.WebApi\Aurora.SMS.FakeProvider.WebApi.csproj", "{34B15A2F-B2EE-44CB-9513-22E25A4C132D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BEE97785-78C7-42AB-9345-88F0D221AC46}"
+	ProjectSection(SolutionItems) = preProject
+		..\HowToIndex.md = ..\HowToIndex.md
+		..\Readme.md = ..\Readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
