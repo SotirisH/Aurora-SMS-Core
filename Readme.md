@@ -14,4 +14,4 @@ Note: The main solution is the [Aurora.SMS.sln] (https://github.com/SotirisH/MVC
 
 ## AWS Integration
 
-(https://github.com/SotirisH/Aurora-SMS-Core/blob/master/MainApp.jpg)
+![AWS Diagram](https://github.com/SotirisH/Aurora-SMS-Core/blob/master/MainApp.jpg)
