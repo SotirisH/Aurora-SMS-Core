@@ -10,7 +10,8 @@ Aurora SMS is a demo project that simulates the functionality of sending bulk SM
 - Usage of ViewComponents
 - Use the new Tag Helpers
 
-Note: The main solution is the Aurora.SMS.sln
+Note: The main solution is the [Aurora.SMS.sln] (https://github.com/SotirisH/MVC)
 
-## ToDo
-- Use [DbContextScope](https://github.com/SotirisH/DbContextScope)
+## AWS Integration
+
+(https://github.com/SotirisH/Aurora-SMS-Core/blob/master/MainApp.jpg)
