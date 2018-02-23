@@ -2,6 +2,7 @@
 using Aurora.SMS.Data;
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using FluentValidation.Attributes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -34,7 +35,10 @@ namespace Aurora.SMS.Web
             // Add framework services.
             //https://github.com/aspnet/Mvc/issues/4842  MVC now serializes JSON with camel case names by default
             services.AddMvc()
-                .AddFluentValidation()
+                 .AddFluentValidation(fv =>
+                 {
+                     fv.ValidatorFactoryType = typeof(AttributedValidatorFactory);
+                 })
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
 
             services.AddAutoMapper();
@@ -57,7 +61,7 @@ namespace Aurora.SMS.Web
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddSingleton<CookieHelper>();
             services.AddSingleton<Aurora.SMS.Web.SessionHelper>();
-            
+
             services.AddDbContext<SMSDb>(options => options.UseSqlServer(sMSDbconnection));
             services.AddDbContext<Insurance.Data.InsuranceDb>(options => options.UseSqlServer(insuranceDbconnection));
 
@@ -111,6 +115,7 @@ namespace Aurora.SMS.Web
                     name: "default",
                     template: "{controller=AuroraSMS}/{action=Index}/{id?}");
             });
+
         }
     }
 }

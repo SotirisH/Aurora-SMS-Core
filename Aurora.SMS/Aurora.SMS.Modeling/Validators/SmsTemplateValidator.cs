@@ -1,15 +1,12 @@
-﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Aurora.SMS.Modeling.Interfaces;
+using FluentValidation;
 
-namespace Aurora.SMS.Web.Models.SmsTemplate
+namespace Aurora.SMS.Modeling.Validators
 {
     /// <summary>
     /// The validator class for the SmsTemplate
     /// </summary>
-    public class SmsTemplateValidator: AbstractValidator<SmsTemplateViewModel>
+    public class SmsTemplateValidator : AbstractValidator<ISmsTemplateModel>
     {
         public SmsTemplateValidator()
         {
