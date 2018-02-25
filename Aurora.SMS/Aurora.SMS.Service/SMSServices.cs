@@ -97,7 +97,7 @@ namespace Aurora.SMS.Service
 
             }
             Task.WaitAll(serverRequests.ToArray());
-            DbContext.SaveChanges();
+            
             return sessionId;
         }
 
@@ -118,7 +118,7 @@ namespace Aurora.SMS.Service
             {
                 throw new NullReferenceException(string.Format("The template with id:{0} cannot be found in the db!",templateId));
             }
-            
+
             foreach (var recepient in recepients)
             {
                 string smsText = template.Text;

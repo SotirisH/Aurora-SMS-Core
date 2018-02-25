@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.8
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Core.Data", "..\Aurora.Core\Aurora.Core.Data\Aurora.Core.Data.csproj", "{1D167CE2-70DC-4D13-AEE0-0E786DB96D82}"
 EndProject
@@ -33,9 +33,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\Readme.md = ..\Readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.SMS.WebApi", "Aurora.SMS.WebApi\Aurora.SMS.WebApi.csproj", "{EEE0D8AC-7CAD-4EE6-AA12-365C363EE845}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.WebApi", "Aurora.SMS.WebApi\Aurora.SMS.WebApi.csproj", "{EEE0D8AC-7CAD-4EE6-AA12-365C363EE845}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.SMS.Modeling", "Aurora.SMS.Modeling\Aurora.SMS.Modeling.csproj", "{4337C1FB-3B8A-4444-A60A-6F94FC0063D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.Modeling", "Aurora.SMS.Modeling\Aurora.SMS.Modeling.csproj", "{4337C1FB-3B8A-4444-A60A-6F94FC0063D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AWS", "AWS", "{51D51094-2FE2-4DA0-B9CE-83860B07CC97}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.AWS", "Aurora.SMS.AWS\Aurora.SMS.AWS.csproj", "{7587D2D2-EDB0-4124-A756-C2B00A751CE5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Worker", "Worker", "{43DC5D3C-1DD4-4445-BD71-8900FAEF6D07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.SMS.WindowsService", "Aurora.SMS.WindowsService\Aurora.SMS.WindowsService.csproj", "{8AB1748C-36DC-4161-83CC-20524C1598B7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.Worker", "Aurora.SMS.Worker\Aurora.SMS.Worker.csproj", "{FAB1ED24-4D4F-4A51-AAFA-E724FF622FF2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.AWS.Tests", "Aurora.SMS.AWS.Tests\Aurora.SMS.AWS.Tests.csproj", "{E3BB12BE-00E2-4828-8A20-ACE1B62C98A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,13 +107,34 @@ Global
 		{4337C1FB-3B8A-4444-A60A-6F94FC0063D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4337C1FB-3B8A-4444-A60A-6F94FC0063D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4337C1FB-3B8A-4444-A60A-6F94FC0063D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7587D2D2-EDB0-4124-A756-C2B00A751CE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7587D2D2-EDB0-4124-A756-C2B00A751CE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7587D2D2-EDB0-4124-A756-C2B00A751CE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7587D2D2-EDB0-4124-A756-C2B00A751CE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AB1748C-36DC-4161-83CC-20524C1598B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AB1748C-36DC-4161-83CC-20524C1598B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AB1748C-36DC-4161-83CC-20524C1598B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AB1748C-36DC-4161-83CC-20524C1598B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAB1ED24-4D4F-4A51-AAFA-E724FF622FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAB1ED24-4D4F-4A51-AAFA-E724FF622FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAB1ED24-4D4F-4A51-AAFA-E724FF622FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAB1ED24-4D4F-4A51-AAFA-E724FF622FF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3BB12BE-00E2-4828-8A20-ACE1B62C98A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3BB12BE-00E2-4828-8A20-ACE1B62C98A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3BB12BE-00E2-4828-8A20-ACE1B62C98A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3BB12BE-00E2-4828-8A20-ACE1B62C98A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{4292F568-73FE-4921-ADD3-99E9D54171C1} = {43DC5D3C-1DD4-4445-BD71-8900FAEF6D07}
 		{34B15A2F-B2EE-44CB-9513-22E25A4C132D} = {79C8EFAD-EC20-48A9-B0C0-EE7722AC5A67}
 		{EEE0D8AC-7CAD-4EE6-AA12-365C363EE845} = {79C8EFAD-EC20-48A9-B0C0-EE7722AC5A67}
+		{7587D2D2-EDB0-4124-A756-C2B00A751CE5} = {51D51094-2FE2-4DA0-B9CE-83860B07CC97}
+		{8AB1748C-36DC-4161-83CC-20524C1598B7} = {43DC5D3C-1DD4-4445-BD71-8900FAEF6D07}
+		{FAB1ED24-4D4F-4A51-AAFA-E724FF622FF2} = {43DC5D3C-1DD4-4445-BD71-8900FAEF6D07}
+		{E3BB12BE-00E2-4828-8A20-ACE1B62C98A3} = {51D51094-2FE2-4DA0-B9CE-83860B07CC97}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C365CE61-2D7D-4E1F-894C-D0D427DDA6EA}
