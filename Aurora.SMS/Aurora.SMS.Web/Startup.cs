@@ -1,4 +1,6 @@
-﻿using Aurora.Core.Data;
+﻿using Amazon.SQS;
+using Aurora.Core.Data;
+using Aurora.SMS.AWS;
 using Aurora.SMS.Data;
 using AutoMapper;
 using FluentValidation.AspNetCore;
@@ -60,24 +62,24 @@ namespace Aurora.SMS.Web
 
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddSingleton<CookieHelper>();
-            services.AddSingleton<Aurora.SMS.Web.SessionHelper>();
+            services.AddSingleton<SessionHelper>();
 
             services.AddDbContext<SMSDb>(options => options.UseSqlServer(sMSDbconnection));
             services.AddDbContext<Insurance.Data.InsuranceDb>(options => options.UseSqlServer(insuranceDbconnection));
 
-            /*OLD:
-            *container.RegisterType<Service.ITemplateServices, Service.TemplateServices>();
-            container.RegisterType<Service.ITemplateFieldServices, Service.TemplateFieldServices>();
-            container.RegisterType<Service.IInsuranceServices, Service.InsuranceServices>();
-            container.RegisterType<Service.ISMSServices, Service.SMSServices>();
-            */
+            //AWS
+            // More details: https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/net-dg-config-netcore.html
+            services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
+            services.AddAWSService<IAmazonSQS>();
+
             services.AddTransient<Service.ITemplateServices, Service.TemplateServices>();
             services.AddTransient<Service.ITemplateFieldServices, Service.TemplateFieldServices>();
             services.AddTransient<Insurance.Services.ICompanyServices, Insurance.Services.CompanyServices>();
             services.AddTransient<Insurance.Services.IContractServices, Insurance.Services.ContractServices>();
             services.AddTransient<Service.ISMSServices, Service.SMSServices>();
+            services.AddTransient<IAWSServices, AWSServices>();
 
-
+            
 
         }
 

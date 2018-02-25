@@ -54,7 +54,7 @@ namespace Aurora.SMS.AWS
                             MessageBody = sMSMessage.Message
                         };
                         sendMessageRequest.MessageAttributes.Add("Id", new MessageAttributeValue() { DataType = "String", StringValue = sMSMessage.Id.ToString() });
-                        sendMessageRequest.MessageAttributes.Add("MobileNumber", new MessageAttributeValue() { DataType = "String", StringValue = sMSMessage.MobileNumber });
+                        sendMessageRequest.MessageAttributes.Add("MobileNumber", new MessageAttributeValue() { DataType = "String", StringValue = string.IsNullOrWhiteSpace(sMSMessage.MobileNumber)?"N/A": sMSMessage.MobileNumber });
                         sendMessageRequest.MessageAttributes.Add("ProviderName", new MessageAttributeValue() { DataType = "String", StringValue = sMSMessage.ProviderName });
                         await sqs.SendMessageAsync(sendMessageRequest);
                     }

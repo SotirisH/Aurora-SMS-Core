@@ -14,12 +14,14 @@ using Aurora.SMS.Data;
 using Aurora.SMS.EFModel.Enumerators;
 using Aurora.SMS.Providers;
 using LinqKit;
+using Aurora.SMS.AWS;
+using Aurora.SMS.AWS.Models;
 
 namespace Aurora.SMS.Service
 {
     public interface ISMSServices
     {
-        Guid SendBulkSMS(IEnumerable<SMSMessageDTO> messagesToSent, string providerName);
+        Task<Guid> SendBulkSMS(IEnumerable<SMSMessageDTO> messagesToSent, string providerName);
         IEnumerable<DTO.SMSMessageDTO> ConstructSMSMessages(IEnumerable<ContractDTO> recepients, int templateId);
         string GetAvailableCredits(string smsGateWayName);
         /// <summary>
@@ -39,32 +41,34 @@ namespace Aurora.SMS.Service
 
     public class SMSServices : DbServiceBase<SMSDb>, ISMSServices
     {
+        private readonly IAWSServices _AWSServices;
         /// <summary>
         /// Primary constructor.
         /// </summary>
         /// <param name="db">It is fine to pass the dbcontext here</param>
-        public SMSServices(SMSDb db):base(db)
+        public SMSServices(SMSDb db, IAWSServices AWSServices) :base(db)
         {
-
+            _AWSServices = AWSServices;
         }
 
-        /// <summary>
-        /// Sends messages to the provider, creates a session in the history table and saves the messages as history
-        /// under this session
-        /// </summary>
-        /// <param name="messagesToSent"></param>
-        /// <param name="providerId"></param>
-        /// <returns>Returns the session ID</returns>
-        public Guid SendBulkSMS(IEnumerable<DTO.SMSMessageDTO> messagesToSent, string providerName)
+    /// <summary>
+    /// Sends messages to the provider, creates a session in the history table and saves the messages as history
+    /// under this session
+    /// </summary>
+    /// <param name="messagesToSent"></param>
+    /// <param name="providerId"></param>
+    /// <returns>Returns the session ID</returns>
+    public async Task<Guid> SendBulkSMS(IEnumerable<SMSMessageDTO> messagesToSent, string providerName)
         {
            
             // get the provider data
             Provider provider =  DbContext.Providers.Single(x=>x.Name==providerName);
             Guid sessionId = Guid.NewGuid();
             // First job is to save the messages into the history table in order to populate the id
+            var smsToSent = new List<SMSHistory>();
             foreach (var msg in messagesToSent)
             {
-                EFModel.SMSHistory smsHistory = new EFModel.SMSHistory();
+                SMSHistory smsHistory = new SMSHistory();
                 smsHistory.ContractId = msg.ContractId;
                 smsHistory.Message = msg.Message;
                 smsHistory.MobileNumber = msg.MobileNumber;
@@ -80,23 +84,25 @@ namespace Aurora.SMS.Service
                     smsHistory.ProviderFeedback = "The mobile number is not present!";
                     smsHistory.Status = MessageStatus.Skipped;
                 }
-
-                DbContext.Add(smsHistory);
+                smsToSent.Add(smsHistory);
+          
             }
-            DbContext.SaveChanges();
+            await DbContext.SMSHistoryRecords.AddRangeAsync(smsToSent);
+            await DbContext.SaveChangesAsync();
+            await _AWSServices.PushMessagesAsync(AutoMapper.Mapper.Map<IEnumerable<SMSMessage>>(smsToSent), sessionId);
 
-            List<Task> serverRequests = new List<Task>();
-            // TODO:Need to abstract the ClientProviderFactory
-            var smsProviderProxy = ClientProviderFactory.CreateClient(providerName, provider.UserName, provider.PassWord);
-            //LINQ to Entities does not recognize the method 'Boolean IsNullOrWhiteSpace(System.String)'                  
-            //http://stackoverflow.com/questions/9606979/string-isnullorwhitespace-in-linq-expression
-            foreach (var historysms in DbContext.SMSHistoryRecords.Where(m=> (m.SessionId== sessionId) && (m.MobileNumber!=null) && m.MobileNumber.Trim()!=string.Empty).ToArray())
-            {
-                // Collect all tasks in an array
-                serverRequests.Add(SendSMSToProvider(smsProviderProxy, provider, historysms));
+            //List<Task> serverRequests = new List<Task>();
+            //// TODO:Need to abstract the ClientProviderFactory
+            //var smsProviderProxy = ClientProviderFactory.CreateClient(providerName, provider.UserName, provider.PassWord);
+            ////LINQ to Entities does not recognize the method 'Boolean IsNullOrWhiteSpace(System.String)'                  
+            ////http://stackoverflow.com/questions/9606979/string-isnullorwhitespace-in-linq-expression
+            //foreach (var historysms in DbContext.SMSHistoryRecords.Where(m=> (m.SessionId== sessionId) && (m.MobileNumber!=null) && m.MobileNumber.Trim()!=string.Empty).ToArray())
+            //{
+            //    // Collect all tasks in an array
+            //    serverRequests.Add(SendSMSToProvider(smsProviderProxy, provider, historysms));
 
-            }
-            Task.WaitAll(serverRequests.ToArray());
+            //}
+            //Task.WaitAll(serverRequests.ToArray());
             
             return sessionId;
         }
