@@ -1,7 +1,9 @@
 ﻿using Amazon.SQS;
 using Aurora.Core.Data;
 using Aurora.SMS.AWS;
+using Aurora.SMS.AWS.Interfaces;
 using Aurora.SMS.Data;
+using Aurora.SMS.Providers;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using FluentValidation.Attributes;
@@ -77,9 +79,10 @@ namespace Aurora.SMS.Web
             services.AddTransient<Insurance.Services.ICompanyServices, Insurance.Services.CompanyServices>();
             services.AddTransient<Insurance.Services.IContractServices, Insurance.Services.ContractServices>();
             services.AddTransient<Service.ISMSServices, Service.SMSServices>();
-            services.AddTransient<IAWSServices, AWSServices>();
+            services.AddTransient<ISQSsmsServices, SQSsmsServices>();
+            services.AddTransient<IClientProviderFactory, ClientProviderFactory>();
 
-            
+
 
         }
 

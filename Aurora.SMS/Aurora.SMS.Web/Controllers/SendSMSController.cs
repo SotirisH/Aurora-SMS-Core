@@ -90,7 +90,7 @@ namespace Aurora.SMS.Web.Controllers
             int selectedTemplateId = _sessionHelper.SelectedTemplateId;
             var recepients = _contractServices.GetContracts(criteria);
             var previewMessages = _smsServices.ConstructSMSMessages(recepients, selectedTemplateId);
-            var sessionId = _smsServices.SendBulkSMS(previewMessages, _cookieHelper.GetDefaultSmsGateWay());
+            var sessionId = _smsServices.QueueForSend(previewMessages, _cookieHelper.GetDefaultSmsGateWay());
             ViewBag.SessionId = sessionId;
             return View();
         }

@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Aurora.SMS.AWS.Tests
 {
-    internal static class ConfigurationHelper
+    public static class ConfigurationHelper
     {
         /// <summary>
         /// Gets the default configuration for testing.

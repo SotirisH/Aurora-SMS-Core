@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Aurora.SMS.AWS.Interfaces;
+using Aurora.SMS.Worker.Interfaces;
+using System;
 
 namespace Aurora.SMS.Worker
 {
@@ -7,12 +9,22 @@ namespace Aurora.SMS.Worker
     /// </summary>
     public class JobScheduler
     {
-        private System.Timers.Timer timer = new System.Timers.Timer();
+        private readonly System.Timers.Timer _timer = new System.Timers.Timer();
+        private readonly ISQSsmsServices _iSQSsmsServices;
+        private readonly IConsumeSMS _consumeSMS;
+
+        public JobScheduler(ISQSsmsServices iSQSsmsServices, IConsumeSMS consumeSMS)
+        {
+            _iSQSsmsServices = iSQSsmsServices ?? throw new ArgumentNullException(nameof(iSQSsmsServices));
+            _timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer);
+            _consumeSMS = consumeSMS ?? throw new ArgumentNullException(nameof(consumeSMS));
+        }
+
         public void Start()
         {
-            timer.Interval = 60000; // 60 seconds  
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
-            timer.Start();
+            // The timer runs every VisibilityTimeOut + 1min
+            _timer.Interval = _iSQSsmsServices.GetVisibilityTimeOut().Result + 60000;
+            _timer.Start();
         }
 
         /// <summary>
@@ -20,12 +32,13 @@ namespace Aurora.SMS.Worker
         /// </summary>
         public void Stop()
         {
-            timer.Stop();
+            _timer.Stop();
         }
 
-        public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
+        public async void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
-            // TODO: Insert monitoring activities here.  
+            await _consumeSMS.Execute();
+            // TODO: Insert monitoring activities here.
             //eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
             /*This method:
              * - Reads some messages from the queue

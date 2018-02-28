@@ -4,4 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Aurora.SMS.AWS.Interfaces\Aurora.SMS.AWS.Interfaces.csproj" />
+    <ProjectReference Include="..\Aurora.SMS.Worker.Interfaces\Aurora.SMS.Worker.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>

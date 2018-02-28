@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Aurora.SMS.Providers
@@ -26,7 +23,8 @@ namespace Aurora.SMS.Providers
                             string mobileNumber,
                             string smsMessage,
                             string sender,
-                            DateTime?  scheduledDate);
+                            DateTime? scheduledDate);
+
         Task<string> GetAvailableCreditsAsync();
     }
 }

@@ -16,12 +16,14 @@ using Aurora.SMS.Providers;
 using LinqKit;
 using Aurora.SMS.AWS;
 using Aurora.SMS.AWS.Models;
+using Aurora.SMS.AWS.Interfaces;
 
 namespace Aurora.SMS.Service
 {
+
     public interface ISMSServices
     {
-        Task<Guid> SendBulkSMS(IEnumerable<SMSMessageDTO> messagesToSent, string providerName);
+        Task<Guid> QueueForSend(IEnumerable<SMSMessageDTO> messagesToSent, string providerName);
         IEnumerable<DTO.SMSMessageDTO> ConstructSMSMessages(IEnumerable<ContractDTO> recepients, int templateId);
         string GetAvailableCredits(string smsGateWayName);
         /// <summary>
@@ -41,14 +43,18 @@ namespace Aurora.SMS.Service
 
     public class SMSServices : DbServiceBase<SMSDb>, ISMSServices
     {
-        private readonly IAWSServices _AWSServices;
+        private readonly ISQSsmsServices _AWSServices;
+        private readonly IClientProviderFactory _clientProviderFactory;
         /// <summary>
         /// Primary constructor.
         /// </summary>
         /// <param name="db">It is fine to pass the dbcontext here</param>
-        public SMSServices(SMSDb db, IAWSServices AWSServices) :base(db)
+        public SMSServices(SMSDb db, 
+            ISQSsmsServices aWSServices,
+            IClientProviderFactory clientProviderFactory) :base(db)
         {
-            _AWSServices = AWSServices;
+            _AWSServices = aWSServices ?? throw new ArgumentNullException(nameof(aWSServices));
+            _clientProviderFactory = clientProviderFactory ?? throw new ArgumentNullException(nameof(clientProviderFactory));
         }
 
     /// <summary>
@@ -58,11 +64,10 @@ namespace Aurora.SMS.Service
     /// <param name="messagesToSent"></param>
     /// <param name="providerId"></param>
     /// <returns>Returns the session ID</returns>
-    public async Task<Guid> SendBulkSMS(IEnumerable<SMSMessageDTO> messagesToSent, string providerName)
+    public async Task<Guid> QueueForSend(IEnumerable<SMSMessageDTO> messagesToSent, string providerName)
         {
            
-            // get the provider data
-            Provider provider =  DbContext.Providers.Single(x=>x.Name==providerName);
+           
             Guid sessionId = Guid.NewGuid();
             // First job is to save the messages into the history table in order to populate the id
             var smsToSent = new List<SMSHistory>();
@@ -89,6 +94,7 @@ namespace Aurora.SMS.Service
             }
             await DbContext.SMSHistoryRecords.AddRangeAsync(smsToSent);
             await DbContext.SaveChangesAsync();
+
             await _AWSServices.PushMessagesAsync(AutoMapper.Mapper.Map<IEnumerable<SMSMessage>>(smsToSent), sessionId);
 
             //List<Task> serverRequests = new List<Task>();
@@ -166,38 +172,7 @@ namespace Aurora.SMS.Service
         }
 
 
-        /// <summary>
-        /// Sends a message to the SMS gateway
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <param name="smsHistory"></param>
-        /// <returns></returns>
-        private async Task SendSMSToProvider(ISMSClientProxy smsClient,
-                                                    EFModel.Provider provider,
-                                                    EFModel.SMSHistory smsHistory)
-        {
-            // send the sms to the provider and return the control to the 
-            var result = await smsClient.SendSMSAsync(smsHistory.Id,
-                                                    smsHistory.MobileNumber,
-                                                    smsHistory.Message,
-                                                    null,
-                                                    null).ConfigureAwait(false);
-            // when a task finish the history record is updated
-            smsHistory.ProviderFeedback = result.ReturnedMessage;
-            smsHistory.ProviderFeedBackDateTime = result.TimeStamp;
-            smsHistory.ProviderMsgId = result.ProviderId;
-            if (result.MessageStatus == MessageStatus.Delivered)
-            {
-                smsHistory.Status = MessageStatus.Delivered;
-            }
-            else
-            {
-                smsHistory.Status = MessageStatus.Error;
-            }
-
-           // _smsHistoryRepository.Update(smsHistory);
-            return;
-        }
+     
 
         public string GetAvailableCredits(string smsGateWayName)
         {
@@ -207,8 +182,7 @@ namespace Aurora.SMS.Service
 
         public string GetAvailableCredits(string smsGateWayName, string userName, string password)
         {
-            // TODO:Need to abstract the ClientProviderFactory
-            var smsProviderProxy = ClientProviderFactory.CreateClient(smsGateWayName, userName, userName);
+            var smsProviderProxy = _clientProviderFactory.CreateClient(smsGateWayName, userName, userName);
             return  smsProviderProxy.GetAvailableCreditsAsync().Result;
 
         }
