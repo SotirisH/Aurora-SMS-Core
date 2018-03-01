@@ -13,7 +13,8 @@ namespace Aurora.SMS.Worker
         private readonly ISQSsmsServices _iSQSsmsServices;
         private readonly IConsumeSMS _consumeSMS;
 
-        public JobScheduler(ISQSsmsServices iSQSsmsServices, IConsumeSMS consumeSMS)
+        public JobScheduler(ISQSsmsServices iSQSsmsServices, 
+            IConsumeSMS consumeSMS)
         {
             _iSQSsmsServices = iSQSsmsServices ?? throw new ArgumentNullException(nameof(iSQSsmsServices));
             _timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer);

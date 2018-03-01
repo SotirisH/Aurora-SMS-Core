@@ -1,20 +1,32 @@
-﻿using System.ServiceProcess;
+﻿using System;
+using System.ServiceProcess;
 
 namespace Aurora.SMS.WindowsService
 {
-    internal static class Program
+    class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        private static void Main()
+        static void Main(string[] args)
         {
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new Service1()
+                new SQSConsumerService()
             };
             ServiceBase.Run(ServicesToRun);
+            Console.WriteLine("Service registered!");
+            Console.ReadKey();
+
+        }
+    }
+
+    public partial class SQSConsumerService : ServiceBase
+    {
+        protected override void OnStart(string[] args)
+        {
+        }
+
+        protected override void OnStop()
+        {
         }
     }
 }
