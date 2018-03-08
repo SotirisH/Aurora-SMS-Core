@@ -11,7 +11,11 @@ namespace Aurora.SMS.AWS.Tests
         [Fact]
         public async Task PushMessagesAsyncTest()
         {
-            var target = new SQSsmsServices(ConfigurationHelper.GetAWSConfiguration(), "SMS");
+            SQSsmsServicesOptions sQSsmsServicesOptions = new SQSsmsServicesOptions();
+            sQSsmsServicesOptions.AWSOptions = ConfigurationHelper.GetAWSConfiguration();
+            sQSsmsServicesOptions.QueueName = "SMSTest";
+
+            var target = new SQSsmsServices(sQSsmsServicesOptions);
             var mockMessages = new List<SMSMessage>();
             var faker = new Bogus.Faker();
             for (int i = 0; i < 50; i++)
@@ -30,7 +34,10 @@ namespace Aurora.SMS.AWS.Tests
         [Fact]
         public void GetVisibilityTimeOutTest()
         {
-            var target = new SQSsmsServices(ConfigurationHelper.GetAWSConfiguration(), "SMS");
+            SQSsmsServicesOptions sQSsmsServicesOptions = new SQSsmsServicesOptions();
+            sQSsmsServicesOptions.AWSOptions = ConfigurationHelper.GetAWSConfiguration();
+            sQSsmsServicesOptions.QueueName = "SMSTest";
+            var target = new SQSsmsServices(sQSsmsServicesOptions);
             Assert.Equal(30, target.GetVisibilityTimeOut().Result);
         }
     }

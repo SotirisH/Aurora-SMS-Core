@@ -23,7 +23,12 @@ namespace Aurora.SMS.Worker.Consumer.Tests
             mockICurrentUserService.Setup(p => p.GetCurrentUser()).Returns("TestUser");
             optionsBuilder.UseSqlServer(sMSDbconnection);
             var db = new SMSDb(optionsBuilder.Options, mockICurrentUserService.Object);
-            var sQSsmsServices = new SQSsmsServices(ConfigurationHelper.GetAWSConfiguration(), "SMS");
+
+            SQSsmsServicesOptions sQSsmsServicesOptions = new SQSsmsServicesOptions();
+            sQSsmsServicesOptions.AWSOptions = ConfigurationHelper.GetAWSConfiguration();
+            sQSsmsServicesOptions.QueueName = "SMSTest";
+
+            var sQSsmsServices = new SQSsmsServices(sQSsmsServicesOptions);
             var databaseCommands = new DatabaseCommands(db);
             var mockSMSResult = new SMSResult()
             {

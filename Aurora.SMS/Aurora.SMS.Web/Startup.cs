@@ -1,7 +1,6 @@
 ﻿using Amazon.SQS;
 using Aurora.Core.Data;
 using Aurora.SMS.AWS;
-using Aurora.SMS.AWS.Interfaces;
 using Aurora.SMS.Data;
 using Aurora.SMS.Providers;
 using AutoMapper;
@@ -56,9 +55,7 @@ namespace Aurora.SMS.Web
                 options.Cookie.HttpOnly = true;
             });
 
-            var insuranceDbconnection = @"Server =.\SQL16; Database = InsuranceCore; Trusted_Connection = True;";
-            var sMSDbconnection = @"Server =.\SQL16; Database = SMSDbCore; Trusted_Connection = True;";
-
+        
             // This registration is used for the CurrentUserService class
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -66,12 +63,13 @@ namespace Aurora.SMS.Web
             services.AddSingleton<CookieHelper>();
             services.AddSingleton<SessionHelper>();
 
-            services.AddDbContext<SMSDb>(options => options.UseSqlServer(sMSDbconnection));
-            services.AddDbContext<Insurance.Data.InsuranceDb>(options => options.UseSqlServer(insuranceDbconnection));
+            services.AddDbContext<SMSDb>(options => options.UseSqlServer(Configuration.GetConnectionString("sMSDbconnection")));
+            services.AddDbContext<Insurance.Data.InsuranceDb>(options => options.UseSqlServer(Configuration.GetConnectionString("insuranceDbconnection")));
 
             //AWS
             // More details: https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/net-dg-config-netcore.html
-            services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
+            var awsOptions = Configuration.GetAWSOptions();
+            services.AddDefaultAWSOptions(awsOptions);
             services.AddAWSService<IAmazonSQS>();
 
             services.AddTransient<Service.ITemplateServices, Service.TemplateServices>();
@@ -79,6 +77,12 @@ namespace Aurora.SMS.Web
             services.AddTransient<Insurance.Services.ICompanyServices, Insurance.Services.CompanyServices>();
             services.AddTransient<Insurance.Services.IContractServices, Insurance.Services.ContractServices>();
             services.AddTransient<Service.ISMSServices, Service.SMSServices>();
+
+            SQSsmsServicesOptions sQSsmsServicesOptions = new SQSsmsServicesOptions();
+            sQSsmsServicesOptions.AWSOptions = awsOptions;
+            //TODO: move the name of the queue to the config file
+            sQSsmsServicesOptions.QueueName = "SMS";
+            services.AddSingleton(sQSsmsServicesOptions);
             services.AddTransient<ISQSsmsServices, SQSsmsServices>();
             services.AddTransient<IClientProviderFactory, ClientProviderFactory>();
 

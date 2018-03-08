@@ -2,7 +2,7 @@
 
 namespace Aurora.SMS.Worker.Interfaces
 {
-    public interface IConsumeSMS
+    public interface IConsumerSMS
     {
         /// <summary>
         /// Reads the SQS and sends the messages to the provider

@@ -16,7 +16,7 @@ using Aurora.SMS.Providers;
 using LinqKit;
 using Aurora.SMS.AWS;
 using Aurora.SMS.AWS.Models;
-using Aurora.SMS.AWS.Interfaces;
+using AutoMapper;
 
 namespace Aurora.SMS.Service
 {
@@ -45,16 +45,19 @@ namespace Aurora.SMS.Service
     {
         private readonly ISQSsmsServices _AWSServices;
         private readonly IClientProviderFactory _clientProviderFactory;
+        private readonly IMapper _mapper;
         /// <summary>
         /// Primary constructor.
         /// </summary>
         /// <param name="db">It is fine to pass the dbcontext here</param>
         public SMSServices(SMSDb db, 
             ISQSsmsServices aWSServices,
-            IClientProviderFactory clientProviderFactory) :base(db)
+            IClientProviderFactory clientProviderFactory,
+            IMapper mapper) :base(db)
         {
             _AWSServices = aWSServices ?? throw new ArgumentNullException(nameof(aWSServices));
             _clientProviderFactory = clientProviderFactory ?? throw new ArgumentNullException(nameof(clientProviderFactory));
+            _mapper = mapper?? throw new ArgumentNullException(nameof(mapper));
         }
 
     /// <summary>
@@ -95,7 +98,7 @@ namespace Aurora.SMS.Service
             await DbContext.SMSHistoryRecords.AddRangeAsync(smsToSent);
             await DbContext.SaveChangesAsync();
 
-            await _AWSServices.PushMessagesAsync(AutoMapper.Mapper.Map<IEnumerable<SMSMessage>>(smsToSent), sessionId);
+            await _AWSServices.PushMessagesAsync(_mapper.Map<IEnumerable<SMSMessage>>(smsToSent), sessionId);
 
             //List<Task> serverRequests = new List<Task>();
             //// TODO:Need to abstract the ClientProviderFactory

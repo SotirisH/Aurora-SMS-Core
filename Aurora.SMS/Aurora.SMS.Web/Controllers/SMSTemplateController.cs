@@ -1,4 +1,5 @@
 ﻿using Aurora.SMS.Service;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 
@@ -7,10 +8,12 @@ namespace Aurora.SMS.Web.Controllers
     public class SMSTemplateController : Controller
     {
         private readonly ITemplateServices _templateServices;
-
-        public SMSTemplateController(ITemplateServices templateServices)
+        private readonly IMapper _mapper;
+        public SMSTemplateController(ITemplateServices templateServices,
+            IMapper mapper)
         {
             _templateServices = templateServices;
+            _mapper = mapper;
         }
 
         // GET: SMSTemplate
@@ -27,7 +30,6 @@ namespace Aurora.SMS.Web.Controllers
         [HttpPost]
         public ActionResult CreateEdit(Models.SmsTemplate.SmsTemplateViewModel vm)
         {
-            AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<Models.SmsTemplate.SmsTemplateViewModel, EFModel.Template>());
             // Demo using FluentValidation
             if (!ModelState.IsValid)
             {
@@ -40,11 +42,11 @@ namespace Aurora.SMS.Web.Controllers
             vm.Text = Regex.Replace(vm.Text, "data\\s*-\\s*dismiss", "alert-dismiss");
             if (vm.Id != 0)
             {
-                _templateServices.Update(AutoMapper.Mapper.Map<EFModel.Template>(vm));
+                _templateServices.Update(_mapper.Map<EFModel.Template>(vm));
             }
             else
             {
-                _templateServices.CreateTemplate(AutoMapper.Mapper.Map<EFModel.Template>(vm));
+                _templateServices.CreateTemplate(_mapper.Map<EFModel.Template>(vm));
             }
             return RedirectToAction("Index");
 
@@ -61,8 +63,7 @@ namespace Aurora.SMS.Web.Controllers
 
         public ViewResult Edit(int id)
         {
-            AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<EFModel.Template, Models.SmsTemplate.SmsTemplateViewModel>());
-            return View("CreateEdit", AutoMapper.Mapper.Map<Models.SmsTemplate.SmsTemplateViewModel>(_templateServices.GetById(id)));
+            return View("CreateEdit", _mapper.Map<Models.SmsTemplate.SmsTemplateViewModel>(_templateServices.GetById(id)));
         }
 
     }

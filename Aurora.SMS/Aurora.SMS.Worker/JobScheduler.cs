@@ -1,4 +1,4 @@
-﻿using Aurora.SMS.AWS.Interfaces;
+﻿using Aurora.SMS.AWS;
 using Aurora.SMS.Worker.Interfaces;
 using System;
 
@@ -11,10 +11,10 @@ namespace Aurora.SMS.Worker
     {
         private readonly System.Timers.Timer _timer = new System.Timers.Timer();
         private readonly ISQSsmsServices _iSQSsmsServices;
-        private readonly IConsumeSMS _consumeSMS;
+        private readonly IConsumerSMS _consumeSMS;
 
         public JobScheduler(ISQSsmsServices iSQSsmsServices, 
-            IConsumeSMS consumeSMS)
+            IConsumerSMS consumeSMS)
         {
             _iSQSsmsServices = iSQSsmsServices ?? throw new ArgumentNullException(nameof(iSQSsmsServices));
             _timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer);

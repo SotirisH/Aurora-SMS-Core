@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Aurora.Insurance\Aurora.Insurance.Services\Aurora.Insurance.Services.csproj" />
-    <ProjectReference Include="..\Aurora.SMS.AWS.Interfaces\Aurora.SMS.AWS.Interfaces.csproj" />
     <ProjectReference Include="..\Aurora.SMS.AWS\Aurora.SMS.AWS.csproj" />
     <ProjectReference Include="..\Aurora.SMS.Data\Aurora.SMS.Data.csproj" />
     <ProjectReference Include="..\Aurora.SMS.Providers\Aurora.SMS.Providers.csproj" />

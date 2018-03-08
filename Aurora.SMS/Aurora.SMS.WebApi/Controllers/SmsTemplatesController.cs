@@ -22,6 +22,7 @@ namespace Aurora.SMS.WebApi.Controllers
                                     IMapper mapper)
         {
             _templateServices = templateServices;
+            _mapper = mapper;
         }
 
         // GET: api/SmsTemplates

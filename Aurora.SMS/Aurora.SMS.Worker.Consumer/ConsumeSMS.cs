@@ -1,4 +1,4 @@
-﻿using Aurora.SMS.AWS.Interfaces;
+﻿using Aurora.SMS.AWS;
 using Aurora.SMS.AWS.Models;
 using Aurora.SMS.Data;
 using Aurora.SMS.EFModel;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Aurora.SMS.Worker.Consumer
 {
-    public class ConsumeSMS : IConsumeSMS
+    public class ConsumeSMS : IConsumerSMS
     {
         private readonly ISQSsmsServices _sQSsmsServices;
         private readonly SMSDb _dbContext;

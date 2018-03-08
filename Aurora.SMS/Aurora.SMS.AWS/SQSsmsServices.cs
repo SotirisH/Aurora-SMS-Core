@@ -1,7 +1,6 @@
 ﻿using Amazon.Extensions.NETCore.Setup;
 using Amazon.SQS;
 using Amazon.SQS.Model;
-using Aurora.SMS.AWS.Interfaces;
 using Aurora.SMS.AWS.Models;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,32 @@ using System.Threading.Tasks;
 
 namespace Aurora.SMS.AWS
 {
+    /// <summary>
+    /// Interface for AWS
+    /// </summary>
+    public interface ISQSsmsServices
+    {
+        /// <summary>
+        /// Pushes SMS messages into the SQS
+        /// </summary>
+        /// <param name="sMSMessage"></param>
+        Task PushMessagesAsync(IEnumerable<SMSMessage> sMSMessages, Guid sessionId);
+
+        /// <summary>
+        /// Retrieves messages from the SQS
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<SMSMessage>> GetMessagesAsync();
+
+        /// <summary>
+        /// Deletes a message from the QUEUE
+        /// </summary>
+        /// <returns></returns>
+        Task DeleteMessageAsync(string messageRecieptHandle);
+
+        Task<int> GetVisibilityTimeOut();
+    }
+
     public class SQSsmsServices : ISQSsmsServices
     {
         private readonly AWSOptions _aWSOptions;
@@ -18,10 +43,14 @@ namespace Aurora.SMS.AWS
         /// Primary constructor where the AWSOptions are passed
         /// </summary>
         /// <param name="aWSOptions"></param>
-        public SQSsmsServices(AWSOptions aWSOptions, string queueName)
+        public SQSsmsServices(SQSsmsServicesOptions sQSsmsServicesOptions)
         {
-            _aWSOptions = aWSOptions ?? throw new ArgumentNullException(nameof(aWSOptions));
-            _queueName = queueName ?? throw new ArgumentNullException(nameof(queueName)); ;
+            if(sQSsmsServicesOptions==null)
+            {
+               throw new  ArgumentNullException(nameof(sQSsmsServicesOptions)); ;
+            }
+            _aWSOptions = sQSsmsServicesOptions.AWSOptions ?? throw new ArgumentNullException(nameof(sQSsmsServicesOptions.AWSOptions));
+            _queueName = sQSsmsServicesOptions.QueueName ?? throw new ArgumentNullException(nameof(sQSsmsServicesOptions.QueueName)); ;
         }
 
         public async Task DeleteMessageAsync(string messageRecieptHandle)

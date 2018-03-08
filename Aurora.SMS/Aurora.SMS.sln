@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Core.Data", "..\Aurora.Core\Aurora.Core.Data\Aurora.Core.Data.csproj", "{1D167CE2-70DC-4D13-AEE0-0E786DB96D82}"
 EndProject
@@ -47,17 +47,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.Worker", "Aurora
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.AWS.Tests", "Aurora.SMS.AWS.Tests\Aurora.SMS.AWS.Tests.csproj", "{E3BB12BE-00E2-4828-8A20-ACE1B62C98A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.AWS.Interfaces", "Aurora.SMS.AWS.Interfaces\Aurora.SMS.AWS.Interfaces.csproj", "{4E06F837-C860-4C2F-8BAD-448AC03D3FA4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.Worker.Interfaces", "Aurora.SMS.Worker.Interfaces\Aurora.SMS.Worker.Interfaces.csproj", "{E6C1063D-19B5-44D3-820B-1575B6843C2E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.Worker.Consumer", "Aurora.SMS.Worker.Consumer\Aurora.SMS.Worker.Consumer.csproj", "{9357B792-F1AF-4141-8AB6-8FD9D52227B2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.Worker.Consumer.Tests", "Aurora.SMS.Worker.Consumer.Tests\Aurora.SMS.Worker.Consumer.Tests.csproj", "{FFD7BB10-9D42-4294-907E-9ADA81ADA87D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.SMS.WindowsService", "Aurora.SMS.WindowsService\Aurora.SMS.WindowsService.csproj", "{A2F2E215-7A9C-42D9-9D16-AE05A6B0290F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsService1", "WindowsService1\WindowsService1.csproj", "{CB6A586D-3204-4DE1-BFBB-7FCE9A745485}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.WindowsService", "Aurora.SMS.WindowsService\Aurora.SMS.WindowsService.csproj", "{A2F2E215-7A9C-42D9-9D16-AE05A6B0290F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,10 +125,6 @@ Global
 		{E3BB12BE-00E2-4828-8A20-ACE1B62C98A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3BB12BE-00E2-4828-8A20-ACE1B62C98A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3BB12BE-00E2-4828-8A20-ACE1B62C98A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4E06F837-C860-4C2F-8BAD-448AC03D3FA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4E06F837-C860-4C2F-8BAD-448AC03D3FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4E06F837-C860-4C2F-8BAD-448AC03D3FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4E06F837-C860-4C2F-8BAD-448AC03D3FA4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E6C1063D-19B5-44D3-820B-1575B6843C2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E6C1063D-19B5-44D3-820B-1575B6843C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6C1063D-19B5-44D3-820B-1575B6843C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -149,10 +141,6 @@ Global
 		{A2F2E215-7A9C-42D9-9D16-AE05A6B0290F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2F2E215-7A9C-42D9-9D16-AE05A6B0290F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2F2E215-7A9C-42D9-9D16-AE05A6B0290F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CB6A586D-3204-4DE1-BFBB-7FCE9A745485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CB6A586D-3204-4DE1-BFBB-7FCE9A745485}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CB6A586D-3204-4DE1-BFBB-7FCE9A745485}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CB6A586D-3204-4DE1-BFBB-7FCE9A745485}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -164,12 +152,10 @@ Global
 		{7587D2D2-EDB0-4124-A756-C2B00A751CE5} = {51D51094-2FE2-4DA0-B9CE-83860B07CC97}
 		{FAB1ED24-4D4F-4A51-AAFA-E724FF622FF2} = {43DC5D3C-1DD4-4445-BD71-8900FAEF6D07}
 		{E3BB12BE-00E2-4828-8A20-ACE1B62C98A3} = {51D51094-2FE2-4DA0-B9CE-83860B07CC97}
-		{4E06F837-C860-4C2F-8BAD-448AC03D3FA4} = {51D51094-2FE2-4DA0-B9CE-83860B07CC97}
 		{E6C1063D-19B5-44D3-820B-1575B6843C2E} = {43DC5D3C-1DD4-4445-BD71-8900FAEF6D07}
 		{9357B792-F1AF-4141-8AB6-8FD9D52227B2} = {43DC5D3C-1DD4-4445-BD71-8900FAEF6D07}
 		{FFD7BB10-9D42-4294-907E-9ADA81ADA87D} = {43DC5D3C-1DD4-4445-BD71-8900FAEF6D07}
 		{A2F2E215-7A9C-42D9-9D16-AE05A6B0290F} = {43DC5D3C-1DD4-4445-BD71-8900FAEF6D07}
-		{CB6A586D-3204-4DE1-BFBB-7FCE9A745485} = {43DC5D3C-1DD4-4445-BD71-8900FAEF6D07}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C365CE61-2D7D-4E1F-894C-D0D427DDA6EA}
