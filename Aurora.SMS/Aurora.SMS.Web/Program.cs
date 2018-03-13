@@ -17,7 +17,7 @@ namespace Aurora.SMS.Web
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
-                .Build();
+                .Build(); 
 
             host.Run();
         }
