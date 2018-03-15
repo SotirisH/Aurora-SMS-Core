@@ -26,6 +26,7 @@ namespace Aurora.SMS.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
+                throw new System.Exception("The optionsBuilder has not been configured!");
                 // When we run the migration commands these are executed in the dev DB
                 optionsBuilder.UseSqlServer(@"Server=.\SQL16;Database=SMSDbCore;Trusted_Connection=True;");
             }

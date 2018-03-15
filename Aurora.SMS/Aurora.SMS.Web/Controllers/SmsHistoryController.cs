@@ -18,6 +18,7 @@ namespace Aurora.SMS.Web.Controllers
         [HttpPost]
         public ActionResult Index(Models.SmsHistory.SmsHistoryViewModel vm)
         {
+            var h= _smsServices.GetHistory(vm.Criteria);
             vm.HistoryResults = _smsServices.GetHistory(vm.Criteria);
             return View(vm);
         }
