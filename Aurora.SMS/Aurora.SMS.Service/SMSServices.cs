@@ -209,7 +209,7 @@ namespace Aurora.SMS.Service
             }
             if (smsHistoryCriteriaDTO.SendDateTo.HasValue)
             {
-                finalExpression = finalExpression.And(c => c.SendDateTime <= smsHistoryCriteriaDTO.SendDateFrom);
+                finalExpression = finalExpression.And(c => c.SendDateTime <= smsHistoryCriteriaDTO.SendDateTo);
             }
             var messageStatusExpression = PredicateBuilder.New<SMSHistory>(true);
             if (smsHistoryCriteriaDTO.MessageStatusList!=null)
