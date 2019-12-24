@@ -52,8 +52,8 @@ namespace Aurora.SMS.Web
                 options.Cookie.HttpOnly = true;
             });
 
-            var insuranceDbconnection = @"Server =.\SQL16; Database = InsuranceCore; Trusted_Connection = True;";
-            var sMSDbconnection = @"Server =.\SQL16; Database = SMSDbCore; Trusted_Connection = True;";
+            var insuranceDbconnection = @"Server =.\SQL16; Database = Insurance; Trusted_Connection = True;";
+            var sMSDbconnection = @"Server =.\SQL16; Database = SMSDb; Trusted_Connection = True;";
 
             // This registration is used for the CurrentUserService class
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -84,6 +84,8 @@ namespace Aurora.SMS.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 

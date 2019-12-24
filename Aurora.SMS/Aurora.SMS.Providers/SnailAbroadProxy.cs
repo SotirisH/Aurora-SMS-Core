@@ -60,7 +60,7 @@ namespace Aurora.SMS.Providers
         {
             _userName = userName;
             _password = password;
-            client.BaseAddress = new Uri("http://localhost:8080");
+            client.BaseAddress = new Uri("http://localhost:64815/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }

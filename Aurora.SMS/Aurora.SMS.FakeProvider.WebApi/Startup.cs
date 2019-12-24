@@ -38,8 +38,9 @@ namespace Aurora.SMS.FakeProvider.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseStaticFiles();
             app.UseMvc(routes => routes.MapRoute("default", "{controller=SnailAbroad}/{action=EchoTest}/{id?}"));
+           
         }
     }
 }
