@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Aurora.SMS.Providers
 {
     /// <summary>
-    /// 
+    /// Concrete implementation for the SnailAbroad 
     /// </summary>
     /// <remarks>
     /// Example:https://www.asp.net/web-api/overview/advanced/calling-a-web-api-from-a-net-client

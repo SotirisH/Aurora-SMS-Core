@@ -1,0 +1,16 @@
+﻿@layout MainLayout
+
+<div>
+    <h3>@Title</h3>
+ </div>
+<hr />
+<div>
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = "Default Title";
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

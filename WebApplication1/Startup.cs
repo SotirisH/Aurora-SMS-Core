@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,8 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-
-namespace Aurora.SMS.FakeProvider.WebApi
+namespace WebApplication1
 {
     public class Startup
     {
@@ -25,15 +24,12 @@ namespace Aurora.SMS.FakeProvider.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
             services.AddControllers();
-            services.AddSingleton(new CreditCounterSnail());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseStaticFiles();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -43,17 +39,10 @@ namespace Aurora.SMS.FakeProvider.WebApi
 
             app.UseAuthorization();
 
-            // 2.0 :  app.UseMvc(routes => routes.MapRoute("default", "{controller=SnailAbroad}/{action=EchoTest}/{id?}"));
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapControllerRoute(name: "default", pattern: "{controller=SnailAbroad}/{action=EchoTest}/{id?}");
             });
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
         }
     }
 }

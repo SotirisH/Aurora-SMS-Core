@@ -1,12 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="LinqKit.Core" Version="1.1.15" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Aurora.Insurance\Aurora.Insurance.Services\Aurora.Insurance.Services.csproj" />
