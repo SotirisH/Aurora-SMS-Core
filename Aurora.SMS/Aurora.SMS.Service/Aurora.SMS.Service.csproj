@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="LinqKit" Version="1.1.17" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Aurora.Insurance\Aurora.Insurance.Services\Aurora.Insurance.Services.csproj" />
     <ProjectReference Include="..\Aurora.SMS.Data\Aurora.SMS.Data.csproj" />
     <ProjectReference Include="..\Aurora.SMS.Providers\Aurora.SMS.Providers.csproj" />
