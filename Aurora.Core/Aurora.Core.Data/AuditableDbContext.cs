@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Aurora.Core.Data
 {
@@ -14,20 +15,13 @@ namespace Aurora.Core.Data
     {
         private readonly ICurrentUserService _currentUserService;
 
-        protected AuditableDbContext() : base()
+        protected AuditableDbContext()
         { }
 
         protected AuditableDbContext(DbContextOptions options,
                                     ICurrentUserService currentUserService) : base(options)
         {
             _currentUserService = currentUserService ?? throw new ArgumentNullException("currentUserService");
-        }
-
-
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
         }
 
         /// <summary>
@@ -44,6 +38,12 @@ namespace Aurora.Core.Data
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+
         /// <summary>
         /// All entities are being audited.
         /// This overload should be used instead of the original one
@@ -52,18 +52,18 @@ namespace Aurora.Core.Data
         /// <returns></returns>
         private void AddAudit()
         {
-            var currentUser = _currentUserService.GetCurrentUser();
-            var changeSet = ChangeTracker.Entries<EntityBase>();
+            string currentUser = _currentUserService.GetCurrentUser();
+            IEnumerable<EntityEntry<EntityBase>> changeSet = ChangeTracker.Entries<EntityBase>();
 
 
             if (changeSet != null)
             {
-                foreach (var entry in changeSet.Where(c => c.State == EntityState.Added))
+                foreach (EntityEntry<EntityBase> entry in changeSet.Where(c => c.State == EntityState.Added))
                 {
                     entry.Entity.CreatedOn = DateTime.Now;
                     entry.Entity.CreatedBy = currentUser;
                 }
-                foreach (var entry in changeSet.Where(c => c.State == EntityState.Modified))
+                foreach (EntityEntry<EntityBase> entry in changeSet.Where(c => c.State == EntityState.Modified))
                 {
                     entry.Entity.ModifiedOn = DateTime.Now;
                     entry.Entity.ModifiedBy = currentUser;
@@ -83,15 +83,15 @@ namespace Aurora.Core.Data
             var serviceProvider = this.GetService<IServiceProvider>();
             var items = new Dictionary<object, object>();
             var errorResults = new List<ValidationResult>();
-            foreach (var entry in ChangeTracker.Entries().Where(e => (e.State == EntityState.Added) || (e.State == EntityState.Modified)))
+            foreach (EntityEntry entry in ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
             {
-                var entity = entry.Entity;
+                object entity = entry.Entity;
                 var context = new ValidationContext(entity, serviceProvider, items);
                 var results = new List<ValidationResult>();
 
                 if (Validator.TryValidateObject(entity, context, results, true) == false)
                 {
-                    foreach (var result in results)
+                    foreach (ValidationResult result in results)
                     {
                         if (result != ValidationResult.Success)
                         {
@@ -101,7 +101,5 @@ namespace Aurora.Core.Data
                 }
             }
         }
-
-
     }
 }

@@ -8,10 +8,7 @@ namespace Aurora.SMS.Blazor.Utils
 
         public static string CurrentTitle
         {
-            get
-            {
-                return _currentTitle;
-            }
+            get => _currentTitle;
             set
             {
                 _currentTitle = value;
@@ -21,6 +18,9 @@ namespace Aurora.SMS.Blazor.Utils
 
         public static event Action OnChange;
 
-        private static void NotifyStateChanged() => OnChange?.Invoke();
+        private static void NotifyStateChanged()
+        {
+            OnChange?.Invoke();
+        }
     }
 }

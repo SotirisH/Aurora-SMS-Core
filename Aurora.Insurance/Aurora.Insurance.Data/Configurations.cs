@@ -1,9 +1,6 @@
 ﻿using Aurora.Insurance.EFModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Aurora.Insurance.Data
 {
@@ -26,7 +23,11 @@ namespace Aurora.Insurance.Data
             builder.Property(p => p.ContractNumber).IsRequired().HasMaxLength(15);
             builder.Property(p => p.ReceiptNumber).IsRequired().HasMaxLength(15);
             // Composite index
-            builder.HasIndex(p => new {p.ContractNumber,p.ReceiptNumber});
+            builder.HasIndex(p => new
+            {
+                p.ContractNumber,
+                p.ReceiptNumber
+            });
             builder.Property(p => p.GrossAmount).IsRequired();
             builder.Property(p => p.NetAmount).IsRequired();
             builder.Property(p => p.TaxAmount).IsRequired();

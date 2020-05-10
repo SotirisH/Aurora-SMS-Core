@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Aurora.Core.Data
+﻿namespace Aurora.Core.Data
 {
     /// <summary>
-    /// Interface for supporting uow
+    ///     Interface for supporting uow
     /// </summary>
     public interface ISupportsUnitOfWork
     {

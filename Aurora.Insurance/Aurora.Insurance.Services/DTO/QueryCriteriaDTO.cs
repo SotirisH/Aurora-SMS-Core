@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aurora.Insurance.Services.DTO
 {
     /// <summary>
-    /// Criteria that are passed to the service
+    ///     Criteria that are passed to the service
     /// </summary>
     public class QueryCriteriaDTO
     {
@@ -25,6 +21,5 @@ namespace Aurora.Insurance.Services.DTO
         public bool? IsCanceled { get; set; }
         public DateTime? CanceledDate { get; set; }
         public string CompanyId { get; set; }
-
     }
 }

@@ -1,14 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Aurora.SMS.Data
 {
     /// <summary>
-    /// An inplementation of the IDesignTimeDbContextFactory
-    /// is needed to run Add-Migration
+    ///     An inplementation of the IDesignTimeDbContextFactory
+    ///     is needed to run Add-Migration
     /// </summary>
     /// <remarks>https://docs.microsoft.com/en-us/ef/core/miscellaneous/configuring-dbcontext</remarks>
     public class DesignTimeContextFactory : IDesignTimeDbContextFactory<SMSDb>

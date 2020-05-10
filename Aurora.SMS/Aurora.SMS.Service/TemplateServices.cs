@@ -1,44 +1,41 @@
-﻿using Aurora.Core.Data;
-using Aurora.SMS.Data;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Aurora.SMS.EFModel;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using Aurora.Core.Data;
+using Aurora.SMS.Data;
+using Aurora.SMS.EFModel;
 
 namespace Aurora.SMS.Service
 {
     public interface ITemplateServices
     {
         /// <summary>
-        /// Updates a template or creates a new one if the
-        /// modifies template has a reference to the SMSHostory
+        ///     Updates a template or creates a new one if the
+        ///     modifies template has a reference to the SMSHostory
         /// </summary>
         /// <param name="template"></param>
-        void Update(EFModel.Template template);
+        void Update(Template template);
+
         /// <summary>
-        /// Checks if the template has references to the SMS history table
+        ///     Checks if the template has references to the SMS history table
         /// </summary>
         /// <param name="templateId"></param>
         /// <returns></returns>
         bool IsTemplateUsed(int templateId);
-        void DeleteTemplate(int templateId);
-        void CreateTemplate(EFModel.Template template);
-        IEnumerable<EFModel.Template> GetAll();
-        EFModel.Template GetById(int id);
 
+        void DeleteTemplate(int templateId);
+        void CreateTemplate(Template template);
+        IEnumerable<Template> GetAll();
+        Template GetById(int id);
     }
 
     public class TemplateServices : DbServiceBase<SMSDb>, ITemplateServices
     {
         /// <summary>
-        /// Primary constructor.
+        ///     Primary constructor.
         /// </summary>
         /// <param name="db">It is fine to pass the dbcontext here</param>
-        public TemplateServices(SMSDb db):base(db)
+        public TemplateServices(SMSDb db) : base(db)
         {
-
         }
 
         public void CreateTemplate(Template template)
@@ -49,7 +46,7 @@ namespace Aurora.SMS.Service
 
         public void DeleteTemplate(int templateId)
         {
-            var templateToDelete=DbContext.Find<Template>(templateId);
+            var templateToDelete = DbContext.Find<Template>(templateId);
             DbContext.Remove(templateToDelete);
             DbContext.SaveChanges();
         }
@@ -68,9 +65,10 @@ namespace Aurora.SMS.Service
         {
             return DbContext.SMSHistoryRecords.Any(h => h.TemplateId == templateId);
         }
+
         /// <summary>
-        /// Updates a template or creates a new one if the
-        /// modifies template has a reference to the SMSHostory
+        ///     Updates a template or creates a new one if the
+        ///     modifies template has a reference to the SMSHostory
         /// </summary>
         /// <param name="template"></param>
         public void Update(Template template)
@@ -85,6 +83,7 @@ namespace Aurora.SMS.Service
             {
                 DbContext.Update(template);
             }
+
             DbContext.SaveChanges();
         }
     }
