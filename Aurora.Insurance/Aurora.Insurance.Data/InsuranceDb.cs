@@ -7,16 +7,24 @@ namespace Aurora.Insurance.Data
     public class InsuranceDb : AuditableDbContext
     {
         /// <summary>
-        /// Internal costructor for Migration commands
+        ///     Internal costructor for Migration commands
         /// </summary>
-        internal InsuranceDb() : base()
+        internal InsuranceDb()
         {
+        }
 
-        }
         public InsuranceDb(DbContextOptions<InsuranceDb> options,
-                                 ICurrentUserService currentUserService) : base(options, currentUserService)
+            ICurrentUserService currentUserService) : base(options, currentUserService)
         {
         }
+
+        // Remember to setup the entities here or the tables will not be created!
+        // Note that the DbSet properties on the context are marked as virtual. 
+        //This will allow the mocking framework to derive from our context and overriding these properties with a mocked implementation.
+        public virtual DbSet<Contract> Contracts { get; set; }
+        public virtual DbSet<Person> Persons { get; set; }
+        public virtual DbSet<Phone> Phones { get; set; }
+        public virtual DbSet<Company> Companies { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -26,13 +34,6 @@ namespace Aurora.Insurance.Data
                 optionsBuilder.UseSqlServer(@"Server=.\SQL16;Database=InsuranceCore;Trusted_Connection=True;");
             }
         }
-        // Remember to setup the entities here or the tables will not be created!
-        // Note that the DbSet properties on the context are marked as virtual. 
-        //This will allow the mocking framework to derive from our context and overriding these properties with a mocked implementation.
-        public virtual DbSet<Contract> Contracts { get; set; }
-        public virtual DbSet<Person> Persons { get; set; }
-        public virtual DbSet<Phone> Phones { get; set; }
-        public virtual DbSet<Company> Companies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,6 +44,4 @@ namespace Aurora.Insurance.Data
             base.OnModelCreating(modelBuilder);
         }
     }
-
-
 }

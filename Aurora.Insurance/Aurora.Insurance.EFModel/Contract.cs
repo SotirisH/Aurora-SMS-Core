@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aurora.Insurance.EFModel
 {
     /// <summary>
-    /// Represents an insurance contract for a vehicle
+    ///     Represents an insurance contract for a vehicle
     /// </summary>
     public class Contract
     {
@@ -25,7 +19,7 @@ namespace Aurora.Insurance.EFModel
         public string PlateNumber { get; set; }
         public bool IsCanceled { get; set; }
         public DateTime? CanceledDate { get; set; }
-        public  virtual Company Company { get; set; }
+        public virtual Company Company { get; set; }
         public int PersonId { get; set; }
         public virtual Person Person { get; set; }
     }

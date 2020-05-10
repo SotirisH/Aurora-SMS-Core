@@ -8,21 +8,12 @@
 
 using Aurora.SMS.EFModel;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Aurora.SMS.Data
 {
-    
-    public class ProviderConfiguration: IEntityTypeConfiguration<Provider>
+    public class ProviderConfiguration : IEntityTypeConfiguration<Provider>
     {
-        
-
         public void Configure(EntityTypeBuilder<Provider> builder)
         {
             builder.ToTable("Provider");
@@ -54,8 +45,6 @@ namespace Aurora.SMS.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }
-
-     
     }
 
     public class TemplateConfiguration : IEntityTypeConfiguration<Template>
@@ -66,7 +55,7 @@ namespace Aurora.SMS.Data
             builder.Property(p => p.Name).IsRequired().HasMaxLength(50);
             //https://docs.microsoft.com/en-us/ef/core/modeling/indexes
             builder.HasIndex(p => p.Name).IsUnique();
-             //ef 6     .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute() { IsUnique = true }));
+            //ef 6     .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute() { IsUnique = true }));
             builder.Property(p => p.Description).HasMaxLength(255);
             builder.Property(p => p.Text).IsRequired();
         }

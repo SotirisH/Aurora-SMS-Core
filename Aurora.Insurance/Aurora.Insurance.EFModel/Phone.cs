@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Aurora.Insurance.EFModel
+﻿namespace Aurora.Insurance.EFModel
 {
     public enum PhoneType
     {
         Fixed,
         Mobile
     }
+
     public class Phone
     {
         public int Id { get; set; }

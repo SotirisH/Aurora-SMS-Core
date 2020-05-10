@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Aurora.SMS.FakeProvider.Models
+﻿namespace Aurora.SMS.FakeProvider.Models
 {
     public class SmsRequest
     {

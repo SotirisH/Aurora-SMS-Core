@@ -1,7 +1,7 @@
 ﻿namespace Aurora.SMS.Modeling.Interfaces
 {
     /// <summary>
-    /// Model for SmsTemplate
+    ///     Model for SmsTemplate
     /// </summary>
     public interface ISmsTemplateModel
     {

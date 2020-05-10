@@ -1,0 +1,63 @@
+﻿@page "/"
+
+<div class="jumbotron">
+    <h1>Aurora SMS (Blazor Version)</h1>
+    <p class="lead">Aurora SMS is a demo project that simulates the functionality of sending bulk SMS through an SMS gateway</p>
+    <p>This project demostartes techologies &amp; concepts such as:</p>
+    <ul class="h5">
+        <li>Blazor Technology</li>
+        <li>ASP.NET Core V3.1</li>
+        <li>
+            <ul>
+                <li>Ef Core</li>
+                <li>Use of Session</li>
+                <li>Automapper</li>
+
+            </ul>
+        </li>
+        <li>
+            Other
+            <ul>
+                <li>IoC</li>
+                <li>WebApi</li>
+                <li>Unit testing with EF moq</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Create an SMS Template</h2>
+        <p>
+            Create or modify the existing SMS templates. An SMS template is used as a pattern for the contstruction of SMS the messages.
+            It can contain a mix of plain text and dynamic fields
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Send bulk SMS</h2>
+        <p>
+            Send bulk SMS to multiple recepients by using a spcific template.
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>View History</h2>
+        <p>
+            You can easily view the history of the messages that you have send in the past and check the status of each messages(Success, Pending, Error).
+            You may want to resend the one that have failed using a different provider
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <p class="col-md-4">
+        <a href="" asp-action="Index" asp-controller="SMSTemplate" class="btn btn-primary">Manage</a>
+        @*OLD:@Html.ActionLink("Manage >>", "Index", "SMSTemplate", null, new { @class = "btn btn-default" })*@
+    </p>
+    <p class="col-md-4">
+        <a href="" class="btn btn-primary">Start</a>
+    </p>
+    <p href="" class="col-md-4">
+        <a href="" asp-action="Index" asp-controller="SmsHistory" class="btn btn-primary">View</a>
+    </p>
+</div>

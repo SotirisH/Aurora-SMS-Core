@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aurora.Insurance.Services.DTO
 {
     /// <summary>
-    /// The flatten object that is returned from the service "GetContracts"
+    ///     The flatten object that is returned from the service "GetContracts"
     /// </summary>
     public class ContractDTO
     {
@@ -35,10 +31,7 @@ namespace Aurora.Insurance.Services.DTO
         public string CompanyId { get; set; }
         public string CompanyDescription { get; set; }
         public string MobileNumber { get; set; }
-        public bool ContainsMobile {
-            get {
-                return !string.IsNullOrWhiteSpace(MobileNumber);
-            } }
 
+        public bool ContainsMobile => !string.IsNullOrWhiteSpace(MobileNumber);
     }
 }

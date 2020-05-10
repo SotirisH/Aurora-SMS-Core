@@ -1,27 +1,27 @@
-﻿using Aurora.Core.Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Aurora.Core.Data;
 using Aurora.Insurance.Data;
+using Aurora.Insurance.EFModel;
 using Aurora.Insurance.Services.DTO;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Aurora.Insurance.Services
 {
     public interface IContractServices
     {
         /// <summary>
-        /// The main service that will return the contacs based on the given criteia
+        ///     The main service that will return the contacs based on the given criteia
         /// </summary>
         /// <param name="criteria"></param>
         /// <returns></returns>
         IEnumerable<ContractDTO> GetContracts(QueryCriteriaDTO criteria);
     }
+
     public class ContractServices : DbServiceBase<InsuranceDb>, IContractServices
     {
-
         public ContractServices(InsuranceDb db) : base(db)
         {
-
         }
 
         /* Creating dynamic queries used to be hard back to the old days. The necesity of a SQL query builder was stronger than ever 
@@ -40,10 +40,8 @@ namespace Aurora.Insurance.Services
         */
         public IEnumerable<ContractDTO> GetContracts(QueryCriteriaDTO criteria)
         {
-
-
             // create a dynamic query
-            IQueryable<EFModel.Contract> queryableData = DbContext.Contracts.AsQueryable();
+            IQueryable<Contract> queryableData = DbContext.Contracts.AsQueryable();
             queryableData.Include(c => c.Person).Include(c => c.Company).Include(c => c.Person.Phones);
 
             //get only mobiles
@@ -51,19 +49,23 @@ namespace Aurora.Insurance.Services
             {
                 queryableData = queryableData.Where(c => c.ContractNumber == criteria.ContractNumber);
             }
+
             if (!string.IsNullOrWhiteSpace(criteria.PlateNumber))
             {
                 queryableData = queryableData.Where(c => c.PlateNumber == criteria.PlateNumber);
             }
+
             if (!string.IsNullOrWhiteSpace(criteria.CompanyId))
             {
                 queryableData = queryableData.Where(c => c.Company.Id == criteria.CompanyId);
             }
+
             // TODO: Refactor to use date ranges
             if (criteria.ExpireDateFrom.HasValue)
             {
                 queryableData = queryableData.Where(c => c.ExpireDate >= criteria.ExpireDateFrom);
             }
+
             if (criteria.ExpireDateTo.HasValue)
             {
                 queryableData = queryableData.Where(c => c.ExpireDate <= criteria.ExpireDateTo);
@@ -73,6 +75,7 @@ namespace Aurora.Insurance.Services
             {
                 queryableData = queryableData.Where(c => c.IssueDate >= criteria.IssueDateFrom);
             }
+
             if (criteria.IssueDateTo.HasValue)
             {
                 queryableData = queryableData.Where(c => c.IssueDate <= criteria.IssueDateTo);
@@ -82,6 +85,7 @@ namespace Aurora.Insurance.Services
             {
                 queryableData = queryableData.Where(c => c.StartDate >= criteria.StartDateFrom);
             }
+
             if (criteria.StartDateTo.HasValue)
             {
                 queryableData = queryableData.Where(c => c.StartDate <= criteria.StartDateTo);
@@ -108,39 +112,36 @@ namespace Aurora.Insurance.Services
             }
 
             // Can we use AutoMapper here?
-            var t = queryableData.Select(s =>
-               new ContractDTO()
-               {
-                   Address = s.Person.Address,
-                   BirthDate = s.Person.BirthDate,
-                   CanceledDate = s.CanceledDate,
-                   CompanyDescription = s.Company.Description,
-                   CompanyId = s.Company.Id,
-                   Contractid = s.Id,
-                   ContractNumber = s.ContractNumber,
-                   DrivingLicenceNum = s.Person.DrivingLicenceNum,
-                   ExpireDate = s.ExpireDate,
-                   FatherName = s.Person.FatherName,
-                   FirstName = s.Person.FirstName,
-                   GrossAmount = s.GrossAmount,
-                   IsCanceled = s.IsCanceled,
-                   IssueDate = s.IssueDate,
-                   LastName = s.Person.LastName,
-                   MobileNumber = s.Person.Phones.FirstOrDefault(p => p.PhoneType == EFModel.PhoneType.Mobile).Number,
-                   NetAmount = s.NetAmount,
-                   PersonId = s.PersonId,
-                   PlateNumber = s.PlateNumber,
-                   ReceiptNumber = s.ReceiptNumber,
-                   StartDate = s.StartDate,
-                   TaxAmount = s.TaxAmount,
-                   TaxId = s.Person.TaxId,
-                   ZipCode = s.Person.ZipCode
-               });
+            IQueryable<ContractDTO> t = queryableData.Select(s =>
+                new ContractDTO
+                {
+                    Address = s.Person.Address,
+                    BirthDate = s.Person.BirthDate,
+                    CanceledDate = s.CanceledDate,
+                    CompanyDescription = s.Company.Description,
+                    CompanyId = s.Company.Id,
+                    Contractid = s.Id,
+                    ContractNumber = s.ContractNumber,
+                    DrivingLicenceNum = s.Person.DrivingLicenceNum,
+                    ExpireDate = s.ExpireDate,
+                    FatherName = s.Person.FatherName,
+                    FirstName = s.Person.FirstName,
+                    GrossAmount = s.GrossAmount,
+                    IsCanceled = s.IsCanceled,
+                    IssueDate = s.IssueDate,
+                    LastName = s.Person.LastName,
+                    MobileNumber = s.Person.Phones.FirstOrDefault(p => p.PhoneType == PhoneType.Mobile).Number,
+                    NetAmount = s.NetAmount,
+                    PersonId = s.PersonId,
+                    PlateNumber = s.PlateNumber,
+                    ReceiptNumber = s.ReceiptNumber,
+                    StartDate = s.StartDate,
+                    TaxAmount = s.TaxAmount,
+                    TaxId = s.Person.TaxId,
+                    ZipCode = s.Person.ZipCode
+                });
 
             return t.ToArray();
         }
-
-
-
     }
 }

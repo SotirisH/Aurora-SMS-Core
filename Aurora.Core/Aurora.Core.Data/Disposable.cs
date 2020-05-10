@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aurora.Core.Data
 {
@@ -10,16 +6,17 @@ namespace Aurora.Core.Data
     {
         private bool isDisposed;
 
-        ~Disposable()
-        {
-            Dispose(false);
-        }
-
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        ~Disposable()
+        {
+            Dispose(false);
+        }
+
         private void Dispose(bool disposing)
         {
             if (!isDisposed && disposing)

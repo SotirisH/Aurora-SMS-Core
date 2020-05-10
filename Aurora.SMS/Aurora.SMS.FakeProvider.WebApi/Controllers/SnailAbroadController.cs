@@ -1,23 +1,25 @@
-﻿
+﻿using System;
+using System.Threading;
+using Aurora.SMS.FakeProvider.Models;
 using Aurora.SMS.FakeProvider.WebApi;
 using Aurora.SMS.FakeProvider.WebApi.Models;
+using Bogus;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading;
 
 namespace Aurora.SMS.FakeProvider.Controllers
 {
     /// <summary>
-    /// The SMS GateWay.
+    ///     The SMS GateWay.
     /// </summary>
     /// <remarks>
-    /// For demostration purposes the gateway is slow and creates random errors
-    /// WEB API 2 EXPLORING PARAMETER BINDING
-    /// https://damienbod.com/2014/08/22/web-api-2-exploring-parameter-binding/
+    ///     For demostration purposes the gateway is slow and creates random errors
+    ///     WEB API 2 EXPLORING PARAMETER BINDING
+    ///     https://damienbod.com/2014/08/22/web-api-2-exploring-parameter-binding/
     /// </remarks>
     public class SnailAbroadController : Controller
     {
         private readonly CreditCounterSnail _creditCounter;
+
         public SnailAbroadController(CreditCounterSnail creditCounter)
         {
             _creditCounter = creditCounter;
@@ -25,13 +27,14 @@ namespace Aurora.SMS.FakeProvider.Controllers
 
 
         /// <summary>
-        /// The credit decrease is created as public function in order to be able to Moq it
+        ///     The credit decrease is created as public function in order to be able to Moq it
         /// </summary>
         [NonAction]
         public virtual void DecreaseCredit()
         {
             _creditCounter.Credits--;
         }
+
         [NonAction]
         public virtual void ApplyDelay()
         {
@@ -39,8 +42,8 @@ namespace Aurora.SMS.FakeProvider.Controllers
         }
 
         /// <summary>
-        /// Default get action
-        /// http://localhost:8080/api/SnailAbroad/EchoTest?echo=sdsd
+        ///     Default get action
+        ///     http://localhost:8080/api/SnailAbroad/EchoTest?echo=sdsd
         /// </summary>
         /// <param name="echo"></param>
         /// <returns></returns>
@@ -50,7 +53,7 @@ namespace Aurora.SMS.FakeProvider.Controllers
         }
 
         /// <summary>
-        /// Sends an SMS to a mobile phone
+        ///     Sends an SMS to a mobile phone
         /// </summary>
         /// <param name="username">Login user name</param>
         /// <param name="password"></param>
@@ -60,13 +63,13 @@ namespace Aurora.SMS.FakeProvider.Controllers
         /// <returns></returns>
         /// <remarks>The [FromBody] is needed to read the json content from the body of the message</remarks>
         [HttpPost]
-        public IActionResult SendSMS([FromBody] Models.SmsRequest smsRequest)
+        public IActionResult SendSMS([FromBody] SmsRequest smsRequest)
         {
             return Ok(SendSmsHelper(smsRequest));
         }
 
         /// <summary>
-        /// This method simulates resending an SMS message with a given Id
+        ///     This method simulates resending an SMS message with a given Id
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
@@ -74,30 +77,34 @@ namespace Aurora.SMS.FakeProvider.Controllers
         /// <param name="messageExternalId"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult ReSendSMS(Models.SmsRequest smsRequest)
+        public IActionResult ReSendSMS(SmsRequest smsRequest)
         {
             throw new NotImplementedException();
         }
 
-     
+
         public SMSResult GetMessageStatus(Guid smsId)
         {
             throw new NotImplementedException();
         }
 
-        
+
         public int GetAvailableCredits(string username,
-                 string password)
+            string password)
         {
             ApplyDelay();
             // Remove one credit from the application variable
             return _creditCounter.Credits;
         }
 
-        private SMSResult SendSmsHelper(Models.SmsRequest smsRequest)
+        private SMSResult SendSmsHelper(SmsRequest smsRequest)
         {
-            Bogus.Faker faker = new Bogus.Faker();
-            SMSResult result = new SMSResult() { Id = Guid.NewGuid(), ExternalId = smsRequest.messageExternalId };
+            var faker = new Faker();
+            var result = new SMSResult
+            {
+                Id = Guid.NewGuid(),
+                ExternalId = smsRequest.messageExternalId
+            };
             //try
             //{
             ApplyDelay();
@@ -137,12 +144,9 @@ namespace Aurora.SMS.FakeProvider.Controllers
                     result.ReturnedMessage = "Pending....";
                     break;
             }
+
             result.TimeStamp = DateTime.Now;
             return result;
         }
-
     }
-
-
-
 }

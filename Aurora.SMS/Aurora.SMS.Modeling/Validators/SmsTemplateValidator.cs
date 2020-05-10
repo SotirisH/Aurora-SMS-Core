@@ -4,7 +4,7 @@ using FluentValidation;
 namespace Aurora.SMS.Modeling.Validators
 {
     /// <summary>
-    /// The validator class for the SmsTemplate
+    ///     The validator class for the SmsTemplate
     /// </summary>
     public class SmsTemplateValidator : AbstractValidator<ISmsTemplateModel>
     {
