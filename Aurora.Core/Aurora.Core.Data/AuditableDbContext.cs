@@ -86,7 +86,8 @@ namespace Aurora.Core.Data
             foreach (EntityEntry entry in ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
             {
                 object entity = entry.Entity;
-                var context = new ValidationContext(entity, serviceProvider, items);
+                //var context = new ValidationContext(entity, serviceProvider, items);
+                var context = new ValidationContext(entity);
                 var results = new List<ValidationResult>();
 
                 if (Validator.TryValidateObject(entity, context, results, true) == false)
