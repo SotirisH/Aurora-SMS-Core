@@ -1,33 +1,53 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Aurora.Core.Data;
-using Aurora.Insurance.Data;
+﻿using Aurora.Insurance.Data;
 using Aurora.Insurance.EFModel;
+using Aurora.Insurance.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Aurora.Insurance.Services
 {
-    public interface ICompanyServices
+    public class CompanyServices : ICompanyServices
     {
-        /// <summary>
-        ///     Returns all the companies ordered by Description
-        /// </summary>
-        /// <returns></returns>
-        IEnumerable<Company> GetAll();
-    }
+        private readonly InsuranceDb _db;
 
-    public class CompanyServices : DbServiceBase<InsuranceDb>, ICompanyServices
-    {
         /// <summary>
         ///     Primary constructor.
         /// </summary>
         /// <param name="db">It is fine to pass the dbcontext here</param>
-        public CompanyServices(InsuranceDb db) : base(db)
+        public CompanyServices(InsuranceDb db)
         {
+            _db = db;
         }
 
-        public IEnumerable<Company> GetAll()
+        public async Task<IEnumerable<Company>> GetAll()
         {
-            return DbContext.Companies.OrderBy(m => m.Description).ToArray();
+            return await _db.Companies.OrderBy(m => m.Description).ToListAsync();
+        }
+
+        public async Task<Company> CreateOne(Company company)
+        {
+            await _db.Companies.AddAsync(company);
+            await _db.SaveChangesAsync();
+            return company;
+        }
+
+        public async Task<Company> UpdateOne(Company company)
+        {
+            _db.Companies.Update(company);
+            await _db.SaveChangesAsync();
+            return company;
+        }
+
+        public async Task DeleteOne(string id)
+        {
+            var resourceToDelete = new Company
+            {
+                Id = id
+            };
+            _db.Remove(resourceToDelete);
+            await _db.SaveChangesAsync();
         }
     }
 }

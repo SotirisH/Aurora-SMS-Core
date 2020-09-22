@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Aurora.Core.Data;
+﻿using Aurora.Core.Data;
 using Aurora.Insurance.Data;
 using Aurora.Insurance.EFModel;
 using Aurora.Insurance.Services.DTO;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Aurora.Insurance.Services
 {
