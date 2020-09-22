@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Web;
-using Aurora.Core.Data;
+﻿using Aurora.Core.Data;
 using Aurora.Insurance.Services.DTO;
 using Aurora.SMS.Data;
 using Aurora.SMS.EFModel;
@@ -12,6 +6,12 @@ using Aurora.SMS.EFModel.Enumerators;
 using Aurora.SMS.Providers;
 using Aurora.SMS.Service.DTO;
 using LinqKit;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace Aurora.SMS.Service
 {

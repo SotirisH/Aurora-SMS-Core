@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Aurora.Core.Data;
+﻿using Aurora.Core.Data;
 using Aurora.SMS.Data;
 using Aurora.SMS.EFModel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Aurora.SMS.Service
 {
