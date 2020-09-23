@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Aurora.Core.Data;
+﻿using Aurora.Core.Data;
+using System.Collections.Generic;
 
 namespace Aurora.SMS.EFModel
 {

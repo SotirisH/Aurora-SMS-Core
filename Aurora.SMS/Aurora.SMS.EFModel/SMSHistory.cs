@@ -1,6 +1,6 @@
-﻿using System;
-using Aurora.Core.Data;
+﻿using Aurora.Core.Data;
 using Aurora.SMS.EFModel.Enumerators;
+using System;
 
 namespace Aurora.SMS.EFModel
 {

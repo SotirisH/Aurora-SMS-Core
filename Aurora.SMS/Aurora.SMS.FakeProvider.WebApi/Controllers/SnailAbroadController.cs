@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading;
-using Aurora.SMS.FakeProvider.Models;
+﻿using Aurora.SMS.FakeProvider.Models;
 using Aurora.SMS.FakeProvider.WebApi;
 using Aurora.SMS.FakeProvider.WebApi.Models;
 using Bogus;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading;
 
 namespace Aurora.SMS.FakeProvider.Controllers
 {

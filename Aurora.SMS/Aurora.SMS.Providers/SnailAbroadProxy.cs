@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Aurora.SMS.EFModel.Enumerators;
+using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Aurora.SMS.EFModel.Enumerators;
-using Newtonsoft.Json;
 
 namespace Aurora.SMS.Providers
 {

@@ -1,5 +1,5 @@
-﻿using System;
-using Aurora.SMS.EFModel.Enumerators;
+﻿using Aurora.SMS.EFModel.Enumerators;
+using System;
 
 namespace Aurora.SMS.Providers
 

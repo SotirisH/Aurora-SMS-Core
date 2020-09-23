@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Aurora.SMS.EFModel.Enumerators;
+using System;
 using System.Collections.Generic;
-using Aurora.SMS.EFModel.Enumerators;
 
 namespace Aurora.SMS.Service.DTO
 {

@@ -1,7 +1,7 @@
-﻿using System;
-using System.IO;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System;
+using System.IO;
 
 namespace Aurora.SMS.Data.Migrations
 {

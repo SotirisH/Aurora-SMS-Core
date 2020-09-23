@@ -1,6 +1,6 @@
 using System;
 
-namespace Aurora.SMS.Blazor.Data
+namespace Aurora.Insurance.WebAPI
 {
     public class WeatherForecast
     {
