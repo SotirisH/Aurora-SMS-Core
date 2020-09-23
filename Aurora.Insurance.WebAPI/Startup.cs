@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 
 namespace Aurora.Insurance.WebAPI
 {
@@ -22,6 +23,15 @@ namespace Aurora.Insurance.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:54549",
+                                            "http://localhost:49906");
+                    });
+            });
             services.AddControllers();
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddScoped <ICompanyServices, CompanyServices>();
@@ -38,13 +48,14 @@ namespace Aurora.Insurance.WebAPI
             }
 
             app.UseRouting();
-
+            app.UseCors();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+           
         }
     }
 }

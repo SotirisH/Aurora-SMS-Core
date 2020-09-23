@@ -1,0 +1,44 @@
+﻿@page "/administration/companiesList"
+@inject HttpClient Http
+
+<h1>Insurance companies</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (companyList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var company in companyList)
+            {
+                <tr>
+                    <td>@company.Id</td>
+                    <td>@company.Description</td>
+                    <td>@company.ModifiedOn.GetValueOrDefault().ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Aurora.Insurance.EFModel.Company[] companyList;
+
+    protected override async Task OnInitializedAsync()
+    {
+        companyList = await Http.GetFromJsonAsync<Aurora.Insurance.EFModel.Company[]>("api/companies");
+    }
+
+}
