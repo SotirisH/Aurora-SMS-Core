@@ -46,7 +46,6 @@ namespace Aurora.Insurance.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseRouting();
             app.UseCors();
             app.UseAuthorization();

@@ -1,0 +1,41 @@
+﻿@page "/administration/companies"
+@page "/administration/companies/{companyId}"
+@inject HttpClient Http
+
+<h3>Form</h3>
+<EditForm Model="@CompanyToEdit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <p>
+        <label>
+            Identifier:
+            <InputText @bind-Value="CompanyToEdit.Id" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Description:
+            <InputText @bind-Value="CompanyToEdit.Description" />
+        </label>
+    </p>
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public string? CompanyId { get; set; }
+    private EFModel.Company CompanyToEdit =new EFModel.Company();
+    protected override async Task OnInitializedAsync()
+    {
+        if (CompanyId == null)
+        {
+            CompanyToEdit = new EFModel.Company();
+            return;
+        }
+        else
+        {
+            CompanyToEdit = await Http.GetFromJsonAsync<Aurora.Insurance.EFModel.Company>($"api/companies/{CompanyId}");
+        }
+    }
+}

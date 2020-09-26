@@ -49,5 +49,10 @@ namespace Aurora.Insurance.Services
             _db.Remove(resourceToDelete);
             await _db.SaveChangesAsync();
         }
+
+        public async Task<Company> GetOne(string id)
+        {
+            return await _db.FindAsync<Company>(id);
+        }
     }
 }

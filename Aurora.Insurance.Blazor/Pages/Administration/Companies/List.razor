@@ -1,0 +1,63 @@
+﻿@page "/administration/companies/list"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h1>Insurance companies</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+<button class="btn btn-primary" @onclick="AddCompany">
+    Add
+</button>
+
+@if (CompanyList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var company in CompanyList)
+            {
+                /*
+                Because currently blazor doesn't support concatenation of strings inside the values of attributes 
+                passed to components, we use a variable instead
+                https://github.com/dotnet/aspnetcore/issues/9854
+                */
+                var itemRef = $"/administration/companies/{company.Id}";
+                <tr>
+                    <td>
+                        <NavLink href="@itemRef">
+                            @company.Id
+                        </NavLink>
+                    </td>
+                    <td>@company.Description</td>
+                    <td>@company.ModifiedOn.GetValueOrDefault().ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Aurora.Insurance.EFModel.Company[]? CompanyList;
+
+    protected override async Task OnInitializedAsync()
+    {
+        CompanyList = await Http.GetFromJsonAsync<Aurora.Insurance.EFModel.Company[]>("api/companies");
+    }
+
+    private void AddCompany()
+    {
+        NavigationManager.NavigateTo("/administration/companies");
+    }
+
+}

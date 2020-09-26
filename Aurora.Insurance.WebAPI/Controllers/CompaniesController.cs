@@ -25,9 +25,14 @@ namespace Aurora.Insurance.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public Company Get(string id)
+        public async Task<ActionResult<Company>> Get(string id)
         {
-            throw new NotImplementedException();
+            var resource = await companyServices.GetOne(id);
+            if(resource!=null)
+            {
+                return Ok(resource);
+            }
+            return NotFound();
         }
 
         [HttpPost]

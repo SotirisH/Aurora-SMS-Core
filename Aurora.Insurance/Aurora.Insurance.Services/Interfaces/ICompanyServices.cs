@@ -6,6 +6,7 @@ namespace Aurora.Insurance.Services.Interfaces
 {
     public interface ICompanyServices
     {
+        Task<Company> GetOne(string id);
         /// <summary>
         ///     Returns all the companies ordered by Description
         /// </summary>
