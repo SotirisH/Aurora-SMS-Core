@@ -10,23 +10,23 @@ namespace Aurora.Insurance.WebAPI.Controllers
     [ApiController]
     public class CompaniesController : ControllerBase
     {
-        private readonly ICompanyServices companyServices;
+        private readonly ICompanyServices _companyServices;
 
         public CompaniesController(ICompanyServices companyServices)
         {
-            this.companyServices = companyServices;
+            this._companyServices = companyServices;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Company>>> Get()
         {
-            return Ok(await companyServices.GetAll());
+            return Ok(await _companyServices.GetAll());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Company>> Get(string id)
         {
-            var resource = await companyServices.GetOne(id);
+            var resource = await _companyServices.GetOne(id);
             if (resource != null)
             {
                 return Ok(resource);
@@ -35,19 +35,23 @@ namespace Aurora.Insurance.WebAPI.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] Company value)
+        public async Task<ActionResult<Company>> Post([FromBody] Company value)
         {
+            var result = await _companyServices.CreateOne(value);
+            return Ok();
         }
 
         [HttpPut("{id}")]
-        public void Put(string id, [FromBody] Company value)
+        public async Task<ActionResult> Put(string id, [FromBody] Company value)
         {
+            var result = await _companyServices.UpdateOne(value);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)
         {
-            await companyServices.DeleteOne(id);
+            await _companyServices.DeleteOne(id);
             return NoContent();
         }
     }

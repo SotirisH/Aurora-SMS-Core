@@ -1,9 +1,11 @@
 ﻿@page "/administration/companies"
 @page "/administration/companies/{companyId}"
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 <h3>Form</h3>
-<EditForm Model="@CompanyToEdit">
+<EditForm Model="@CompanyToEdit"
+          OnValidSubmit="@UpsertRecord">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <p>
@@ -25,7 +27,8 @@
 @code {
     [Parameter]
     public string? CompanyId { get; set; }
-    private EFModel.Company CompanyToEdit =new EFModel.Company();
+    private EFModel.Company CompanyToEdit = new EFModel.Company();
+    private bool CreateMode => CompanyId == null;
     protected override async Task OnInitializedAsync()
     {
         if (CompanyId == null)
@@ -38,4 +41,20 @@
             CompanyToEdit = await Http.GetFromJsonAsync<Aurora.Insurance.EFModel.Company>($"api/companies/{CompanyId}");
         }
     }
+
+    private async Task UpsertRecord()
+    {
+        if (CreateMode)
+        {
+            await Http.PostAsJsonAsync("api/companies", CompanyToEdit);
+            NavigationManager.NavigateTo("/administration/companies/list");
+        }
+        else
+        {
+            await Http.PutAsJsonAsync($"api/companies/{CompanyToEdit.Id}", CompanyToEdit);
+            NavigationManager.NavigateTo("/administration/companies/list");
+        }
+
+    }
+
 }

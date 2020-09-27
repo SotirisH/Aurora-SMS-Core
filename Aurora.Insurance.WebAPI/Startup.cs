@@ -28,8 +28,8 @@ namespace Aurora.Insurance.WebAPI
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:54549",
-                                            "http://localhost:49906")
+                        builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
                         .AllowAnyMethod();
                     });
             });
