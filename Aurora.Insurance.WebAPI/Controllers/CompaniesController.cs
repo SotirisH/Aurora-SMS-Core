@@ -1,7 +1,6 @@
 ﻿using Aurora.Insurance.EFModel;
 using Aurora.Insurance.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -28,7 +27,7 @@ namespace Aurora.Insurance.WebAPI.Controllers
         public async Task<ActionResult<Company>> Get(string id)
         {
             var resource = await companyServices.GetOne(id);
-            if(resource!=null)
+            if (resource != null)
             {
                 return Ok(resource);
             }
@@ -46,8 +45,10 @@ namespace Aurora.Insurance.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void Delete(string id)
+        public async Task<ActionResult> Delete(string id)
         {
+            await companyServices.DeleteOne(id);
+            return NoContent();
         }
     }
 }

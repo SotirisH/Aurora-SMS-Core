@@ -42,17 +42,14 @@ namespace Aurora.Insurance.Services
 
         public async Task DeleteOne(string id)
         {
-            var resourceToDelete = new Company
-            {
-                Id = id
-            };
+            var resourceToDelete = await GetOne(id);
             _db.Remove(resourceToDelete);
             await _db.SaveChangesAsync();
         }
 
         public async Task<Company> GetOne(string id)
         {
-            return await _db.FindAsync<Company>(id);
+            return await _db.Companies.FindAsync(id);
         }
     }
 }

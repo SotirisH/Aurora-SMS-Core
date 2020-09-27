@@ -29,7 +29,8 @@ namespace Aurora.Insurance.WebAPI
                     builder =>
                     {
                         builder.WithOrigins("http://localhost:54549",
-                                            "http://localhost:49906");
+                                            "http://localhost:49906")
+                        .AllowAnyMethod();
                     });
             });
             services.AddControllers();

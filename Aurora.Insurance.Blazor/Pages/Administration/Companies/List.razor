@@ -1,6 +1,7 @@
 ﻿@page "/administration/companies/list"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
 
 <h1>Insurance companies</h1>
 
@@ -20,19 +21,20 @@ else
             <tr>
                 <th>Id</th>
                 <th>Description</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Modified</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var company in CompanyList)
             {
+                var currentCompany = company;
                 /*
-                Because currently blazor doesn't support concatenation of strings inside the values of attributes 
+                Because currently blazor doesn't support concatenation of strings inside the values of attributes
                 passed to components, we use a variable instead
                 https://github.com/dotnet/aspnetcore/issues/9854
                 */
-                var itemRef = $"/administration/companies/{company.Id}";
+                var itemRef = $"/administration/companies/{currentCompany.Id}";
                 <tr>
                     <td>
                         <NavLink href="@itemRef">
@@ -41,6 +43,12 @@ else
                     </td>
                     <td>@company.Description</td>
                     <td>@company.ModifiedOn.GetValueOrDefault().ToShortDateString()</td>
+                    <td>
+                    <a  class="oi oi-x" 
+                         onmouseover="" 
+                         style="cursor: pointer"
+                           @onclick="@(() => DeleteCompany(currentCompany.Id))"></a>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -58,6 +66,17 @@ else
     private void AddCompany()
     {
         NavigationManager.NavigateTo("/administration/companies");
+    }
+
+    async Task DeleteCompany(string id)
+    {
+        var targetCompany = CompanyList.First(x => x.Id == id);
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", $"Do you want to delete {targetCompany.Description}?");
+        if (confirmed)
+        {
+            await Http.DeleteAsync($"api/companies/{targetCompany.Id}");
+            await OnInitializedAsync();
+        }
     }
 
 }
