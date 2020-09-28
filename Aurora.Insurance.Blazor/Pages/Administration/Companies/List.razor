@@ -1,4 +1,5 @@
 ﻿@page "/administration/companies/list"
+@using Aurora.Insurance.EFModel
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
@@ -12,55 +13,58 @@
 
 @if (CompanyList == null)
 {
-    <p><em>Loading...</em></p>
+    <p>
+        <em>Loading...</em>
+    </p>
 }
 else
 {
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Description</th>
-                <th>Modified</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Description</th>
+            <th>Modified</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var company in CompanyList)
-            {
-                var currentCompany = company;
-                /*
+        @foreach (Company company in CompanyList)
+        {
+            Company currentCompany = company;
+            /*
                 Because currently blazor doesn't support concatenation of strings inside the values of attributes
                 passed to components, we use a variable instead
                 https://github.com/dotnet/aspnetcore/issues/9854
                 */
-                var itemRef = $"/administration/companies/{currentCompany.Id}";
-                <tr>
-                    <td>
-                        <NavLink href="@itemRef">
-                            @company.Id
-                        </NavLink>
-                    </td>
-                    <td>@company.Description</td>
-                    <td>@company.ModifiedOn.GetValueOrDefault().ToShortDateString()</td>
-                    <td>
-                    <a  class="oi oi-x" 
-                         onmouseover="" 
-                         style="cursor: pointer"
-                           @onclick="@(() => DeleteCompany(currentCompany.Id))"></a>
-                    </td>
-                </tr>
-            }
+            var itemRef = $"/administration/companies/{currentCompany.Id}";
+            <tr>
+                <td>
+                    <NavLink href="@itemRef">
+                        @company.Id
+                    </NavLink>
+                </td>
+                <td>@company.Description</td>
+                <td>@company.ModifiedOn.GetValueOrDefault().ToShortDateString()</td>
+                <td>
+                    <a class="oi oi-x"
+                       onmouseover=""
+                       style="cursor: pointer"
+                       @onclick="@(() => DeleteCompany(currentCompany.Id))">
+                    </a>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 }
 
 @code {
-    private Aurora.Insurance.EFModel.Company[]? CompanyList;
+    private Company[]? CompanyList;
 
     protected override async Task OnInitializedAsync()
     {
-        CompanyList = await Http.GetFromJsonAsync<Aurora.Insurance.EFModel.Company[]>("api/companies");
+        CompanyList = await Http.GetFromJsonAsync<Company[]>("api/companies");
     }
 
     private void AddCompany()
@@ -70,8 +74,8 @@ else
 
     async Task DeleteCompany(string id)
     {
-        var targetCompany = CompanyList.First(x => x.Id == id);
-        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", $"Do you want to delete {targetCompany.Description}?");
+        Company targetCompany = CompanyList.First(x => x.Id == id);
+        var confirmed = await JsRuntime.InvokeAsync<bool>("confirm", $"Do you want to delete {targetCompany.Description}?");
         if (confirmed)
         {
             await Http.DeleteAsync($"api/companies/{targetCompany.Id}");

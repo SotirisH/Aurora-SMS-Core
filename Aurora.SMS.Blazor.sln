@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Insurance.WebAPI", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Insurance.Blazor", "Aurora.Insurance.Blazor\Aurora.Insurance.Blazor.csproj", "{3AD54625-7281-44FB-89A7-1B1031950DCB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.Web", "Aurora.SMS\Aurora.SMS.Web\Aurora.SMS.Web.csproj", "{CCCD0AF0-DAA9-48B3-83AD-27D0E18D88A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,10 @@ Global
 		{3AD54625-7281-44FB-89A7-1B1031950DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AD54625-7281-44FB-89A7-1B1031950DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AD54625-7281-44FB-89A7-1B1031950DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCCD0AF0-DAA9-48B3-83AD-27D0E18D88A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCCD0AF0-DAA9-48B3-83AD-27D0E18D88A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCCD0AF0-DAA9-48B3-83AD-27D0E18D88A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCCD0AF0-DAA9-48B3-83AD-27D0E18D88A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

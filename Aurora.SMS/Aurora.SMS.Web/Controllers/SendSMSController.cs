@@ -1,7 +1,9 @@
 ﻿using Aurora.Insurance.Services;
+using Aurora.Insurance.Services.Interfaces;
 using Aurora.SMS.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Aurora.SMS.Web.Controllers
 {
@@ -34,19 +36,19 @@ namespace Aurora.SMS.Web.Controllers
             return View();
         }
 
-        public ViewResult SelectCustomers()
+        public async Task<ViewResult> SelectCustomers()
         {
             var mock = new Models.CustomerSelectionViewModel();
-            mock.Companies = _companyServices.GetAll();
+            mock.Companies = await _companyServices.GetAll();
             mock.Contracts = new List<Insurance.Services.DTO.ContractDTO>();
             return View(mock);
         }
 
         [HttpPost]
-        public ViewResult SelectCustomers(Models.CustomerSelectionViewModel vm)
+        public async Task<ViewResult> SelectCustomers(Models.CustomerSelectionViewModel vm)
         {
             var results = _contractServices.GetContracts(vm.Criteria);
-            vm.Companies = _companyServices.GetAll();
+            vm.Companies = await _companyServices.GetAll();
             vm.Contracts = results;
             return View(vm);
         }
