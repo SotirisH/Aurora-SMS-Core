@@ -1,4 +1,8 @@
-﻿using Aurora.Core.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Aurora.Core.Data;
 using Aurora.SMS.Data;
 using AutoMapper;
 using FluentValidation.AspNetCore;
@@ -10,14 +14,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Options;
 
 namespace Aurora.SMS.Web
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -34,14 +39,14 @@ namespace Aurora.SMS.Web
         {
             // Add framework services.
             //https://github.com/aspnet/Mvc/issues/4842  MVC now serializes JSON with camel case names by default
-            services.AddMvc()
+            services.AddMvc(options => options.EnableEndpointRouting = false)
                  .AddFluentValidation(fv =>
                  {
                      fv.ValidatorFactoryType = typeof(AttributedValidatorFactory);
-                 })
-                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
+                 });
+                
 
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(Startup));
 
             // Adds a default in-memory implementation of IDistributedCache.
             services.AddDistributedMemoryCache();
@@ -73,7 +78,7 @@ namespace Aurora.SMS.Web
             */
             services.AddTransient<Service.ITemplateServices, Service.TemplateServices>();
             services.AddTransient<Service.ITemplateFieldServices, Service.TemplateFieldServices>();
-            services.AddTransient<Insurance.Services.ICompanyServices, Insurance.Services.CompanyServices>();
+            services.AddTransient<Insurance.Services.Interfaces.ICompanyServices, Insurance.Services.CompanyServices>();
             services.AddTransient<Insurance.Services.IContractServices, Insurance.Services.ContractServices>();
             services.AddTransient<Service.ISMSServices, Service.SMSServices>();
 
@@ -82,17 +87,12 @@ namespace Aurora.SMS.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
-
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
             }
             else
             {

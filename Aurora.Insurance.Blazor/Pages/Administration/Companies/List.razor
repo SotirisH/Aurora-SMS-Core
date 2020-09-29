@@ -1,0 +1,86 @@
+﻿@page "/administration/companies/list"
+@using Aurora.Insurance.EFModel
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<h1>Insurance companies</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+<button class="btn btn-primary" @onclick="AddCompany">
+    Add
+</button>
+
+@if (CompanyList == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Description</th>
+            <th>Modified</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (Company company in CompanyList)
+        {
+            Company currentCompany = company;
+            /*
+                Because currently blazor doesn't support concatenation of strings inside the values of attributes
+                passed to components, we use a variable instead
+                https://github.com/dotnet/aspnetcore/issues/9854
+                */
+            var itemRef = $"/administration/companies/{currentCompany.Id}";
+            <tr>
+                <td>
+                    <NavLink href="@itemRef">
+                        @company.Id
+                    </NavLink>
+                </td>
+                <td>@company.Description</td>
+                <td>@company.ModifiedOn.GetValueOrDefault().ToShortDateString()</td>
+                <td>
+                    <a class="oi oi-x"
+                       onmouseover=""
+                       style="cursor: pointer"
+                       @onclick="@(() => DeleteCompany(currentCompany.Id))">
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Company[]? CompanyList;
+
+    protected override async Task OnInitializedAsync()
+    {
+        CompanyList = await Http.GetFromJsonAsync<Company[]>("api/companies");
+    }
+
+    private void AddCompany()
+    {
+        NavigationManager.NavigateTo("/administration/companies");
+    }
+
+    async Task DeleteCompany(string id)
+    {
+        Company targetCompany = CompanyList.First(x => x.Id == id);
+        var confirmed = await JsRuntime.InvokeAsync<bool>("confirm", $"Do you want to delete {targetCompany.Description}?");
+        if (confirmed)
+        {
+            await Http.DeleteAsync($"api/companies/{targetCompany.Id}");
+            await OnInitializedAsync();
+        }
+    }
+
+}
