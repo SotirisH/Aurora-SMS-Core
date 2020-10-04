@@ -3,8 +3,18 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
-
 <h1>Insurance companies</h1>
+
+<ModalDialog @ref="Modal">
+    <Title>Confirm company deletion</Title>
+    <Body>
+        <p>Do you want to delete the company <b>@TargetCompanyToEdit.Description</b></p>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-danger" @onclick="DeleteCompany">Delete</button>
+        <button type="button" class="btn btn-light" data-dismiss="modal" @onclick="() => Modal.Close()">Close</button>
+    </Footer>
+</ModalDialog>
 
 <p>This component demonstrates fetching data from the server.</p>
 <button class="btn btn-primary" @onclick="AddCompany">
@@ -13,22 +23,21 @@
 
 @if (CompanyList == null)
 {
-    <p>
-        <em>Loading...</em>
-    </p>
-}
+<p>
+    <em>Loading...</em>
+</p> }
 else
 {
-    <table class="table">
-        <thead>
+<table class="table">
+    <thead>
         <tr>
             <th>Id</th>
             <th>Description</th>
             <th>Modified</th>
             <th>Actions</th>
         </tr>
-        </thead>
-        <tbody>
+    </thead>
+    <tbody>
         @foreach (Company company in CompanyList)
         {
             Company currentCompany = company;
@@ -38,29 +47,31 @@ else
                 https://github.com/dotnet/aspnetcore/issues/9854
                 */
             var itemRef = $"/administration/companies/{currentCompany.Id}";
-            <tr>
-                <td>
-                    <NavLink href="@itemRef">
-                        @company.Id
-                    </NavLink>
-                </td>
-                <td>@company.Description</td>
-                <td>@company.ModifiedOn.GetValueOrDefault().ToShortDateString()</td>
-                <td>
-                    <a class="oi oi-x"
-                       onmouseover=""
-                       style="cursor: pointer"
-                       @onclick="@(() => DeleteCompany(currentCompany.Id))">
-                    </a>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
+<tr>
+    <td>
+        <NavLink href="@itemRef">
+            @company.Id
+        </NavLink>
+    </td>
+    <td>@company.Description</td>
+    <td>@company.ModifiedOn.GetValueOrDefault().ToShortDateString()</td>
+    <td>
+        <a class="fas fa-trash"
+           onmouseover=""
+           style="cursor: pointer"
+           @onclick="@(() => DeleteCurrentCompany(currentCompany.Id))">
+        </a>
+    </td>
+</tr>
 }
+    </tbody>
+</table>}
 
-@code {
+@code { 
     private Company[]? CompanyList;
+
+    private ModalDialog Modal { get; set; } = new ModalDialog();
+    private Company TargetCompanyToEdit { get; set; } = new Company();
 
     protected override async Task OnInitializedAsync()
     {
@@ -72,15 +83,17 @@ else
         NavigationManager.NavigateTo("/administration/companies");
     }
 
-    async Task DeleteCompany(string id)
+    async Task DeleteCompany()
     {
-        Company targetCompany = CompanyList.First(x => x.Id == id);
-        var confirmed = await JsRuntime.InvokeAsync<bool>("confirm", $"Do you want to delete {targetCompany.Description}?");
-        if (confirmed)
-        {
-            await Http.DeleteAsync($"api/companies/{targetCompany.Id}");
-            await OnInitializedAsync();
-        }
+
+        await Http.DeleteAsync($"api/companies/{TargetCompanyToEdit.Id}");
+        await OnInitializedAsync();
+    }
+
+    private void DeleteCurrentCompany(string companyId)
+    {
+        TargetCompanyToEdit = CompanyList.First(x => x.Id == companyId);
+        Modal.Open();
     }
 
 }
