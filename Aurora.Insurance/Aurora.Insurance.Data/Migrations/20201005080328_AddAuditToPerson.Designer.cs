@@ -4,14 +4,16 @@ using Aurora.Insurance.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aurora.Insurance.Data.Migrations
 {
     [DbContext(typeof(InsuranceDb))]
-    partial class InsuranceDbModelSnapshot : ModelSnapshot
+    [Migration("20201005080328_AddAuditToPerson")]
+    partial class AddAuditToPerson
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -5,14 +5,14 @@
 @inject IJSRuntime JsRuntime
 <h1>Insurance companies</h1>
 
-<ModalDialog @ref="Modal">
+<ModalDialog @ref="modal" @key="TargetCompanyToEdit" >
     <Title>Confirm company deletion</Title>
     <Body>
         <p>Do you want to delete the company <b>@TargetCompanyToEdit.Description</b></p>
     </Body>
     <Footer>
         <button type="button" class="btn btn-danger" @onclick="DeleteCompany">Delete</button>
-        <button type="button" class="btn btn-light" data-dismiss="modal" @onclick="() => Modal.Close()">Close</button>
+        <button type="button" class="btn btn-light" data-dismiss="modal" @onclick="() => modal.Close()">Close</button>
     </Footer>
 </ModalDialog>
 
@@ -70,7 +70,7 @@ else
 @code { 
     private Company[]? CompanyList;
 
-    private ModalDialog Modal { get; set; } = new ModalDialog();
+    private ModalDialog modal;
     private Company TargetCompanyToEdit { get; set; } = new Company();
 
     protected override async Task OnInitializedAsync()
@@ -93,7 +93,7 @@ else
     private void DeleteCurrentCompany(string companyId)
     {
         TargetCompanyToEdit = CompanyList.First(x => x.Id == companyId);
-        Modal.Open();
+        modal.Open();
     }
 
 }

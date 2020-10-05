@@ -36,6 +36,8 @@ namespace Aurora.Insurance.WebAPI
             services.AddControllers();
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddScoped <ICompanyServices, CompanyServices>();
+            services.AddScoped<IPersonServices, PersonServices>();
+            
             services.AddDbContext<Insurance.Data.InsuranceDb>(options => options.UseSqlServer(Configuration.GetConnectionString("InsuranceDbconnection")));
           
         }

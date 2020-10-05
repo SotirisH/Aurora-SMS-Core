@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Aurora.Insurance\Aurora.Insurance.EFModel\Aurora.Insurance.EFModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Contacts\" />
+  </ItemGroup>
+
 </Project>

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Aurora.Core.Data;
+using System;
 using System.Collections.Generic;
 
 namespace Aurora.Insurance.EFModel
 {
-    public class Person
+    public class Person : EntityBase
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
