@@ -3,7 +3,7 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
-<h1>Insurance companies</h1>
+
 
 <ModalDialog @ref="modal" @key="TargetCompanyToEdit" >
     <Title>Confirm company deletion</Title>
@@ -12,26 +12,39 @@
     </Body>
     <Footer>
         <button type="button" class="btn btn-danger" @onclick="DeleteCompany">Delete</button>
-        <button type="button" class="btn btn-light" data-dismiss="modal" @onclick="() => modal.Close()">Close</button>
+        <button type="button" class="btn btn-light" data-dismiss="modal" @onclick="() => modal.Close()">Cancel</button>
     </Footer>
 </ModalDialog>
 
-<p>This component demonstrates fetching data from the server.</p>
-<button class="btn btn-primary" @onclick="AddCompany">
-    Add
-</button>
+<div class="container">
+    <div class="row">
+        <div class="col-lg">
+            <h1>Insurance companies</h1>
+        </div>
+        <div class="col-lg-auto">
+            <button class="btn btn-primary" @onclick="AddCompany">
+                Add
+            </button>
+        </div>
+    </div>
+</div>
+
+
 
 @if (CompanyList == null)
 {
-<p>
-    <em>Loading...</em>
-</p> }
+<div class="d-flex justify-content-center">
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+ }
 else
 {
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
+            <th>Code</th>
             <th>Description</th>
             <th>Modified</th>
             <th>Actions</th>
@@ -56,11 +69,10 @@ else
     <td>@company.Description</td>
     <td>@company.ModifiedOn.GetValueOrDefault().ToShortDateString()</td>
     <td>
-        <a class="fas fa-trash"
-           onmouseover=""
+        <i class="fas fa-trash"
            style="cursor: pointer"
            @onclick="@(() => DeleteCurrentCompany(currentCompany.Id))">
-        </a>
+        </i>
     </td>
 </tr>
 }
@@ -90,7 +102,7 @@ else
         await OnInitializedAsync();
     }
 
-    private void DeleteCurrentCompany(string companyId)
+    void DeleteCurrentCompany(string companyId)
     {
         TargetCompanyToEdit = CompanyList.First(x => x.Id == companyId);
         modal.Open();

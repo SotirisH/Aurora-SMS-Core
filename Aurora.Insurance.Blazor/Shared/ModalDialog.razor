@@ -41,6 +41,7 @@
         modalDisplay = "block;";
         modalClass = "show";
         showBackdrop = true;
+        StateHasChanged();
     }
 
     public void Close()
@@ -48,5 +49,6 @@
         modalDisplay = "none";
         modalClass = "";
         showBackdrop = false;
+        StateHasChanged();
     }
 }
