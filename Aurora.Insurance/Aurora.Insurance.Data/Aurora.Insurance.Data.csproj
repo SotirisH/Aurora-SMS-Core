@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Aurora.Core\Aurora.Core.Data\Aurora.Core.Data.csproj" />
+    <ProjectReference Include="..\..\Aurora.Insurance.Validation\Aurora.Insurance.Validation.csproj" />
     <ProjectReference Include="..\Aurora.Insurance.EFModel\Aurora.Insurance.EFModel.csproj" />
   </ItemGroup>
 

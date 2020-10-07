@@ -71,7 +71,7 @@ else
     <td>
         <i class="fas fa-trash"
            style="cursor: pointer"
-           @onclick="@(() => DeleteCurrentCompany(currentCompany.Id))">
+           @onclick="@(() => ConfirmDelete(currentCompany.Id))">
         </i>
     </td>
 </tr>
@@ -102,7 +102,7 @@ else
         await OnInitializedAsync();
     }
 
-    void DeleteCurrentCompany(string companyId)
+    void ConfirmDelete(string companyId)
     {
         TargetCompanyToEdit = CompanyList.First(x => x.Id == companyId);
         modal.Open();

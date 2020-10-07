@@ -1,12 +1,11 @@
+using Aurora.Insurance.EFModel;
+using Aurora.Insurance.Validation.Validators;
+using FluentValidation;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Text;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Aurora.Insurance.Blazor
 {
@@ -18,6 +17,7 @@ namespace Aurora.Insurance.Blazor
             builder.RootComponents.Add<App>("app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:49906") });
+            builder.Services.AddTransient<IValidator<Company>, CompanyValidator>();
 
             await builder.Build().RunAsync();
         }

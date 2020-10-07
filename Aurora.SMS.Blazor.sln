@@ -45,6 +45,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Insurance", "Insurance", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SMS", "SMS", "{18A01AA2-1FF6-4588-881A-FF60BAF2C22B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Insurance.Validation", "Aurora.Insurance.Validation\Aurora.Insurance.Validation.csproj", "{C2B71603-B9B3-4017-87FA-F20076B94EB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,10 @@ Global
 		{CCCD0AF0-DAA9-48B3-83AD-27D0E18D88A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCCD0AF0-DAA9-48B3-83AD-27D0E18D88A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCCD0AF0-DAA9-48B3-83AD-27D0E18D88A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2B71603-B9B3-4017-87FA-F20076B94EB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2B71603-B9B3-4017-87FA-F20076B94EB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2B71603-B9B3-4017-87FA-F20076B94EB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2B71603-B9B3-4017-87FA-F20076B94EB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -134,6 +140,7 @@ Global
 		{AE8304CF-49FB-402F-A3BC-E7570AE82E37} = {D04F9F75-9A72-42B6-9ECC-DF18D7362F7A}
 		{D04F9F75-9A72-42B6-9ECC-DF18D7362F7A} = {4B57A2E3-7C2E-4193-AADC-17AB0054B293}
 		{18A01AA2-1FF6-4588-881A-FF60BAF2C22B} = {4B57A2E3-7C2E-4193-AADC-17AB0054B293}
+		{C2B71603-B9B3-4017-87FA-F20076B94EB2} = {D04F9F75-9A72-42B6-9ECC-DF18D7362F7A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0CDB330D-D918-4832-8709-8AA73E75B88F}

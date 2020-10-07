@@ -1,4 +1,5 @@
 ﻿using Aurora.Insurance.EFModel;
+using Aurora.Insurance.Validation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,8 +11,8 @@ namespace Aurora.Insurance.Data
         {
             builder.ToTable("Company");
             builder.HasKey(p => p.Id);
-            builder.Property(p => p.Id).IsRequired().HasMaxLength(7);
-            builder.Property(p => p.Description).IsRequired().HasMaxLength(50);
+            builder.Property(p => p.Id).IsRequired().HasMaxLength(StandardStringLengths.Code);
+            builder.Property(p => p.Description).IsRequired().HasMaxLength(StandardStringLengths.DefaultString);
         }
     }
 
@@ -20,8 +21,8 @@ namespace Aurora.Insurance.Data
         public void Configure(EntityTypeBuilder<Contract> builder)
         {
             builder.ToTable("Contract");
-            builder.Property(p => p.ContractNumber).IsRequired().HasMaxLength(15);
-            builder.Property(p => p.ReceiptNumber).IsRequired().HasMaxLength(15);
+            builder.Property(p => p.ContractNumber).IsRequired().HasMaxLength(InsuranceStringLengths.ContractNumber);
+            builder.Property(p => p.ReceiptNumber).IsRequired().HasMaxLength(InsuranceStringLengths.ContractNumber);
             // Composite index
             builder.HasIndex(p => new
             {
@@ -31,7 +32,7 @@ namespace Aurora.Insurance.Data
             builder.Property(p => p.GrossAmount).IsRequired();
             builder.Property(p => p.NetAmount).IsRequired();
             builder.Property(p => p.TaxAmount).IsRequired();
-            builder.Property(p => p.PlateNumber).IsRequired().HasMaxLength(15);
+            builder.Property(p => p.PlateNumber).IsRequired().HasMaxLength(InsuranceStringLengths.ContractNumber);
             // Single Navigation Property
             builder.HasOne(p => p.Company);
         }
@@ -42,11 +43,11 @@ namespace Aurora.Insurance.Data
         public void Configure(EntityTypeBuilder<Person> builder)
         {
             builder.ToTable("Person");
-            builder.Property(p => p.FirstName).HasMaxLength(50);
-            builder.Property(p => p.LastName).IsRequired().HasMaxLength(50);
-            builder.Property(p => p.DrivingLicenceNum).HasMaxLength(50);
-            builder.Property(p => p.Address).HasMaxLength(250);
-            builder.Property(p => p.ZipCode).HasMaxLength(12);
+            builder.Property(p => p.FirstName).HasMaxLength(StandardStringLengths.DefaultString);
+            builder.Property(p => p.LastName).IsRequired().HasMaxLength(StandardStringLengths.DefaultString);
+            builder.Property(p => p.DrivingLicenceNum).HasMaxLength(StandardStringLengths.DefaultString);
+            builder.Property(p => p.Address).HasMaxLength(StandardStringLengths.LongString);
+            builder.Property(p => p.ZipCode).HasMaxLength(InsuranceStringLengths.ZipCode);
         }
     }
 
@@ -55,7 +56,7 @@ namespace Aurora.Insurance.Data
         public void Configure(EntityTypeBuilder<Phone> builder)
         {
             builder.ToTable("Phone");
-            builder.Property(p => p.Number).IsRequired().HasMaxLength(50);
+            builder.Property(p => p.Number).IsRequired().HasMaxLength(StandardStringLengths.DefaultString);
             builder.HasOne(p => p.Person).WithMany(p => p.Phones).IsRequired();
         }
     }
