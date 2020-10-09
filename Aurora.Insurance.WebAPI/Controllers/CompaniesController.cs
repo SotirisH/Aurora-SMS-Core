@@ -1,5 +1,6 @@
 ﻿using Aurora.Insurance.EFModel;
 using Aurora.Insurance.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -35,6 +36,9 @@ namespace Aurora.Insurance.WebAPI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<ActionResult<Company>> Post([FromBody] Company value)
         {
             var result = await _companyServices.CreateOne(value);

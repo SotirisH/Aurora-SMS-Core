@@ -12,6 +12,7 @@ a, .btn-link {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
+    min-width:8rem;
 }
 
 app {
@@ -58,7 +59,7 @@ app {
         font-size: 1.1rem;
     }
 
-    .sidebar .oi {
+    .sidebar .fas {
         width: 2rem;
         font-size: 1.1rem;
         vertical-align: text-top;

@@ -9,16 +9,16 @@
     <FluentValidator></FluentValidator>
     <div class="form-group row">
         <label class="col-2 col-form-label">
-            Code
+            Code*
         </label>
         <div class="col-10">
-            <InputText @bind-Value="CompanyToEdit.Id" class="form-control" />
+            <InputText @bind-Value="CompanyToEdit.Id" class="form-control" readonly="@(!CreateMode)" />
             <ValidationMessage For="() => CompanyToEdit.Id"></ValidationMessage>
         </div>
     </div>
     <div class="form-group row">
         <label class="col-2 col-form-label">
-            Description
+            Description*
         </label>
         <div class="col-10">
             <InputText @bind-Value="CompanyToEdit.Description" class="form-control" />
@@ -52,13 +52,15 @@
 
     private async Task UpsertRecord()
     {
+        HttpResponseMessage httpResponseMessage;
         if (CreateMode)
         {
-            await Http.PostAsJsonAsync("api/companies", CompanyToEdit);
+                httpResponseMessage = await Http.PostAsJsonAsync("api/companies", CompanyToEdit);
+
         }
         else
         {
-            await Http.PutAsJsonAsync($"api/companies/{CompanyToEdit.Id}", CompanyToEdit);
+            httpResponseMessage = await Http.PutAsJsonAsync($"api/companies/{CompanyToEdit.Id}", CompanyToEdit);
         }
         NavigateBack();
 

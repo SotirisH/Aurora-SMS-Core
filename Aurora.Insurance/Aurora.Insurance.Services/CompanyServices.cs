@@ -29,7 +29,16 @@ namespace Aurora.Insurance.Services
         public async Task<Company> CreateOne(Company company)
         {
             await _db.Companies.AddAsync(company);
-            await _db.SaveChangesAsync();
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (System.Exception ex)
+            {
+
+                throw;
+            }
+          
             return company;
         }
 
