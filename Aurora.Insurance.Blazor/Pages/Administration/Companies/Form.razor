@@ -56,7 +56,7 @@
     private EFModel.Company CompanyToEdit = new EFModel.Company();
     private bool CreateMode => CompanyId == null;
     private string Title => CreateMode ? "New Company" : $"Edit {CompanyToEdit.Description}";
-    private string Base64Logo { get; set; }
+    private string Base64Logo => $"data:image/png;base64,{CompanyToEdit.LogoData}";
 
     protected override async Task OnInitializedAsync()
     {
@@ -96,12 +96,12 @@
     private async Task HandleFileSelected(IFileListEntry[] files)
     {
         var file = files.First();
-        var format = "image/png";
         using (var memStream = new System.IO.MemoryStream())
         {
             await file.Data.CopyToAsync(memStream);
             memStream.Seek(0, SeekOrigin.Begin);
-            Base64Logo = $"data:{format};base64,{Convert.ToBase64String(memStream.ToArray())}";
+            CompanyToEdit.LogoData = Convert.ToBase64String(memStream.ToArray());
+            StateHasChanged();
         }
     } }
 

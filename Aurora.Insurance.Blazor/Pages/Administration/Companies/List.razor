@@ -67,7 +67,7 @@ else
         </NavLink>
     </td>
     <td>@company.Description</td>
-    <td>@company.ModifiedOn.GetValueOrDefault().ToShortDateString()</td>
+    <td>@((company.ModifiedOn??company.CreatedOn).GetValueOrDefault().ToShortDateString())</td>
     <td>
         <i class="fas fa-trash"
            style="cursor: pointer"
@@ -99,6 +99,7 @@ else
     {
 
         await Http.DeleteAsync($"api/companies/{TargetCompanyToEdit.Id}");
+        modal.Close();
         await OnInitializedAsync();
     }
 
