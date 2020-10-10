@@ -2,6 +2,7 @@
 @page "/administration/companies/{companyId}"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@using System.IO;
 
 <h3>@Title</h3>
 <EditForm Model="@CompanyToEdit"
@@ -25,18 +26,38 @@
             <ValidationMessage For="() => CompanyToEdit.Description"></ValidationMessage>
         </div>
     </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">
+            Active
+        </label>
+        <div class="col-2">
+            <InputCheckbox @bind-Value="CompanyToEdit.IsActive" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">
+            Logo
+        </label>
+        <div class="col-2">
+            <img class="round-border" src="@Base64Logo" />
+        </div>
+        <div class="col-8">
+            <InputFile OnChange="HandleFileSelected" />
+        </div>
+    </div>
     <div class="float-right">
         <button type="submit" class="btn btn-primary">Save</button>
         <button type="button" class="btn btn-light" @onclick="NavigateBack">Cancel</button>
     </div>
 </EditForm>
 
-@code {
-    [Parameter]
+@code { [Parameter]
     public string? CompanyId { get; set; }
     private EFModel.Company CompanyToEdit = new EFModel.Company();
     private bool CreateMode => CompanyId == null;
     private string Title => CreateMode ? "New Company" : $"Edit {CompanyToEdit.Description}";
+    private string Base64Logo { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         if (CompanyId == null)
@@ -55,7 +76,7 @@
         HttpResponseMessage httpResponseMessage;
         if (CreateMode)
         {
-                httpResponseMessage = await Http.PostAsJsonAsync("api/companies", CompanyToEdit);
+            httpResponseMessage = await Http.PostAsJsonAsync("api/companies", CompanyToEdit);
 
         }
         else
@@ -72,4 +93,15 @@
         NavigationManager.NavigateTo("/administration/companies/list");
     }
 
-}
+    private async Task HandleFileSelected(IFileListEntry[] files)
+    {
+        var file = files.First();
+        var format = "image/png";
+        using (var memStream = new System.IO.MemoryStream())
+        {
+            await file.Data.CopyToAsync(memStream);
+            memStream.Seek(0, SeekOrigin.Begin);
+            Base64Logo = $"data:{format};base64,{Convert.ToBase64String(memStream.ToArray())}";
+        }
+    } }
+

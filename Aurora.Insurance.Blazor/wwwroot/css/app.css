@@ -8,6 +8,17 @@ a, .btn-link {
     color: #0366d6;
 }
 
+img, .round-border {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 2px;
+    width: 128px;
+    height: 128px;
+    max-width: 128px;
+    max-height: 128px;
+    object-fit: contain;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
@@ -136,6 +147,8 @@ app {
     right: 0.75rem;
     top: 0.5rem;
 }
+
+
 
 @media (max-width: 767.98px) {
     .main .top-row:not(.auth) {

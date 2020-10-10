@@ -13,5 +13,8 @@ namespace Aurora.Insurance.EFModel
         public string Id { get; set; }
 
         public string Description { get; set; }
+        public bool IsActive { get; set; }
+        public string LogoUrl { get; set; }
+        public string LogoThumbnailUrl { get; set; }
     }
 }
