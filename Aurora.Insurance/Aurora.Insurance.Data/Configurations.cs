@@ -13,6 +13,7 @@ namespace Aurora.Insurance.Data
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Id).IsRequired().HasMaxLength(StandardStringLengths.Code);
             builder.Property(p => p.Description).IsRequired().HasMaxLength(StandardStringLengths.DefaultString);
+            builder.Property(p => p.LogoData).IsUnicode(false);
         }
     }
 

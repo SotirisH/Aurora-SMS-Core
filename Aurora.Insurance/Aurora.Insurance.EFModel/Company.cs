@@ -14,7 +14,6 @@ namespace Aurora.Insurance.EFModel
 
         public string Description { get; set; }
         public bool IsActive { get; set; }
-        public string LogoUrl { get; set; }
-        public string LogoThumbnailUrl { get; set; }
+        public string LogoData { get; set; }
     }
 }

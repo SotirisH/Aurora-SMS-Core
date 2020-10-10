@@ -13,13 +13,9 @@ namespace Aurora.Insurance.Data.Migrations
                 defaultValue: false);
 
             migrationBuilder.AddColumn<string>(
-                name: "LogoThumbnailUrl",
+                name: "LogoData",
                 table: "Company",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "LogoUrl",
-                table: "Company",
+                unicode: false,
                 nullable: true);
         }
 
@@ -30,11 +26,7 @@ namespace Aurora.Insurance.Data.Migrations
                 table: "Company");
 
             migrationBuilder.DropColumn(
-                name: "LogoThumbnailUrl",
-                table: "Company");
-
-            migrationBuilder.DropColumn(
-                name: "LogoUrl",
+                name: "LogoData",
                 table: "Company");
         }
     }

@@ -40,11 +40,9 @@ namespace Aurora.Insurance.Data.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LogoThumbnailUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LogoUrl")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("LogoData")
+                        .HasColumnType("varchar(max)")
+                        .IsUnicode(false);
 
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(50)")
