@@ -45,7 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Insurance", "Insurance", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SMS", "SMS", "{18A01AA2-1FF6-4588-881A-FF60BAF2C22B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Insurance.Validation", "Aurora.Insurance.Validation\Aurora.Insurance.Validation.csproj", "{C2B71603-B9B3-4017-87FA-F20076B94EB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Insurance.Validation", "Aurora.Insurance.Validation\Aurora.Insurance.Validation.csproj", "{C2B71603-B9B3-4017-87FA-F20076B94EB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

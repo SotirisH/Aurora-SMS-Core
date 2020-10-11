@@ -23,7 +23,7 @@ namespace Aurora.Insurance.Services
 
         public async Task<IEnumerable<Person>> GetAll()
         {
-            return await _db.Persons.OrderBy(m => m.RowVersion).Take(100).ToListAsync();
+            return await _db.Persons.Take(10).ToListAsync();
         }
 
         public async Task<Person> CreateOne(Person person)
