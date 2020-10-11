@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20201010230415_Add-Customer.cs" />
     <Compile Remove="Migrations\20201010230415_Add-Customer.Designer.cs" />
+    <Compile Remove="Migrations\20201011065000_Introduce-Attachments.cs" />
+    <Compile Remove="Migrations\20201011065000_Introduce-Attachments.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

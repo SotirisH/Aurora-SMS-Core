@@ -1,5 +1,5 @@
 ﻿@page "/customers/new"
-@page "/customers/{personId}"
+@page "/customers/{personId:int}"
 
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
@@ -16,9 +16,9 @@
                 <label>
                     ID
                 </label>
-                <div>
-                    <InputNumber @bind-Value="Customer.Id" class="form-control" readonly />
-                </div>
+                <label class="form-control col-2">
+                    @Customer.Id
+                </label>
             </div>
         </div>
         <div class="form-row col">
@@ -84,14 +84,6 @@
             </div>
         </div>
     </div>
-    <div class="section">
-        <h4>Phones</h4>
-        <div class="form-group">
-            <label>
-                Phones
-            </label>
-        </div>
-    </div>
     <div class="float-right">
         <button type="submit" class="btn btn-primary">Save</button>
         <button type="button" class="btn btn-light" @onclick="NavigateBack">Cancel</button>
@@ -99,7 +91,8 @@
 </EditForm>
 
 
-@code { [Parameter]
+@code { 
+    [Parameter]
     public int? PersonId { get; set; }
     private EFModel.Person Customer = new EFModel.Person();
     private bool CreateMode => PersonId == null;

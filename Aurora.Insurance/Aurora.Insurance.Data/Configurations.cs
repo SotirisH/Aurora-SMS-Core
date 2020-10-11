@@ -61,4 +61,20 @@ namespace Aurora.Insurance.Data
             builder.HasOne(p => p.Person).WithMany(p => p.Phones).IsRequired();
         }
     }
+
+    public class AttachmentConfiguration : IEntityTypeConfiguration<Attachment>
+    {
+        public void Configure(EntityTypeBuilder<Attachment> builder)
+        {
+            builder.ToTable("Attachment");
+            builder.HasKey(x => x.AttachmentId);
+            builder.Property(p => p.AttachmentId).HasDefaultValueSql("newsequentialid()");
+            builder.Property(p => p.Title).IsRequired().HasMaxLength(StandardStringLengths.LongString);
+            builder.Property(p => p.Description).HasMaxLength(StandardStringLengths.Comment);
+            builder.Property(p => p.Url).HasMaxLength(StandardStringLengths.Comment);
+            builder.Property(p => p.FileName).HasMaxLength(StandardStringLengths.LongString);
+            builder.Property(p => p.MimeType).HasMaxLength(StandardStringLengths.DefaultString);
+            
+        }
+    }
 }
