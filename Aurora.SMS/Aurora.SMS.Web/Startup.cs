@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Aurora.Core.Data;
+﻿using Aurora.Core.Data;
 using Aurora.SMS.Data;
 using AutoMapper;
 using FluentValidation.AspNetCore;
@@ -15,8 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Aurora.SMS.Web
 {
@@ -44,7 +38,7 @@ namespace Aurora.SMS.Web
                  {
                      fv.ValidatorFactoryType = typeof(AttributedValidatorFactory);
                  });
-                
+
 
             services.AddAutoMapper(typeof(Startup));
 

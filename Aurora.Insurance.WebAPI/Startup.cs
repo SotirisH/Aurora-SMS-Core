@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Net.Http.Headers;
 
 namespace Aurora.Insurance.WebAPI
 {
@@ -35,12 +34,12 @@ namespace Aurora.Insurance.WebAPI
             });
             services.AddControllers();
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
-            services.AddScoped <ICompanyServices, CompanyServices>();
+            services.AddScoped<ICompanyServices, CompanyServices>();
             services.AddScoped<IPersonServices, PersonServices>();
-            
+
             services.AddDbContext<Insurance.Data.InsuranceDb>(options => options.UseSqlServer(Configuration.GetConnectionString("InsuranceDbconnection"),
-                x=>x.MigrationsAssembly("Aurora.Insurance.Data")));
-          
+                x => x.MigrationsAssembly("Aurora.Insurance.Data")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +57,7 @@ namespace Aurora.Insurance.WebAPI
             {
                 endpoints.MapControllers();
             });
-           
+
         }
     }
 }

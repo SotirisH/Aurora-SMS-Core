@@ -29,7 +29,7 @@ namespace Aurora.SMS.Web
 
         public string GetDefaultSmsGateWay()
         {
-            var ret=_context.Request.Cookies[DefaultSmsGateWayName];
+            var ret = _context.Request.Cookies[DefaultSmsGateWayName];
             if (string.IsNullOrWhiteSpace(ret))
                 return "SnailAbroad";
             return ret;

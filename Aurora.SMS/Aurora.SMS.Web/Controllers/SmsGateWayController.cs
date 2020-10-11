@@ -56,7 +56,7 @@ namespace Aurora.SMS.Web.Controllers
             return View(vm);
         }
 
-     
+
 
         /// <summary>
         /// Sets this proxy as default
@@ -110,7 +110,7 @@ namespace Aurora.SMS.Web.Controllers
         /// <returns></returns>
         public string GetAvailableCredits()
         {
-            
+
             string defaultSmsGateWayName = _cookieHelper.GetDefaultSmsGateWay();
             if (!string.IsNullOrWhiteSpace(defaultSmsGateWayName))
             {
@@ -118,7 +118,7 @@ namespace Aurora.SMS.Web.Controllers
             }
             return "?";
         }
-      
+
 
     }
 

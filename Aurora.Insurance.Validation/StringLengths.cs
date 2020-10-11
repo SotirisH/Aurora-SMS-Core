@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Aurora.Insurance.Validation
+﻿namespace Aurora.Insurance.Validation
 {
     public static class StandardStringLengths
     {

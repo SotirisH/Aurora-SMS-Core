@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20201010230415_Add-Customer.cs" />
+    <Compile Remove="Migrations\20201010230415_Add-Customer.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Aurora.Core\Aurora.Core.Data\Aurora.Core.Data.csproj" />
     <ProjectReference Include="..\..\Aurora.Insurance.Validation\Aurora.Insurance.Validation.csproj" />
     <ProjectReference Include="..\Aurora.Insurance.EFModel\Aurora.Insurance.EFModel.csproj" />

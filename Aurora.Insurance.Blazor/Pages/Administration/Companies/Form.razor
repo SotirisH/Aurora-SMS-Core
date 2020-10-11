@@ -8,41 +8,50 @@
 <EditForm Model="@CompanyToEdit"
           OnValidSubmit="@UpsertRecord">
     <FluentValidator></FluentValidator>
-    <div class="form-group row">
-        <label class="col-2 col-form-label">
-            Code*
-        </label>
-        <div class="col-10">
-            <InputText @bind-Value="CompanyToEdit.Id" class="form-control" readonly="@(!CreateMode)" />
-            <ValidationMessage For="() => CompanyToEdit.Id"></ValidationMessage>
+    <div class="section">
+
+
+        <div class="form-group col-2">
+            <label>
+                Code*
+            </label>
+            <div>
+                <InputText @bind-Value="CompanyToEdit.Id" class="form-control" readonly="@(!CreateMode)" />
+                <ValidationMessage For="() => CompanyToEdit.Id"></ValidationMessage>
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-2 col-form-label">
-            Description*
-        </label>
-        <div class="col-10">
-            <InputText @bind-Value="CompanyToEdit.Description" class="form-control" />
-            <ValidationMessage For="() => CompanyToEdit.Description"></ValidationMessage>
+        <div class="form-group col">
+            <label>
+                Description*
+            </label>
+            <div>
+                <InputText @bind-Value="CompanyToEdit.Description" class="form-control" />
+                <ValidationMessage For="() => CompanyToEdit.Description"></ValidationMessage>
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-2 col-form-label">
-            Active
-        </label>
-        <div class="col-2">
-            <InputCheckbox @bind-Value="CompanyToEdit.IsActive" />
+        <div class="form-group col">
+            <div class="row col">
+                <div>
+                    <InputCheckbox @bind-Value="CompanyToEdit.IsActive" />
+                </div>
+                <label class="col-auto">
+                    Active
+                </label>
+            </div>
+
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-2 col-form-label">
-            Logo
-        </label>
-        <div class="col-2">
-            <img class="round-border" src="@Base64Logo" />
-        </div>
-        <div class="col-8">
-            <InputFile OnChange="HandleFileSelected" />
+        <div class="form-group col">
+            <label>
+                Logo
+            </label>
+            <div class="form-row">
+                <div class="col-2">
+                    <img class="round-border" src="@Base64Logo" />
+                </div>
+                <div>
+                    <InputFile OnChange="HandleFileSelected" />
+                </div>
+            </div>
         </div>
     </div>
     <div class="float-right">

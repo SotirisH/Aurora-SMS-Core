@@ -1,5 +1,4 @@
 ﻿using Aurora.Core.Data;
-using Microsoft.AspNetCore.Http;
 using System;
 
 namespace Aurora.Insurance.WebAPI

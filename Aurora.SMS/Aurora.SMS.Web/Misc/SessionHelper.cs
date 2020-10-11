@@ -47,7 +47,7 @@ namespace Aurora.SMS.Web
             }
             set
             {
-                _context.Session.SetInt32("SelectedTemplateId",value);
+                _context.Session.SetInt32("SelectedTemplateId", value);
             }
 
         }

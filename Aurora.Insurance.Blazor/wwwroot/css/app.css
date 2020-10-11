@@ -2,6 +2,7 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #f4f6f8;
 }
 
 a, .btn-link {
@@ -12,12 +13,11 @@ img, .round-border {
     border: 1px solid lightgray;
     border-radius: 5px;
     padding: 2px;
-    width: 128px;
-    height: 128px;
-    max-width: 128px;
-    max-height: 128px;
+    width: 132px;
+    height: 132px;
     object-fit: contain;
 }
+
 
 .btn-primary {
     color: #fff;
@@ -56,6 +56,19 @@ app {
 .main .top-row a:first-child {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/*Forms*/
+.section {
+    margin: 2rem 0;
+    padding: 2rem 0rem;
+    box-shadow: 0 0 0 1px rgba(63,63,68,.1), 0 1px 3px 0 rgba(63,63,68,.2);
+    border-radius: 4px;
+    background:#fff;
+}
+
+.form-group label {
+    color: #999
 }
 
 .sidebar {

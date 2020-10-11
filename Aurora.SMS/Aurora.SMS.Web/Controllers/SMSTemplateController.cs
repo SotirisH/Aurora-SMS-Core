@@ -31,7 +31,7 @@ namespace Aurora.SMS.Web.Controllers
         [HttpPost]
         public ActionResult CreateEdit(Models.SmsTemplate.SmsTemplateViewModel vm)
         {
-            
+
             // Demo using FluentValidation
             if (!ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace Aurora.SMS.Web.Controllers
 
         public ViewResult Edit(int id)
         {
-           
+
             return View("CreateEdit", mapper.Map<Models.SmsTemplate.SmsTemplateViewModel>(_templateServices.GetById(id)));
         }
 

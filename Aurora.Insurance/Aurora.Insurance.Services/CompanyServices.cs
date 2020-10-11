@@ -38,7 +38,7 @@ namespace Aurora.Insurance.Services
 
                 throw;
             }
-          
+
             return company;
         }
 

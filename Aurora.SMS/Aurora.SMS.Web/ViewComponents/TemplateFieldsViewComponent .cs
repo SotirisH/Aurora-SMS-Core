@@ -1,8 +1,5 @@
 ﻿using Aurora.SMS.Service;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Aurora.SMS.Web.ViewComponents
@@ -23,7 +20,7 @@ namespace Aurora.SMS.Web.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync(int maxPriority, bool isDone)
         {
             // TODO: Create an async version of GetAllTemplateFields
-            return await Task.FromResult<IViewComponentResult>(View( _templateFieldServices.GetAllTemplateFields()));
+            return await Task.FromResult<IViewComponentResult>(View(_templateFieldServices.GetAllTemplateFields()));
         }
     }
 }
