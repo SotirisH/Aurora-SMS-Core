@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Aurora.Core.Aws.S3
 {
-    public class S3BucketStorageClient
+    public class S3BucketStorageClient:IDisposable
     {
         private readonly IAmazonS3 _s3Client;
         private readonly AWSOptions _aWSOptions;
@@ -103,6 +103,11 @@ namespace Aurora.Core.Aws.S3
         private static string GetS3HostUrlForRegion(RegionEndpoint region)
         {
             return $"https://s3-{region.SystemName}.amazonaws.com";
+        }
+
+        public void Dispose()
+        {
+            _s3Client.Dispose();
         }
     }
 }
