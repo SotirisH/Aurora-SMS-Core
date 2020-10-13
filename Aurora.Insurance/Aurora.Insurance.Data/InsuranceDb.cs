@@ -41,6 +41,7 @@ namespace Aurora.Insurance.Data
             modelBuilder.ApplyConfiguration(new ContractConfiguration());
             modelBuilder.ApplyConfiguration(new PersonConfiguration());
             modelBuilder.ApplyConfiguration(new PhoneConfiguration());
+            modelBuilder.ApplyConfiguration(new AttachmentConfiguration());
             base.OnModelCreating(modelBuilder);
         }
     }

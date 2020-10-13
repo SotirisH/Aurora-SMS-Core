@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Aurora.Core.Aws.S3\Aurora.Core.Aws.S3.csproj" />
     <ProjectReference Include="..\Aurora.Insurance.Data\Aurora.Insurance.Data.csproj" />
     <ProjectReference Include="..\Aurora.Insurance.EFModel\Aurora.Insurance.EFModel.csproj" />
   </ItemGroup>

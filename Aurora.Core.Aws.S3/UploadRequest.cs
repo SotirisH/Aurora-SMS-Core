@@ -17,6 +17,6 @@ namespace Aurora.Core.Aws.S3
         public string FileName { get; set; }
 
         public Stream Content { get; set; }
-        public string ContentType { get; set; }
+        public string MimeType { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Aurora.Core.Aws.S3
 {
-    public class S3BucketStorageClient:IDisposable
+    public class S3BucketStorageClient : IS3BucketStorageClient, IDisposable
     {
         private readonly IAmazonS3 _s3Client;
         private readonly AWSOptions _aWSOptions;
@@ -37,9 +37,9 @@ namespace Aurora.Core.Aws.S3
                         AutoResetStreamPosition = true
                     };
 
-                    if (!string.IsNullOrEmpty(request.ContentType))
+                    if (!string.IsNullOrEmpty(request.MimeType))
                     {
-                        request.ContentType = request.ContentType;
+                        transferUtilityUploadRequest.ContentType = request.MimeType;
                     }
 
                     await utility.UploadAsync(transferUtilityUploadRequest, cancellationToken).ConfigureAwait(false);

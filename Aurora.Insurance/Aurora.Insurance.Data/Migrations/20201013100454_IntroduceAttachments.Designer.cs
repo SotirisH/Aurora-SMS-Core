@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aurora.Insurance.Data.Migrations
 {
     [DbContext(typeof(InsuranceDb))]
-    [Migration("20201011065202_Introduce-Attachments")]
+    [Migration("20201013100454_IntroduceAttachments")]
     partial class IntroduceAttachments
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,29 +25,36 @@ namespace Aurora.Insurance.Data.Migrations
                 {
                     b.Property<Guid>("AttachmentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newsequentialid()");
 
                     b.Property<long>("ContentLength")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
 
                     b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<string>("MimeType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
 
                     b.HasKey("AttachmentId");
 
-                    b.ToTable("Attachments");
+                    b.ToTable("Attachment");
                 });
 
             modelBuilder.Entity("Aurora.Insurance.EFModel.Company", b =>

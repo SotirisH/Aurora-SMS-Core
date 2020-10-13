@@ -1,3 +1,4 @@
+using Aurora.Core.Aws.S3;
 using Aurora.Core.Data;
 using Aurora.Insurance.Services;
 using Aurora.Insurance.Services.Interfaces;
@@ -34,8 +35,12 @@ namespace Aurora.Insurance.WebAPI
             });
             services.AddControllers();
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<IS3BucketStorageClient, S3BucketStorageClient>();
+            
             services.AddScoped<ICompanyServices, CompanyServices>();
             services.AddScoped<IPersonServices, PersonServices>();
+            services.AddScoped<IAttachmentServices, AttachmentServices>();
+            
 
             services.AddDbContext<Insurance.Data.InsuranceDb>(options => options.UseSqlServer(Configuration.GetConnectionString("InsuranceDbconnection"),
                 x => x.MigrationsAssembly("Aurora.Insurance.Data")));
