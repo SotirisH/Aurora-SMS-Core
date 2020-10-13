@@ -9,14 +9,15 @@
 <h3>@Title</h3>
 
 <EditForm Model="@Customer"
-          OnValidSubmit="@UpsertRecord">
+          OnValidSubmit="@UpsertRecord"
+          id="customerForm">
     <div class="section">
         <div class="form-row col">
             <div class="form-group col-2">
                 <label>
                     ID
                 </label>
-                <label class="form-control col-2">
+                <label class="col-2" readonly>
                     @Customer.Id
                 </label>
             </div>
@@ -84,65 +85,70 @@
             </div>
         </div>
     </div>
+
+</EditForm>
+<div class="section">
+    <Attachments ></Attachments>
+</div>
+    
+
     <div class="float-right">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" form="customerForm" class="btn btn-primary">Save</button>
         <button type="button" class="btn btn-light" @onclick="NavigateBack">Cancel</button>
     </div>
-</EditForm>
 
+    @code { [Parameter]
+        public int? PersonId { get; set; }
+        private EFModel.Person Customer = new EFModel.Person();
+        private bool CreateMode => PersonId == null;
+        private string Title => CreateMode ? "New Customer" : $"Edit {Customer.LastName}";
+        //private string Base64Logo => $"data:image/png;base64,{Customer.LogoData}";
 
-@code { 
-    [Parameter]
-    public int? PersonId { get; set; }
-    private EFModel.Person Customer = new EFModel.Person();
-    private bool CreateMode => PersonId == null;
-    private string Title => CreateMode ? "New Customer" : $"Edit {Customer.LastName}";
-    //private string Base64Logo => $"data:image/png;base64,{Customer.LogoData}";
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (PersonId == null)
+        protected override async Task OnInitializedAsync()
         {
-            Customer = new EFModel.Person();
-            return;
+            if (PersonId == null)
+            {
+                Customer = new EFModel.Person();
+                return;
+            }
+            else
+            {
+                Customer = await Http.GetFromJsonAsync<Aurora.Insurance.EFModel.Person>($"api/persons/{PersonId}");
+            }
         }
-        else
+
+        private async Task UpsertRecord()
         {
-            Customer = await Http.GetFromJsonAsync<Aurora.Insurance.EFModel.Person>($"api/persons/{PersonId}");
-        }
-    }
+            HttpResponseMessage httpResponseMessage;
+            if (CreateMode)
+            {
+                httpResponseMessage = await Http.PostAsJsonAsync("api/persons", Customer);
 
-    private async Task UpsertRecord()
-    {
-        HttpResponseMessage httpResponseMessage;
-        if (CreateMode)
+            }
+            else
+            {
+                httpResponseMessage = await Http.PutAsJsonAsync($"api/persons/{Customer.Id}", Customer);
+            }
+            NavigateBack();
+
+        }
+
+
+        private void NavigateBack()
         {
-            httpResponseMessage = await Http.PostAsJsonAsync("api/persons", Customer);
-
+            NavigationManager.NavigateTo("/customers/list");
         }
-        else
+
+        private async Task HandleFileSelected(IFileListEntry[] files)
         {
-            httpResponseMessage = await Http.PutAsJsonAsync($"api/persons/{Customer.Id}", Customer);
-        }
-        NavigateBack();
 
-    }
-
-
-    private void NavigateBack()
-    {
-        NavigationManager.NavigateTo("/customers/list");
-    }
-
-    private async Task HandleFileSelected(IFileListEntry[] files)
-    {
-        var file = files.First();
-        using (var memStream = new System.IO.MemoryStream())
-        {
-            await file.Data.CopyToAsync(memStream);
-            memStream.Seek(0, SeekOrigin.Begin);
-            //Customer.LogoData = Convert.ToBase64String(memStream.ToArray());
-            StateHasChanged();
-        }
-    } }
+            var file = files.First();
+            using (var memStream = new System.IO.MemoryStream())
+            {
+                await file.Data.CopyToAsync(memStream);
+                memStream.Seek(0, SeekOrigin.Begin);
+                //Customer.LogoData = Convert.ToBase64String(memStream.ToArray());
+                StateHasChanged();
+            }
+        } }
 

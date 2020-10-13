@@ -49,7 +49,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Insurance.Validation
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Core.Aws.S3", "Aurora.Core.Aws.S3\Aurora.Core.Aws.S3.csproj", "{BC85ED14-6F57-4C3A-AFC9-CA3A126A0EBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Core.Aws.S3.Tests", "Aurora.Core.Aws.S3.Tests\Aurora.Core.Aws.S3.Tests.csproj", "{8A13DBD4-3BB0-4524-889E-2E4A7098066C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Core.Aws.S3.Tests", "Aurora.Core.Aws.S3.Tests\Aurora.Core.Aws.S3.Tests.csproj", "{8A13DBD4-3BB0-4524-889E-2E4A7098066C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

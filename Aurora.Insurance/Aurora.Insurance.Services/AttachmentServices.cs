@@ -2,6 +2,7 @@
 using Aurora.Insurance.Data;
 using Aurora.Insurance.EFModel;
 using Aurora.Insurance.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,6 +45,11 @@ namespace Aurora.Insurance.Services
         public Task DeleteOne(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Attachment>> GetAll()
+        {
+            return await _db.Attachments.ToListAsync();
         }
 
         public Task<IEnumerable<Attachment>> GetByIds(IList<Guid> ids)

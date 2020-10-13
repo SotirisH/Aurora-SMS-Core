@@ -21,5 +21,7 @@ namespace Aurora.Insurance.Services.Interfaces
         Task<Attachment> UpdateOne(Attachment attachment);
 
         Task DeleteOne(Guid id);
+
+        Task<IEnumerable<Attachment>> GetAll();
     }
 }
