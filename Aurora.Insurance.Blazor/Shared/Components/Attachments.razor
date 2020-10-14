@@ -1,5 +1,6 @@
 ﻿@using Aurora.Insurance.EFModel
 @inject HttpClient Http
+@using System.IO;
 
 <div class="container">
     <div class="row">
@@ -7,9 +8,10 @@
             <h3>Attachments</h3>
         </div>
         <div class="col-lg-auto">
-            <button class="btn btn-primary">
+            <label for="upload-attachement" class="btn btn-primary">
                 Add
-            </button>
+            </label>
+            <InputFile OnChange="HandleFileSelected" name="upload-attachement" id="upload-attachement" @attributes="InputAttributes" />
         </div>
     </div>
 </div>
@@ -56,13 +58,51 @@ else
     </table>
 </div>}
 
-@code { private Attachment[]? AttachmentsList = default!;
+@code { public Dictionary<string, object> InputAttributes { get; set; } =
+            new Dictionary<string, object>()
+            {
+
+            { "class", "hide" }
+
+        };
+            private Attachment[]? AttachmentsList = default!;
             protected override async Task OnInitializedAsync()
+            {
+                await LoadAttachments();
+            }
+
+            private async Task LoadAttachments()
             {
                 AttachmentsList = await Http.GetFromJsonAsync<Attachment[]>("api/persons/1/attachments");
             }
 
             void ConfirmDelete(Guid AttachmentId)
             {
+
+            }
+
+            private async Task HandleFileSelected(IFileListEntry[] files)
+            {
+                var file = files.First();
+                var fileContent = new StreamContent(file.Data)
+                {
+                    Headers =
+           {
+               ContentLength = file.Size,
+               ContentType =  new System.Net.Http.Headers.MediaTypeHeaderValue(file.Type)
+           }
+                };
+
+                var formDataContent = new MultipartFormDataContent();
+                formDataContent.Add(fileContent, "file", file.Name);          // file
+                formDataContent.Add(new StringContent("type"), "Generic");   // form input
+
+                var result = await Http.PostAsync($"api/persons/1/attachments/{file.Name}", formDataContent);
+                if (result.IsSuccessStatusCode)
+                {
+                    AttachmentsList = null;
+                    StateHasChanged();
+                    await LoadAttachments();
+                }
 
             } }

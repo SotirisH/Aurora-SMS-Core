@@ -42,6 +42,12 @@ app {
     flex: 1;
 }
 
+.hide {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
     .main .top-row {
         background-color: #f7f7f7;
         border-bottom: 1px solid #d6d5d5;
