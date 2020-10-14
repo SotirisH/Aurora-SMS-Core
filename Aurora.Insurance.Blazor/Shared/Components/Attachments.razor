@@ -51,7 +51,7 @@ else
                     <td>
                         <i class="fas fa-trash"
                            style="cursor: pointer"
-                           @onclick="@() => ConfirmDelete(currentAttachment.AttachmentId)">
+                           @onclick=@(() => ConfirmDelete(currentAttachment.AttachmentId))>
                         </i>
                     </td>
                 </tr>

@@ -70,7 +70,7 @@ else
                 <td>
                     <i class="fas fa-trash"
                        style="cursor: pointer"
-                       @onclick="@() => ConfirmDelete(currentCompany.Id)">
+                       @onclick=@(() => ConfirmDelete(currentCompany.Id))>
                     </i>
                 </td>
             </tr>
