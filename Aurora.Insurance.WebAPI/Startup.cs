@@ -1,5 +1,6 @@
 using Aurora.Core.Aws.S3;
 using Aurora.Core.Data;
+using Aurora.Insurance.Data;
 using Aurora.Insurance.Services;
 using Aurora.Insurance.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -29,40 +30,37 @@ namespace Aurora.Insurance.WebAPI
                     builder =>
                     {
                         builder.AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
                     });
             });
             services.AddControllers();
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddScoped<IS3BucketStorageClient, S3BucketStorageClient>();
-            
+
             services.AddScoped<ICompanyServices, CompanyServices>();
             services.AddScoped<IPersonServices, PersonServices>();
             services.AddScoped<IAttachmentServices, AttachmentServices>();
-            
 
-            services.AddDbContext<Insurance.Data.InsuranceDb>(options => options.UseSqlServer(Configuration.GetConnectionString("InsuranceDbconnection"),
+
+            services.AddDbContext<InsuranceDb>(options => options.UseSqlServer(Configuration.GetConnectionString("InsuranceDbconnection"),
                 x => x.MigrationsAssembly("Aurora.Insurance.Data")));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app,
+            IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseRouting();
             app.UseCors();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

@@ -74,7 +74,6 @@ namespace Aurora.Insurance.Data
             builder.Property(p => p.Url).HasMaxLength(StandardStringLengths.Comment);
             builder.Property(p => p.FileName).HasMaxLength(StandardStringLengths.LongString);
             builder.Property(p => p.MimeType).HasMaxLength(StandardStringLengths.DefaultString);
-            
         }
     }
 }

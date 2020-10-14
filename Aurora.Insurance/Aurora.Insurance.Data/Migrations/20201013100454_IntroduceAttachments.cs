@@ -8,8 +8,8 @@ namespace Aurora.Insurance.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Attachment",
-                columns: table => new
+                "Attachment",
+                table => new
                 {
                     AttachmentId = table.Column<Guid>(nullable: false, defaultValueSql: "newsequentialid()"),
                     Title = table.Column<string>(maxLength: 250, nullable: false),
@@ -19,16 +19,13 @@ namespace Aurora.Insurance.Data.Migrations
                     MimeType = table.Column<string>(maxLength: 50, nullable: true),
                     ContentLength = table.Column<long>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Attachment", x => x.AttachmentId);
-                });
+                constraints: table => { table.PrimaryKey("PK_Attachment", x => x.AttachmentId); });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Attachment");
+                "Attachment");
         }
     }
 }

@@ -5,10 +5,10 @@
 @inject IJSRuntime JsRuntime
 
 
-<ModalDialog @ref="modal" @key="TargetCompanyToEdit" >
+<ModalDialog @ref="modal" @key="TargetCompanyToEdit">
     <Title>Confirm company deletion</Title>
     <Body>
-        <p>Do you want to delete the company <b>@TargetCompanyToEdit.Description</b></p>
+    <p>Do you want to delete the company <b>@TargetCompanyToEdit.Description</b></p>
     </Body>
     <Footer>
         <button type="button" class="btn btn-danger" @onclick="DeleteCompany">Delete</button>
@@ -19,7 +19,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg">
-            <h1><i class="fas fa-building" />Insurance companies</h1>
+            <h1><i class="fas fa-building"/>Insurance companies</h1>
         </div>
         <div class="col-lg-auto">
             <button class="btn btn-primary" @onclick="AddCompany">
@@ -30,27 +30,26 @@
 </div>
 
 
-
 @if (CompanyList == null)
 {
-<div class="d-flex justify-content-center">
-    <div class="spinner-border text-primary" role="status">
-        <span class="sr-only">Loading...</span>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
     </div>
-</div>
- }
+}
 else
 {
-<table class="table">
-    <thead>
+    <table class="table">
+        <thead>
         <tr>
             <th>Code</th>
             <th>Description</th>
             <th>Modified</th>
             <th>Actions</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         @foreach (Company company in CompanyList)
         {
             Company currentCompany = company;
@@ -60,26 +59,27 @@ else
                 https://github.com/dotnet/aspnetcore/issues/9854
                 */
             var itemRef = $"/administration/companies/{currentCompany.Id}";
-<tr>
-    <td>
-        <NavLink href="@itemRef">
-            @company.Id
-        </NavLink>
-    </td>
-    <td>@company.Description</td>
-    <td>@((company.ModifiedOn??company.CreatedOn).GetValueOrDefault().ToShortDateString())</td>
-    <td>
-        <i class="fas fa-trash"
-           style="cursor: pointer"
-           @onclick="@(() => ConfirmDelete(currentCompany.Id))">
-        </i>
-    </td>
-</tr>
+            <tr>
+                <td>
+                    <NavLink href="@itemRef">
+                        @company.Id
+                    </NavLink>
+                </td>
+                <td>@company.Description</td>
+                <td>@((company.ModifiedOn ?? company.CreatedOn).GetValueOrDefault().ToShortDateString())</td>
+                <td>
+                    <i class="fas fa-trash"
+                       style="cursor: pointer"
+                       @onclick="@() => ConfirmDelete(currentCompany.Id)">
+                    </i>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>}
 
-@code { 
+@code {
     private Company[]? CompanyList;
 
     private ModalDialog modal;
@@ -97,7 +97,6 @@ else
 
     async Task DeleteCompany()
     {
-
         await Http.DeleteAsync($"api/companies/{TargetCompanyToEdit.Id}");
         modal.Close();
         await OnInitializedAsync();

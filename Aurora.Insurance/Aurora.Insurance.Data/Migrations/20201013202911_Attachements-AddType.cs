@@ -7,16 +7,16 @@ namespace Aurora.Insurance.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Type",
-                table: "Attachment",
+                "Type",
+                "Attachment",
                 nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Type",
-                table: "Attachment");
+                "Type",
+                "Attachment");
         }
     }
 }

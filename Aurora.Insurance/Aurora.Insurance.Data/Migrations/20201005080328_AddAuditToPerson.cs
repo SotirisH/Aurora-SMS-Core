@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Aurora.Insurance.Data.Migrations
 {
@@ -8,30 +8,30 @@ namespace Aurora.Insurance.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "CreatedBy",
-                table: "Person",
+                "CreatedBy",
+                "Person",
                 maxLength: 50,
                 nullable: true);
 
             migrationBuilder.AddColumn<DateTime>(
-                name: "CreatedOn",
-                table: "Person",
+                "CreatedOn",
+                "Person",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "ModifiedBy",
-                table: "Person",
+                "ModifiedBy",
+                "Person",
                 maxLength: 50,
                 nullable: true);
 
             migrationBuilder.AddColumn<DateTime>(
-                name: "ModifiedOn",
-                table: "Person",
+                "ModifiedOn",
+                "Person",
                 nullable: true);
 
             migrationBuilder.AddColumn<byte[]>(
-                name: "RowVersion",
-                table: "Person",
+                "RowVersion",
+                "Person",
                 rowVersion: true,
                 nullable: true);
         }
@@ -39,24 +39,24 @@ namespace Aurora.Insurance.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "CreatedBy",
-                table: "Person");
+                "CreatedBy",
+                "Person");
 
             migrationBuilder.DropColumn(
-                name: "CreatedOn",
-                table: "Person");
+                "CreatedOn",
+                "Person");
 
             migrationBuilder.DropColumn(
-                name: "ModifiedBy",
-                table: "Person");
+                "ModifiedBy",
+                "Person");
 
             migrationBuilder.DropColumn(
-                name: "ModifiedOn",
-                table: "Person");
+                "ModifiedOn",
+                "Person");
 
             migrationBuilder.DropColumn(
-                name: "RowVersion",
-                table: "Person");
+                "RowVersion",
+                "Person");
         }
     }
 }

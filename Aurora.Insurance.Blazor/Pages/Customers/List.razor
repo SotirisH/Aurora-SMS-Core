@@ -7,7 +7,7 @@
 <ModalDialog @ref="modal" @key="TargetResourceToEdit">
     <Title>Confirm company deletion</Title>
     <Body>
-        <p>Do you want to delete the customer <b>@TargetResourceToEdit.LastName</b></p>
+    <p>Do you want to delete the customer <b>@TargetResourceToEdit.LastName</b></p>
     </Body>
     <Footer>
         <button type="button" class="btn btn-danger" @onclick="DeleteCustomer">Delete</button>
@@ -30,53 +30,57 @@
 
 @if (PersonList == null)
 {
-<div class="d-flex justify-content-center">
-    <div class="spinner-border text-primary" role="status">
-        <span class="sr-only">Loading...</span>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
     </div>
-</div> }
+}
 else
 {
-<div style=" height: auto;
+    <div style=" height: auto;
         max-height: 150%;
         overflow: auto;">
-    <table class="table">
-        <thead>
+        <table class="table">
+            <thead>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
                 <th>Actions</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
 
             @foreach (Person customer in PersonList)
             {
                 Person currentcustomer = customer;
                 var itemRef = $"/customers/{currentcustomer.Id}";
-<tr>
-    <td>
-        <NavLink href="@itemRef">
-            @currentcustomer.Id
-        </NavLink>
-    </td>
-    <td>@(currentcustomer.LastName + " " + @currentcustomer.FirstName)</td>
+                <tr>
+                    <td>
+                        <NavLink href="@itemRef">
+                            @currentcustomer.Id
+                        </NavLink>
+                    </td>
+                    <td>@(currentcustomer.LastName + " " + currentcustomer.FirstName)</td>
 
-    <td>
-        <i class="fas fa-trash"
-           style="cursor: pointer"
-           @onclick="@(() => ConfirmDelete(currentcustomer.Id))">
-        </i>
-    </td>
-</tr>}
-        </tbody>
-    </table>
-</div>}
+                    <td>
+                        <i class="fas fa-trash"
+                           style="cursor: pointer"
+                           @onclick="@() => ConfirmDelete(currentcustomer.Id)">
+                        </i>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
 
-@code { private Person[]? PersonList = default!;
+@code {
+    private Person[]? PersonList;
 
-    private ModalDialog modal = default!;
-    private Person TargetResourceToEdit { get; set; } = new Person();
+    private readonly ModalDialog modal = default!;
+    private Person TargetResourceToEdit { get; } = new Person();
 
     protected override async Task OnInitializedAsync()
     {
@@ -90,10 +94,10 @@ else
 
     async Task DeleteCustomer()
     {
-
     }
 
     void ConfirmDelete(int personId)
     {
+    }
 
-    } }
+}

@@ -1,8 +1,8 @@
-﻿using Aurora.Insurance.EFModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Aurora.Insurance.EFModel;
 
 namespace Aurora.Insurance.Services.Interfaces
 {
@@ -16,7 +16,8 @@ namespace Aurora.Insurance.Services.Interfaces
         /// <returns></returns>
         Task<IEnumerable<Attachment>> GetByIds(IList<Guid> ids);
 
-        Task<Attachment> CreateOne(Attachment attachment, Stream file);
+        Task<Attachment> CreateOne(Attachment attachment,
+            Stream file);
 
         Task<Attachment> UpdateOne(Attachment attachment);
 

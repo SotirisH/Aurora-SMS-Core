@@ -1,9 +1,9 @@
-﻿using Aurora.Insurance.EFModel;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Aurora.Insurance.EFModel;
 using Aurora.Insurance.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Aurora.Insurance.WebAPI.Controllers
 {
@@ -15,7 +15,7 @@ namespace Aurora.Insurance.WebAPI.Controllers
 
         public CompaniesController(ICompanyServices companyServices)
         {
-            this._companyServices = companyServices;
+            _companyServices = companyServices;
         }
 
         [HttpGet]
@@ -27,11 +27,12 @@ namespace Aurora.Insurance.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Company>> Get(string id)
         {
-            var resource = await _companyServices.GetOne(id);
+            Company resource = await _companyServices.GetOne(id);
             if (resource != null)
             {
                 return Ok(resource);
             }
+
             return NotFound();
         }
 
@@ -41,14 +42,15 @@ namespace Aurora.Insurance.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<ActionResult<Company>> Post([FromBody] Company value)
         {
-            var result = await _companyServices.CreateOne(value);
+            Company result = await _companyServices.CreateOne(value);
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(string id, [FromBody] Company value)
+        public async Task<ActionResult> Put(string id,
+            [FromBody] Company value)
         {
-            var result = await _companyServices.UpdateOne(value);
+            Company result = await _companyServices.UpdateOne(value);
             return NoContent();
         }
 

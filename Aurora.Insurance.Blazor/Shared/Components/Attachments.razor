@@ -1,6 +1,6 @@
 ﻿@using Aurora.Insurance.EFModel
+@using System.Net.Http.Headers
 @inject HttpClient Http
-@using System.IO;
 
 <div class="container">
     <div class="row">
@@ -11,98 +11,103 @@
             <label for="upload-attachement" class="btn btn-primary">
                 Add
             </label>
-            <InputFile OnChange="HandleFileSelected" name="upload-attachement" id="upload-attachement" @attributes="InputAttributes" />
+            <InputFile OnChange="HandleFileSelected" name="upload-attachement" id="upload-attachement" @attributes="InputAttributes"/>
         </div>
     </div>
 </div>
 
 @if (AttachmentsList == null)
 {
-<div class="d-flex justify-content-center">
-    <div class="spinner-border text-primary" role="status">
-        <span class="sr-only">Loading...</span>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
     </div>
-</div> }
+}
 else
 {
-<div style=" height: auto;
+    <div style=" height: auto;
         max-height: 150%;
         overflow: auto;">
-    <table class="table">
-        <thead>
+        <table class="table">
+            <thead>
             <tr>
                 <th>Title</th>
                 <th>Type</th>
                 <th>Actions</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
 
             @foreach (Attachment attachment in AttachmentsList)
             {
                 Attachment currentAttachment = attachment;
-<tr>
-    <td>
-        <a href="@currentAttachment.Url" target="_blank">@currentAttachment.Title</a>
-    </td>
-    <td>@currentAttachment.Type</td>
+                <tr>
+                    <td>
+                        <a href="@currentAttachment.Url" target="_blank">@currentAttachment.Title</a>
+                    </td>
+                    <td>@currentAttachment.Type</td>
 
-    <td>
-        <i class="fas fa-trash"
-           style="cursor: pointer"
-           @onclick="@(() => ConfirmDelete(currentAttachment.AttachmentId))">
-        </i>
-    </td>
-</tr>}
-        </tbody>
-    </table>
-</div>}
+                    <td>
+                        <i class="fas fa-trash"
+                           style="cursor: pointer"
+                           @onclick="@() => ConfirmDelete(currentAttachment.AttachmentId)">
+                        </i>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
 
-@code { public Dictionary<string, object> InputAttributes { get; set; } =
-            new Dictionary<string, object>()
-            {
+@code {
 
-            { "class", "hide" }
-
+    public Dictionary<string, object> InputAttributes { get; set; } =
+        new Dictionary<string, object>
+        {
+            {"class", "hide"}
         };
-            private Attachment[]? AttachmentsList = default!;
-            protected override async Task OnInitializedAsync()
+
+    private Attachment[]? AttachmentsList = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAttachments();
+    }
+
+    private async Task LoadAttachments()
+    {
+        AttachmentsList = await Http.GetFromJsonAsync<Attachment[]>("api/persons/1/attachments");
+    }
+
+    void ConfirmDelete(Guid AttachmentId)
+    {
+    }
+
+    private async Task HandleFileSelected(IFileListEntry[] files)
+    {
+        IFileListEntry? file = files.First();
+        var fileContent = new StreamContent(file.Data)
+        {
+            Headers =
             {
-                await LoadAttachments();
+                ContentLength = file.Size,
+                ContentType = new MediaTypeHeaderValue(file.Type)
             }
+        };
 
-            private async Task LoadAttachments()
-            {
-                AttachmentsList = await Http.GetFromJsonAsync<Attachment[]>("api/persons/1/attachments");
-            }
+        var formDataContent = new MultipartFormDataContent();
+        formDataContent.Add(fileContent, "file", file.Name); // file
+        formDataContent.Add(new StringContent("type"), "Generic"); // form input
 
-            void ConfirmDelete(Guid AttachmentId)
-            {
+        HttpResponseMessage? result = await Http.PostAsync($"api/persons/1/attachments/{file.Name}", formDataContent);
+        if (result.IsSuccessStatusCode)
+        {
+            AttachmentsList = null;
+            StateHasChanged();
+            await LoadAttachments();
+        }
+    }
 
-            }
-
-            private async Task HandleFileSelected(IFileListEntry[] files)
-            {
-                var file = files.First();
-                var fileContent = new StreamContent(file.Data)
-                {
-                    Headers =
-           {
-               ContentLength = file.Size,
-               ContentType =  new System.Net.Http.Headers.MediaTypeHeaderValue(file.Type)
-           }
-                };
-
-                var formDataContent = new MultipartFormDataContent();
-                formDataContent.Add(fileContent, "file", file.Name);          // file
-                formDataContent.Add(new StringContent("type"), "Generic");   // form input
-
-                var result = await Http.PostAsync($"api/persons/1/attachments/{file.Name}", formDataContent);
-                if (result.IsSuccessStatusCode)
-                {
-                    AttachmentsList = null;
-                    StateHasChanged();
-                    await LoadAttachments();
-                }
-
-            } }
+}

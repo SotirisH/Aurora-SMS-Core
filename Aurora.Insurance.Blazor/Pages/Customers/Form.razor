@@ -1,9 +1,10 @@
 ﻿@page "/customers/new"
 @page "/customers/{personId:int}"
+@using Aurora.Insurance.EFModel
+@using System.IO
 
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
-@using System.IO;
 
 
 <h3>@Title</h3>
@@ -28,7 +29,7 @@
                     First name
                 </label>
                 <div>
-                    <InputText @bind-Value="Customer.FirstName" class="form-control" />
+                    <InputText @bind-Value="Customer.FirstName" class="form-control"/>
                 </div>
             </div>
             <div class="form-group col-4">
@@ -36,7 +37,7 @@
                     Last name *
                 </label>
                 <div>
-                    <InputText @bind-Value="Customer.LastName" class="form-control" />
+                    <InputText @bind-Value="Customer.LastName" class="form-control"/>
                 </div>
             </div>
             <div class="form-group col-4">
@@ -44,7 +45,7 @@
                     Fathes's name
                 </label>
                 <div>
-                    <InputText @bind-Value="Customer.FatherName" class="form-control" />
+                    <InputText @bind-Value="Customer.FatherName" class="form-control"/>
                 </div>
             </div>
         </div>
@@ -54,7 +55,7 @@
                     Date of birth
                 </label>
                 <div>
-                    <InputDate @bind-Value="Customer.BirthDate" class="form-control" />
+                    <InputDate @bind-Value="Customer.BirthDate" class="form-control"/>
                 </div>
             </div>
             <div class="form-group col-6">
@@ -62,7 +63,7 @@
                     Tax Id
                 </label>
                 <div>
-                    <InputText @bind-Value="Customer.TaxId" class="form-control" />
+                    <InputText @bind-Value="Customer.TaxId" class="form-control"/>
                 </div>
             </div>
         </div>
@@ -73,7 +74,7 @@
                 Address
             </label>
             <div>
-                <InputTextArea @bind-Value="Customer.Address" rows="3" class="form-control" />
+                <InputTextArea @bind-Value="Customer.Address" rows="3" class="form-control"/>
             </div>
         </div>
         <div class="form-group col">
@@ -81,7 +82,7 @@
                 Email Address
             </label>
             <div>
-                <InputText @bind-Value="Customer.EmailAddress" class="form-control" />
+                <InputText @bind-Value="Customer.EmailAddress" class="form-control"/>
             </div>
         </div>
     </div>
@@ -90,65 +91,65 @@
 <div class="section">
     <Attachments ></Attachments>
 </div>
-    
 
-    <div class="float-right">
-        <button type="submit" form="customerForm" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-light" @onclick="NavigateBack">Cancel</button>
-    </div>
 
-    @code { [Parameter]
-        public int? PersonId { get; set; }
-        private EFModel.Person Customer = new EFModel.Person();
-        private bool CreateMode => PersonId == null;
-        private string Title => CreateMode ? "New Customer" : $"Edit {Customer.LastName}";
-        //private string Base64Logo => $"data:image/png;base64,{Customer.LogoData}";
+<div class="float-right">
+    <button type="submit" form="customerForm" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-light" @onclick="NavigateBack">Cancel</button>
+</div>
 
-        protected override async Task OnInitializedAsync()
+@code {
+
+    [Parameter]
+    public int? PersonId { get; set; }
+
+    private Person Customer = new Person();
+    private bool CreateMode => PersonId == null;
+    private string Title => CreateMode ? "New Customer" : $"Edit {Customer.LastName}";
+    //private string Base64Logo => $"data:image/png;base64,{Customer.LogoData}";
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (PersonId == null)
         {
-            if (PersonId == null)
-            {
-                Customer = new EFModel.Person();
-                return;
-            }
-            else
-            {
-                Customer = await Http.GetFromJsonAsync<Aurora.Insurance.EFModel.Person>($"api/persons/{PersonId}");
-            }
+            Customer = new Person();
         }
-
-        private async Task UpsertRecord()
+        else
         {
-            HttpResponseMessage httpResponseMessage;
-            if (CreateMode)
-            {
-                httpResponseMessage = await Http.PostAsJsonAsync("api/persons", Customer);
-
-            }
-            else
-            {
-                httpResponseMessage = await Http.PutAsJsonAsync($"api/persons/{Customer.Id}", Customer);
-            }
-            NavigateBack();
-
+            Customer = await Http.GetFromJsonAsync<Person>($"api/persons/{PersonId}");
         }
+    }
 
-
-        private void NavigateBack()
+    private async Task UpsertRecord()
+    {
+        HttpResponseMessage httpResponseMessage;
+        if (CreateMode)
         {
-            NavigationManager.NavigateTo("/customers/list");
+            httpResponseMessage = await Http.PostAsJsonAsync("api/persons", Customer);
         }
-
-        private async Task HandleFileSelected(IFileListEntry[] files)
+        else
         {
+            httpResponseMessage = await Http.PutAsJsonAsync($"api/persons/{Customer.Id}", Customer);
+        }
+        NavigateBack();
+    }
 
-            var file = files.First();
-            using (var memStream = new System.IO.MemoryStream())
-            {
-                await file.Data.CopyToAsync(memStream);
-                memStream.Seek(0, SeekOrigin.Begin);
-                //Customer.LogoData = Convert.ToBase64String(memStream.ToArray());
-                StateHasChanged();
-            }
-        } }
 
+    private void NavigateBack()
+    {
+        NavigationManager.NavigateTo("/customers/list");
+    }
+
+    private async Task HandleFileSelected(IFileListEntry[] files)
+    {
+        IFileListEntry? file = files.First();
+        using (var memStream = new MemoryStream())
+        {
+            await file.Data.CopyToAsync(memStream);
+            memStream.Seek(0, SeekOrigin.Begin);
+    //Customer.LogoData = Convert.ToBase64String(memStream.ToArray());
+            StateHasChanged();
+        }
+    }
+
+}

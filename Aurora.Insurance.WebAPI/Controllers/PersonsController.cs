@@ -1,8 +1,8 @@
-﻿using Aurora.Insurance.EFModel;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Aurora.Insurance.EFModel;
 using Aurora.Insurance.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Aurora.Insurance.WebAPI.Controllers
 {
@@ -14,7 +14,7 @@ namespace Aurora.Insurance.WebAPI.Controllers
 
         public PersonsController(IPersonServices personServices)
         {
-            this._personServices = personServices;
+            _personServices = personServices;
         }
 
         [HttpGet]
@@ -26,25 +26,27 @@ namespace Aurora.Insurance.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Company>> Get(int id)
         {
-            var resource = await _personServices.GetOne(id);
+            Person resource = await _personServices.GetOne(id);
             if (resource != null)
             {
                 return Ok(resource);
             }
+
             return NotFound();
         }
 
         [HttpPost]
         public async Task<ActionResult<Company>> Post([FromBody] Person value)
         {
-            var result = await _personServices.CreateOne(value);
+            Person result = await _personServices.CreateOne(value);
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(string id, [FromBody] Person value)
+        public async Task<ActionResult> Put(string id,
+            [FromBody] Person value)
         {
-            var result = await _personServices.UpdateOne(value);
+            Person result = await _personServices.UpdateOne(value);
             return NoContent();
         }
 

@@ -1,8 +1,9 @@
 ﻿@page "/administration/companies"
 @page "/administration/companies/{companyId}"
+@using Aurora.Insurance.EFModel
+@using System.IO
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
-@using System.IO;
 
 <h3>@Title</h3>
 <EditForm Model="@CompanyToEdit"
@@ -16,7 +17,7 @@
                 Code*
             </label>
             <div>
-                <InputText @bind-Value="CompanyToEdit.Id" class="form-control" readonly="@(!CreateMode)" />
+                <InputText @bind-Value="CompanyToEdit.Id" class="form-control" readonly="@(!CreateMode)"/>
                 <ValidationMessage For="() => CompanyToEdit.Id"></ValidationMessage>
             </div>
         </div>
@@ -25,14 +26,14 @@
                 Description*
             </label>
             <div>
-                <InputText @bind-Value="CompanyToEdit.Description" class="form-control" />
+                <InputText @bind-Value="CompanyToEdit.Description" class="form-control"/>
                 <ValidationMessage For="() => CompanyToEdit.Description"></ValidationMessage>
             </div>
         </div>
         <div class="form-group col">
             <div class="row col">
                 <div>
-                    <InputCheckbox @bind-Value="CompanyToEdit.IsActive" />
+                    <InputCheckbox @bind-Value="CompanyToEdit.IsActive"/>
                 </div>
                 <label class="col-auto">
                     Active
@@ -46,10 +47,10 @@
             </label>
             <div class="form-row">
                 <div class="col-2">
-                    <img class="round-border" src="@Base64Logo" />
+                    <img class="round-border" src="@Base64Logo"/>
                 </div>
                 <div>
-                    <InputFile OnChange="HandleFileSelected" />
+                    <InputFile OnChange="HandleFileSelected"/>
                 </div>
             </div>
         </div>
@@ -60,9 +61,12 @@
     </div>
 </EditForm>
 
-@code { [Parameter]
+@code {
+
+    [Parameter]
     public string? CompanyId { get; set; }
-    private EFModel.Company CompanyToEdit = new EFModel.Company();
+
+    private Company CompanyToEdit = new Company();
     private bool CreateMode => CompanyId == null;
     private string Title => CreateMode ? "New Company" : $"Edit {CompanyToEdit.Description}";
     private string Base64Logo => $"data:image/png;base64,{CompanyToEdit.LogoData}";
@@ -71,12 +75,11 @@
     {
         if (CompanyId == null)
         {
-            CompanyToEdit = new EFModel.Company();
-            return;
+            CompanyToEdit = new Company();
         }
         else
         {
-            CompanyToEdit = await Http.GetFromJsonAsync<Aurora.Insurance.EFModel.Company>($"api/companies/{CompanyId}");
+            CompanyToEdit = await Http.GetFromJsonAsync<Company>($"api/companies/{CompanyId}");
         }
     }
 
@@ -86,14 +89,12 @@
         if (CreateMode)
         {
             httpResponseMessage = await Http.PostAsJsonAsync("api/companies", CompanyToEdit);
-
         }
         else
         {
             httpResponseMessage = await Http.PutAsJsonAsync($"api/companies/{CompanyToEdit.Id}", CompanyToEdit);
         }
         NavigateBack();
-
     }
 
 
@@ -104,13 +105,14 @@
 
     private async Task HandleFileSelected(IFileListEntry[] files)
     {
-        var file = files.First();
-        using (var memStream = new System.IO.MemoryStream())
+        IFileListEntry? file = files.First();
+        using (var memStream = new MemoryStream())
         {
             await file.Data.CopyToAsync(memStream);
             memStream.Seek(0, SeekOrigin.Begin);
             CompanyToEdit.LogoData = Convert.ToBase64String(memStream.ToArray());
             StateHasChanged();
         }
-    } }
+    }
 
+}

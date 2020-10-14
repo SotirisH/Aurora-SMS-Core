@@ -1,10 +1,9 @@
-﻿using Aurora.Insurance.EFModel;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Aurora.Insurance.EFModel;
 using Aurora.Insurance.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Aurora.Insurance.WebAPI.Controllers
 {
@@ -20,7 +19,7 @@ namespace Aurora.Insurance.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Uploads a file into the server and creates an attachment record
+        ///     Uploads a file into the server and creates an attachment record
         /// </summary>
         /// <param name="endpoint">The name of the resource that this attachment will be under</param>
         /// <param name="entityId">The Id of the parent resource</param>
@@ -41,16 +40,16 @@ namespace Aurora.Insurance.WebAPI.Controllers
             [FromForm] string type,
             [FromForm] IFormFile file)
         {
-
-            var savedAttachment = await attachmentServices.CreateOne(new Attachment
-            {
-                Title= string.IsNullOrWhiteSpace(title)?fileName: title,
-                Description= description,
-                Type = type,
-                FileName = fileName,
-                ContentLength = file.Length,
-                MimeType = file.ContentType,
-            }, file.OpenReadStream());
+            Attachment savedAttachment = await attachmentServices.CreateOne(new Attachment
+                {
+                    Title = string.IsNullOrWhiteSpace(title) ? fileName : title,
+                    Description = description,
+                    Type = type,
+                    FileName = fileName,
+                    ContentLength = file.Length,
+                    MimeType = file.ContentType
+                },
+                file.OpenReadStream());
             return Ok(savedAttachment);
         }
 

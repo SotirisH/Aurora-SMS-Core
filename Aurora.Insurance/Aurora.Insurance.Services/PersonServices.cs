@@ -1,10 +1,10 @@
-﻿using Aurora.Insurance.Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Aurora.Insurance.Data;
 using Aurora.Insurance.EFModel;
 using Aurora.Insurance.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aurora.Insurance.Services
 {
@@ -42,7 +42,7 @@ namespace Aurora.Insurance.Services
 
         public async Task DeleteOne(int id)
         {
-            var resourceToDelete = await GetOne(id);
+            Person resourceToDelete = await GetOne(id);
             _db.Remove(resourceToDelete);
             await _db.SaveChangesAsync();
         }

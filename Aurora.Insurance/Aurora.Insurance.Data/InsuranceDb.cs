@@ -26,6 +26,7 @@ namespace Aurora.Insurance.Data
         public virtual DbSet<Phone> Phones { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<Attachment> Attachments { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

@@ -1,10 +1,10 @@
-﻿using Aurora.Insurance.Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Aurora.Insurance.Data;
 using Aurora.Insurance.EFModel;
 using Aurora.Insurance.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aurora.Insurance.Services
 {
@@ -29,15 +29,7 @@ namespace Aurora.Insurance.Services
         public async Task<Company> CreateOne(Company company)
         {
             await _db.Companies.AddAsync(company);
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (System.Exception ex)
-            {
-
-                throw;
-            }
+            await _db.SaveChangesAsync();
 
             return company;
         }
@@ -51,7 +43,7 @@ namespace Aurora.Insurance.Services
 
         public async Task DeleteOne(string id)
         {
-            var resourceToDelete = await GetOne(id);
+            Company resourceToDelete = await GetOne(id);
             _db.Remove(resourceToDelete);
             await _db.SaveChangesAsync();
         }

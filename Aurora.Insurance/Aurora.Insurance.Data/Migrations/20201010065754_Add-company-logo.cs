@@ -7,14 +7,14 @@ namespace Aurora.Insurance.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "IsActive",
-                table: "Company",
+                "IsActive",
+                "Company",
                 nullable: false,
                 defaultValue: false);
 
             migrationBuilder.AddColumn<string>(
-                name: "LogoData",
-                table: "Company",
+                "LogoData",
+                "Company",
                 unicode: false,
                 nullable: true);
         }
@@ -22,12 +22,12 @@ namespace Aurora.Insurance.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsActive",
-                table: "Company");
+                "IsActive",
+                "Company");
 
             migrationBuilder.DropColumn(
-                name: "LogoData",
-                table: "Company");
+                "LogoData",
+                "Company");
         }
     }
 }

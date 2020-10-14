@@ -1,6 +1,6 @@
-﻿using Aurora.Insurance.EFModel;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Aurora.Insurance.EFModel;
 
 namespace Aurora.Insurance.Services.Interfaces
 {
