@@ -43,9 +43,12 @@ namespace Aurora.Insurance.WebAPI
             services.AddScoped<IAttachmentServices, AttachmentServices>();
 
 
-            services.AddDbContext<InsuranceDb>(options => options.UseSqlServer(Configuration.GetConnectionString("InsuranceDbconnection"),
+            services.AddDbContext<InsuranceDb>(options => options.UseSqlServer(Configuration.GetConnectionString("InsuranceDbConnection"),
                 x => x.MigrationsAssembly("Aurora.Insurance.Data")));
+            
+           
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
@@ -58,9 +61,12 @@ namespace Aurora.Insurance.WebAPI
 
             app.UseRouting();
             app.UseCors();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
+        
+
     }
 }

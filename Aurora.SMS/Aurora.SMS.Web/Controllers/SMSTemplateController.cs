@@ -1,4 +1,5 @@
-﻿using Aurora.SMS.Service;
+﻿using System;
+using Aurora.SMS.Service;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
@@ -67,6 +68,11 @@ namespace Aurora.SMS.Web.Controllers
         {
 
             return View("CreateEdit", mapper.Map<Models.SmsTemplate.SmsTemplateViewModel>(_templateServices.GetById(id)));
+        }
+        
+        public IActionResult Delete(int id)
+        {
+            throw new  NotImplementedException();
         }
 
     }

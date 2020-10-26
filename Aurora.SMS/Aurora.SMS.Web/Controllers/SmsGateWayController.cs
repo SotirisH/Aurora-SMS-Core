@@ -19,10 +19,6 @@ namespace Aurora.SMS.Web.Controllers
             _sMSServices = sMSServices;
             _cookieHelper = cookieHelper;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         public ViewResult Change()
         {

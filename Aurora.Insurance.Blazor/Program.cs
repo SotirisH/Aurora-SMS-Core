@@ -5,6 +5,7 @@ using Aurora.Insurance.EFModel;
 using Aurora.Insurance.Validation.Validators;
 using FluentValidation;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Aurora.Insurance.Blazor
@@ -15,7 +16,13 @@ namespace Aurora.Insurance.Blazor
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
-
+            //In order to authenticate to IS4:
+            // https://github.com/dotnet/aspnetcore/issues/21327
+            builder.Services.AddOidcAuthentication(options =>
+            {
+                builder.Configuration.Bind("Local", options.ProviderOptions);
+            });
+            
             builder.Services.AddScoped(sp => new HttpClient
             {
                 BaseAddress = new Uri("http://localhost:49906")

@@ -3,7 +3,7 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
-
+@attribute [Authorize]
 
 <ModalDialog @ref="modal" @key="TargetCompanyToEdit">
     <Title>Confirm company deletion</Title>
