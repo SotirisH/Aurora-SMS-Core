@@ -18,9 +18,16 @@ namespace Aurora.Insurance.Blazor
             builder.RootComponents.Add<App>("app");
             //In order to authenticate to IS4:
             // https://github.com/dotnet/aspnetcore/issues/21327
-            builder.Services.AddOidcAuthentication(options =>
+            // builder.Services.AddOidcAuthentication(options =>
+            // {
+            //     builder.Configuration.Bind("Local", options.ProviderOptions);
+            // });
+            
+            
+            builder.Services.AddApiAuthorization(options =>
             {
-                builder.Configuration.Bind("Local", options.ProviderOptions);
+                options.ProviderOptions.ConfigurationEndpoint = "http://localhost:51084";
+                options.AuthenticationPaths.
             });
             
             builder.Services.AddScoped(sp => new HttpClient
