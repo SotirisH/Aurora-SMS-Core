@@ -2,10 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Aurora.Core\Aurora.Core.Data\Aurora.Core.Data.csproj" />
+      <PackageReference Include="Aurora.Core.Data.Abstractions" Version="1.0.0" />
     </ItemGroup>
 
 </Project>
