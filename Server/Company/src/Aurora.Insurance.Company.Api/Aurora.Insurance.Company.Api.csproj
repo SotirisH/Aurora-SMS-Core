@@ -9,5 +9,6 @@
     <ItemGroup>
       <ProjectReference Include="..\Aurora.Insurance.Company.Domain\Aurora.Insurance.Company.Domain.csproj" />
       <ProjectReference Include="..\Aurora.Insurance.Company.Infrastructure\Aurora.Insurance.Company.Infrastructure.csproj" />
+      <ProjectReference Include="..\Aurora.Insurance.Company.Services\Aurora.Insurance.Company.Services.csproj" />
     </ItemGroup>
 </Project>

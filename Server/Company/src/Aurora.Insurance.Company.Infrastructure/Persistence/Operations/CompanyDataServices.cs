@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Aurora.Insurance.Company.Domain.Interfaces.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aurora.Insurance.Company.Infrastructure.Persistence.Operations
 {
-    public class ICompanyDataServices : Domain.Interfaces.Infrastructure.ICompanyDataServices
+    public class CompanyDataServices : ICompanyDataServices
     {
         private readonly LocalDbContext _db;
 
-        public ICompanyDataServices(LocalDbContext db)
+        public CompanyDataServices(LocalDbContext db)
         {
             _db = db;
         }

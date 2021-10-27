@@ -1,5 +1,6 @@
 using Aurora.Insurance.Company.Domain.Interfaces.Application;
 using Aurora.Insurance.Company.Infrastructure;
+using Aurora.Insurance.Company.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
