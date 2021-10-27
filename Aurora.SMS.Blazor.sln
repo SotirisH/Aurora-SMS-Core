@@ -61,6 +61,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Insurance.Company.Do
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Insurance.Company.Infrastructure", "Server\Company\Aurora.Insurance.Company.Infrastructure\Aurora.Insurance.Company.Infrastructure.csproj", "{B2FC4D27-A2CC-45CE-B92A-E88000E5FFDC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Insurance.Company.Api", "Server\Company\Aurora.Insurance.Company.Api\Aurora.Insurance.Company.Api.csproj", "{4436C40A-B800-4AFC-A8D6-CD53B9ED4C93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Insurance.Company.Services", "Server\Company\Aurora.Insurance.Company.Services\Aurora.Insurance.Company.Services.csproj", "{38648B24-859D-4AA0-82B6-857F78EAD35F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,6 +159,14 @@ Global
 		{B2FC4D27-A2CC-45CE-B92A-E88000E5FFDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2FC4D27-A2CC-45CE-B92A-E88000E5FFDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2FC4D27-A2CC-45CE-B92A-E88000E5FFDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4436C40A-B800-4AFC-A8D6-CD53B9ED4C93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4436C40A-B800-4AFC-A8D6-CD53B9ED4C93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4436C40A-B800-4AFC-A8D6-CD53B9ED4C93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4436C40A-B800-4AFC-A8D6-CD53B9ED4C93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38648B24-859D-4AA0-82B6-857F78EAD35F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38648B24-859D-4AA0-82B6-857F78EAD35F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38648B24-859D-4AA0-82B6-857F78EAD35F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38648B24-859D-4AA0-82B6-857F78EAD35F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -183,6 +195,8 @@ Global
 		{112756AE-4C6E-4B14-9FA2-134F039A9FB9} = {4B57A2E3-7C2E-4193-AADC-17AB0054B293}
 		{A17001E1-2BEC-49B5-9DD4-D43CE9CCDBBC} = {112756AE-4C6E-4B14-9FA2-134F039A9FB9}
 		{B2FC4D27-A2CC-45CE-B92A-E88000E5FFDC} = {112756AE-4C6E-4B14-9FA2-134F039A9FB9}
+		{4436C40A-B800-4AFC-A8D6-CD53B9ED4C93} = {112756AE-4C6E-4B14-9FA2-134F039A9FB9}
+		{38648B24-859D-4AA0-82B6-857F78EAD35F} = {112756AE-4C6E-4B14-9FA2-134F039A9FB9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0CDB330D-D918-4832-8709-8AA73E75B88F}

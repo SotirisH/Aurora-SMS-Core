@@ -9,28 +9,28 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 namespace Aurora.Core.Data
 {
     /// <summary>
-    /// Extended DbContext that adds timestamps on the EntityBase classes when they are saved
+    ///     Extended DbContext that adds timestamps on the EntityBase classes when they are saved
     /// </summary>
     public abstract class AuditableDbContext : DbContext, ISupportsUnitOfWork
     {
         private readonly ICurrentUserService _currentUserService;
 
         protected AuditableDbContext()
-        { }
+        {
+        }
 
         protected AuditableDbContext(DbContextOptions options,
-                                    ICurrentUserService currentUserService) : base(options)
+            ICurrentUserService currentUserService) : base(options)
         {
             _currentUserService = currentUserService ?? throw new ArgumentNullException("currentUserService");
         }
 
         /// <summary>
-        /// Validates all models, adds tracking record and saves the changes
-        /// This is called last when we save the changes
+        ///     Validates all models, adds tracking record and saves the changes
+        ///     This is called last when we save the changes
         /// </summary>
         /// <param name="acceptAllChangesOnSuccess"></param>
         /// <returns></returns>
-
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             ValidateModel();
@@ -45,8 +45,8 @@ namespace Aurora.Core.Data
         }
 
         /// <summary>
-        /// All entities are being audited.
-        /// This overload should be used instead of the original one
+        ///     All entities are being audited.
+        ///     This overload should be used instead of the original one
         /// </summary>
         /// <param name="userName">The name of the user that perform the actions</param>
         /// <returns></returns>
@@ -63,6 +63,7 @@ namespace Aurora.Core.Data
                     entry.Entity.CreatedOn = DateTime.Now;
                     entry.Entity.CreatedBy = currentUser;
                 }
+
                 foreach (EntityEntry<EntityBase> entry in changeSet.Where(c => c.State == EntityState.Modified))
                 {
                     entry.Entity.ModifiedOn = DateTime.Now;
@@ -72,12 +73,12 @@ namespace Aurora.Core.Data
         }
 
         /// <summary>
-        /// Validated the model. 
-        /// An ValidationException is thrown if the validation doesn't pass
+        ///     Validated the model.
+        ///     An ValidationException is thrown if the validation doesn't pass
         /// </summary>
         /// <remarks>
-        /// https://blogs.msmvps.com/ricardoperes/2016/04/25/implementing-missing-features-in-entity-framework-core-part-3/</remarks>
-        /// 
+        ///     https://blogs.msmvps.com/ricardoperes/2016/04/25/implementing-missing-features-in-entity-framework-core-part-3/
+        /// </remarks>
         public void ValidateModel()
         {
             var serviceProvider = this.GetService<IServiceProvider>();
