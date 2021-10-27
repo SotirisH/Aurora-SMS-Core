@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.SMS.Blazor", "Aurora.SMS.Blazor\Aurora.SMS.Blazor.csproj", "{7C7D95F3-F01E-4C4F-9B1F-93C3407FDE00}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorClassLibrary1", "RazorClassLibrary1\RazorClassLibrary1.csproj", "{03512402-3A75-4BE3-910F-1010866AA27B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aurora.Core", "Aurora.Core", "{B1C835B8-EB42-41C4-BC35-3478E170FA19}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aurora.Core.Data", "Aurora.Core\Aurora.Core.Data\Aurora.Core.Data.csproj", "{4733A10C-CB53-4775-A221-EBC6A35FF9A9}"
@@ -67,10 +65,6 @@ Global
 		{7C7D95F3-F01E-4C4F-9B1F-93C3407FDE00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C7D95F3-F01E-4C4F-9B1F-93C3407FDE00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C7D95F3-F01E-4C4F-9B1F-93C3407FDE00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{03512402-3A75-4BE3-910F-1010866AA27B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03512402-3A75-4BE3-910F-1010866AA27B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03512402-3A75-4BE3-910F-1010866AA27B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03512402-3A75-4BE3-910F-1010866AA27B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4733A10C-CB53-4775-A221-EBC6A35FF9A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4733A10C-CB53-4775-A221-EBC6A35FF9A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4733A10C-CB53-4775-A221-EBC6A35FF9A9}.Release|Any CPU.ActiveCfg = Release|Any CPU

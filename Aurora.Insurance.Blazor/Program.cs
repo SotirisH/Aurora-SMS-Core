@@ -27,7 +27,6 @@ namespace Aurora.Insurance.Blazor
             builder.Services.AddApiAuthorization(options =>
             {
                 options.ProviderOptions.ConfigurationEndpoint = "http://localhost:51084";
-                options.AuthenticationPaths.
             });
             
             builder.Services.AddScoped(sp => new HttpClient
