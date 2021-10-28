@@ -10,17 +10,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Insurance.Company.In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Insurance.Company.Api", "src\Aurora.Insurance.Company.Api\Aurora.Insurance.Company.Api.csproj", "{F105833D-7D89-4D8B-8BF6-E57236336E98}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{4F363E14-1D49-449F-ACEE-C79C99F47530}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{F8D68E71-949F-4DBB-A423-98E8EB4312F9}"
 ProjectSection(SolutionItems) = preProject
 	Dockerfile = Dockerfile
 	.dockerignore = .dockerignore
+	NuGet.Config = NuGet.Config
 EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Core.Data", "..\..\Aurora.Core\Aurora.Core.Data\Aurora.Core.Data.csproj", "{9E2185D8-2503-4CF1-871B-CA0503A50C38}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aurora.Core.Data.Abstractions", "..\..\Aurora.Core\Aurora.Core.Data.Abstractions\Aurora.Core.Data.Abstractions.csproj", "{EAA95204-B03A-45B4-B31A-44CEB1BDC2BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,21 +39,11 @@ Global
 		{F105833D-7D89-4D8B-8BF6-E57236336E98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F105833D-7D89-4D8B-8BF6-E57236336E98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F105833D-7D89-4D8B-8BF6-E57236336E98}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9E2185D8-2503-4CF1-871B-CA0503A50C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E2185D8-2503-4CF1-871B-CA0503A50C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E2185D8-2503-4CF1-871B-CA0503A50C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E2185D8-2503-4CF1-871B-CA0503A50C38}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EAA95204-B03A-45B4-B31A-44CEB1BDC2BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EAA95204-B03A-45B4-B31A-44CEB1BDC2BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EAA95204-B03A-45B4-B31A-44CEB1BDC2BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EAA95204-B03A-45B4-B31A-44CEB1BDC2BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6809A100-0AF9-44B6-8FE6-53C086EDA3E7} = {97534BC7-BB68-45EF-8466-5F679A007295}
 		{EDC43C2B-1CF2-4B3A-89A9-1A2202BA96A0} = {97534BC7-BB68-45EF-8466-5F679A007295}
 		{4082434B-139A-429A-8573-722225BE0CF0} = {97534BC7-BB68-45EF-8466-5F679A007295}
 		{F105833D-7D89-4D8B-8BF6-E57236336E98} = {97534BC7-BB68-45EF-8466-5F679A007295}
-		{9E2185D8-2503-4CF1-871B-CA0503A50C38} = {4F363E14-1D49-449F-ACEE-C79C99F47530}
-		{EAA95204-B03A-45B4-B31A-44CEB1BDC2BE} = {4F363E14-1D49-449F-ACEE-C79C99F47530}
 	EndGlobalSection
 EndGlobal

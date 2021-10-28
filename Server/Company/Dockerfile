@@ -5,16 +5,10 @@ EXPOSE 5001
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["Server/Company/Aurora.Insurance.Company.Api/Aurora.Insurance.Company.Api.csproj", "build-src/"]
-RUN dotnet restore "build-src/Aurora.Insurance.Company.Api.csproj"
-COPY . .
-WORKDIR "/build-src"
-RUN dotnet build "Aurora.Insurance.Company.Api.csproj" -c Release -o /app/build
-
-FROM build AS publish
-RUN dotnet publish "Aurora.Insurance.Company.Api.csproj" -c Release -o /app/publish
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Aurora.Insurance.Company.Api.dll"]
+COPY ["src/Aurora.Insurance.Company.Api/Aurora.Insurance.Company.Api.csproj", "src/Aurora.Insurance.Company.Api/"]
+COPY ["src/Aurora.Insurance.Company.Domain/Aurora.Insurance.Company.Domain.csproj", "src/Aurora.Insurance.Company.Domain/"]
+COPY ["src/Aurora.Insurance.Company.Infrastructure/Aurora.Insurance.Company.Infrastructure.csproj", "src/Aurora.Insurance.Company.Infrastructure/"]
+COPY ["src/Aurora.Insurance.Company.Services/Aurora.Insurance.Company.Services.csproj", "src/Aurora.Insurance.Company.Services/"]
+COPY ["*.sln", "./"]
+COPY ["NuGet.Config", "./"]
+RUN dotnet restore
