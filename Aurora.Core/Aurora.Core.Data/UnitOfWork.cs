@@ -10,7 +10,7 @@ namespace Aurora.Core.Data
     /// </summary>
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly HashSet<ISupportsUnitOfWork> _contexts = new HashSet<ISupportsUnitOfWork>();
+        private readonly HashSet<ISupportsUnitOfWork> _contexts = new();
 
         public void AddContext(ISupportsUnitOfWork context)
         {
