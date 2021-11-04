@@ -6,12 +6,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Interfaces\Application" />
-      <Folder Include="Interfaces\Infrastructure" />
+        <Folder Include="Interfaces\Application"/>
+        <Folder Include="Interfaces\Infrastructure"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Aurora.Core.Data.Abstractions" Version="1.0.0" />
+        <PackageReference Include="Aurora.Core.Data.Abstractions" Version="1.0.0"/>
     </ItemGroup>
 
 </Project>
