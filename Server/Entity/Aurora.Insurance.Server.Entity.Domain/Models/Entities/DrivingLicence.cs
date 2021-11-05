@@ -13,6 +13,6 @@ namespace Aurora.Insurance.Server.Entity.Domain.Models.Entities
         public string? Conditions { get; set; }
 
         public Guid ContactId { get; set; }
-        public virtual Customer Customer { get; set; }
+        public Customer Customer { get; set; }
     }
 }

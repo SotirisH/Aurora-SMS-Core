@@ -8,7 +8,7 @@ namespace Aurora.Insurance.Server.Entity.Domain.Models.Entities
         public Guid PhoneId { get; set; }
         public string Number { get; set; } = null!;
         public PhoneType PhoneType { get; set; }
-        public virtual Guid ContactId { get; set; }
-        public virtual Contact Contact { get; set; } = null!;
+        public Guid ContactId { get; set; }
+        public Contact Contact { get; set; } = null!;
     }
 }

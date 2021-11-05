@@ -14,17 +14,12 @@ namespace Aurora.Insurance.Server.Entity.Domain.Models.Entities
         public string TaxId { get; set; } = null!;
         public string EmailAddress { get; set; } = null!;
         public Address? Address { get; set; }
-        public virtual ICollection<Phone>? Phones { get; set; } = new List<Phone>();
+        public ICollection<Phone>? Phones { get; set; } = new List<Phone>();
         public Guid OrganizationId { get; set; }
 
         /// <summary>
         ///     Standard reference to the organization
         /// </summary>
-        public virtual Organization Organization { get; set; } = null!;
-
-        /// <summary>
-        ///     The user that represents this entity
-        /// </summary>
-        public Guid? UserId { get; set; }
+        public Organization Organization { get; set; } = null!;
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
 {
     [DbContext(typeof(LocalDbContext))]
-    [Migration("20211104065607_InitialCreate")]
+    [Migration("20211105211624_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,9 +111,6 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("ContactId");
 
                     b.HasIndex("OrganizationId");
@@ -163,9 +160,12 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("BrokerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("OrganizationId");
 
-                    b.ToTable("Organizations");
+                    b.ToTable("Organization");
                 });
 
             modelBuilder.Entity("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Phone", b =>
@@ -197,15 +197,8 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
                 {
                     b.HasBaseType("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Contact");
 
-                    b.Property<Guid>("AgentId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("IsBroker")
                         .HasColumnType("bit");
-
-                    b.HasIndex("AgentId")
-                        .IsUnique()
-                        .HasFilter("[AgentId] IS NOT NULL");
 
                     b.ToTable("Agent");
                 });
@@ -217,9 +210,7 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
                     b.Property<Guid>("AgentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("AgentId")
-                        .IsUnique()
-                        .HasFilter("[AgentId] IS NOT NULL");
+                    b.HasIndex("AgentId");
 
                     b.ToTable("Customer");
                 });
@@ -259,25 +250,26 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
 
             modelBuilder.Entity("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Agent", b =>
                 {
-                    b.HasOne("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Agent", null)
-                        .WithMany("Agents")
-                        .HasForeignKey("AgentId")
+                    b.HasOne("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Organization", null)
+                        .WithOne("Broker")
+                        .HasForeignKey("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Agent", "ContactId")
+                        .HasPrincipalKey("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Organization", "BrokerId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Contact", null)
-                        .WithOne()
-                        .HasForeignKey("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Agent", "ContactId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                    b.HasOne("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Agent", null)
+                        .WithMany("Agents")
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Customer", b =>
                 {
                     b.HasOne("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Agent", "Agent")
-                        .WithOne()
-                        .HasForeignKey("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Customer", "AgentId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .WithMany()
+                        .HasForeignKey("AgentId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Contact", null)
@@ -289,6 +281,7 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
                     b.HasOne("Aurora.Insurance.Server.Entity.Domain.Models.Entities.DrivingLicence", "DrivingLicence")
                         .WithOne("Customer")
                         .HasForeignKey("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Customer", "ContactId")
+                        .HasPrincipalKey("Aurora.Insurance.Server.Entity.Domain.Models.Entities.DrivingLicence", "ContactId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -307,6 +300,12 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
             modelBuilder.Entity("Aurora.Insurance.Server.Entity.Domain.Models.Entities.DrivingLicence", b =>
                 {
                     b.Navigation("Customer")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Organization", b =>
+                {
+                    b.Navigation("Broker")
                         .IsRequired();
                 });
 

@@ -23,17 +23,37 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DrivingLicence", x => x.DrivingLicenceId);
+                    table.UniqueConstraint("AK_DrivingLicence_ContactId", x => x.ContactId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Organizations",
+                name: "Organization",
                 columns: table => new
                 {
-                    OrganizationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    OrganizationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BrokerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Organizations", x => x.OrganizationId);
+                    table.PrimaryKey("PK_Organization", x => x.OrganizationId);
+                    table.UniqueConstraint("AK_Organization_BrokerId", x => x.BrokerId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Agent",
+                columns: table => new
+                {
+                    ContactId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsBroker = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Agent", x => x.ContactId);
+                    table.ForeignKey(
+                        name: "FK_Agent_Organization_ContactId",
+                        column: x => x.ContactId,
+                        principalTable: "Organization",
+                        principalColumn: "BrokerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -48,7 +68,6 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
                     TaxId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     EmailAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     OrganizationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ModifiedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -59,9 +78,9 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Contact", x => x.ContactId);
                     table.ForeignKey(
-                        name: "FK_Contact_Organizations_OrganizationId",
+                        name: "FK_Contact_Organization_OrganizationId",
                         column: x => x.OrganizationId,
-                        principalTable: "Organizations",
+                        principalTable: "Organization",
                         principalColumn: "OrganizationId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -89,27 +108,33 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Agent",
+                name: "Customer",
                 columns: table => new
                 {
                     ContactId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AgentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsBroker = table.Column<bool>(type: "bit", nullable: false)
+                    AgentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Agent", x => x.ContactId);
+                    table.PrimaryKey("PK_Customer", x => x.ContactId);
                     table.ForeignKey(
-                        name: "FK_Agent_Agent_AgentId",
+                        name: "FK_Customer_Agent_AgentId",
                         column: x => x.AgentId,
                         principalTable: "Agent",
-                        principalColumn: "ContactId");
+                        principalColumn: "ContactId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Agent_Contact_ContactId",
+                        name: "FK_Customer_Contact_ContactId",
                         column: x => x.ContactId,
                         principalTable: "Contact",
                         principalColumn: "ContactId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Customer_DrivingLicence_ContactId",
+                        column: x => x.ContactId,
+                        principalTable: "DrivingLicence",
+                        principalColumn: "ContactId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -132,47 +157,11 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Customer",
-                columns: table => new
-                {
-                    ContactId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AgentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customer", x => x.ContactId);
-                    table.ForeignKey(
-                        name: "FK_Customer_Agent_AgentId",
-                        column: x => x.AgentId,
-                        principalTable: "Agent",
-                        principalColumn: "ContactId");
-                    table.ForeignKey(
-                        name: "FK_Customer_Contact_ContactId",
-                        column: x => x.ContactId,
-                        principalTable: "Contact",
-                        principalColumn: "ContactId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Customer_DrivingLicence_ContactId",
-                        column: x => x.ContactId,
-                        principalTable: "DrivingLicence",
-                        principalColumn: "DrivingLicenceId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Address_ContactId",
                 table: "Address",
                 column: "ContactId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Agent_AgentId",
-                table: "Agent",
-                column: "AgentId",
-                unique: true,
-                filter: "[AgentId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contact_OrganizationId",
@@ -182,9 +171,7 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Customer_AgentId",
                 table: "Customer",
-                column: "AgentId",
-                unique: true,
-                filter: "[AgentId] IS NOT NULL");
+                column: "AgentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Phone_ContactId",
@@ -213,7 +200,7 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
                 name: "Contact");
 
             migrationBuilder.DropTable(
-                name: "Organizations");
+                name: "Organization");
         }
     }
 }

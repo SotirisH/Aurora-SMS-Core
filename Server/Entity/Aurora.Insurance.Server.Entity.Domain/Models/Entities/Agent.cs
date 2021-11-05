@@ -5,7 +5,7 @@ namespace Aurora.Insurance.Server.Entity.Domain.Models.Entities
 {
     public class Agent : Contact
     {
-        public Guid AgentId { get; set; }
+        public Guid AgentId => ContactId;
 
         /// <summary>
         ///     SubAgents in the hierarchy
