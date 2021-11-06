@@ -1,14 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Aurora.Core.Data
+namespace Aurora.Core.Data.Abstractions
 {
     /// <summary>
     ///     Base class for all EF Class with audit tracking fields & Timestamp
     /// </summary>
     /// <remarks>
     /// </remarks>
-    public abstract class EntityBase
+    public abstract class AuditableEntityBase
     {
         /// <summary>
         ///     User name either from the AD or the application
@@ -21,7 +21,7 @@ namespace Aurora.Core.Data
         public DateTime? CreatedOn { get; set; }
 
         [MaxLength(50)]
-        public string ModifiedBy { get; set; }
+        public string? ModifiedBy { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
 

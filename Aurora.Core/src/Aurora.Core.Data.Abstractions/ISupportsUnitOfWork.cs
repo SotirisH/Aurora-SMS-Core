@@ -1,4 +1,4 @@
-﻿namespace Aurora.Core.Data
+﻿namespace Aurora.Core.Data.Abstractions
 {
     /// <summary>
     ///     Interface for supporting uow

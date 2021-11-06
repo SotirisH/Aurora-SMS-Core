@@ -1,4 +1,5 @@
 using System;
+using Aurora.Core.Data.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,7 @@ namespace Aurora.Core.Data.Tests
             //    connection.Close();
             //}
 
-            var mockICurrentUserService = new Moq.Mock<ICurrentUserService>();
+            /*var mockICurrentUserService = new Moq.Mock<ICurrentUserService>();
             mockICurrentUserService.Setup(m => m.GetCurrentUser()).Returns("TestUser");
             var cnString = @"Server=.\SQL16;Database=Test;Trusted_Connection=True";
             var options = new DbContextOptionsBuilder<AuditableDbContextMock>()
@@ -44,7 +45,7 @@ namespace Aurora.Core.Data.Tests
                 mock.Description = "dddddddddddddddddddddddddddddddddddddddddddddd";
                 context.MockEntity.Add(mock);
                 context.SaveChanges();
-            }
+            }*/
         }
     }
 }
