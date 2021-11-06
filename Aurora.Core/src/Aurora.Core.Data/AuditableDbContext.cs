@@ -20,6 +20,7 @@ namespace Aurora.Core.Data
 
         protected AuditableDbContext()
         {
+            _currentUserService = new DefaultCurrentUserService();
         }
 
         protected AuditableDbContext(DbContextOptions options,
