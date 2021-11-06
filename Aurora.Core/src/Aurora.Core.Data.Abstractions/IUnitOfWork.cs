@@ -1,4 +1,4 @@
-﻿namespace Aurora.Core.Data
+﻿namespace Aurora.Core.Data.Abstractions
 {
     /// <summary>
     ///     Unit of work that supports multiple data sources

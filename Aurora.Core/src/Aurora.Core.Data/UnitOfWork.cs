@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Transactions;
+using Aurora.Core.Data.Abstractions;
 
 namespace Aurora.Core.Data
 {

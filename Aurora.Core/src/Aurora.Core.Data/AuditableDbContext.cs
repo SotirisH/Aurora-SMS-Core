@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Aurora.Core.Data.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -22,7 +25,7 @@ namespace Aurora.Core.Data
         protected AuditableDbContext(DbContextOptions options,
             ICurrentUserService currentUserService) : base(options)
         {
-            _currentUserService = currentUserService ?? throw new ArgumentNullException("currentUserService");
+            _currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
         }
 
         /// <summary>
@@ -38,37 +41,39 @@ namespace Aurora.Core.Data
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
+            CancellationToken cancellationToken = default)
         {
-            base.OnModelCreating(modelBuilder);
+            ValidateModel();
+            AddAudit();
+            return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
         /// <summary>
         ///     All entities are being audited.
         ///     This overload should be used instead of the original one
         /// </summary>
-        /// <param name="userName">The name of the user that perform the actions</param>
         /// <returns></returns>
         private void AddAudit()
         {
             string currentUser = _currentUserService.GetCurrentUser();
-            IEnumerable<EntityEntry<EntityBase>> changeSet = ChangeTracker.Entries<EntityBase>();
+            IEnumerable<EntityEntry<AuditableEntityBase>> changeSet = ChangeTracker.Entries<AuditableEntityBase>()?.ToList();
 
-
-            if (changeSet != null)
+            if (changeSet == null)
             {
-                foreach (EntityEntry<EntityBase> entry in changeSet.Where(c => c.State == EntityState.Added))
-                {
-                    entry.Entity.CreatedOn = DateTime.Now;
-                    entry.Entity.CreatedBy = currentUser;
-                }
+                return;
+            }
 
-                foreach (EntityEntry<EntityBase> entry in changeSet.Where(c => c.State == EntityState.Modified))
-                {
-                    entry.Entity.ModifiedOn = DateTime.Now;
-                    entry.Entity.ModifiedBy = currentUser;
-                }
+            foreach (EntityEntry<AuditableEntityBase> entry in changeSet.Where(c => c.State == EntityState.Added))
+            {
+                entry.Entity.CreatedOn = DateTime.Now;
+                entry.Entity.CreatedBy = currentUser;
+            }
+
+            foreach (EntityEntry<AuditableEntityBase> entry in changeSet.Where(c => c.State == EntityState.Modified))
+            {
+                entry.Entity.ModifiedOn = DateTime.Now;
+                entry.Entity.ModifiedBy = currentUser;
             }
         }
 

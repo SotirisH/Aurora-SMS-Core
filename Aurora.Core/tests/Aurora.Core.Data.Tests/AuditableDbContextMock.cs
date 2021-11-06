@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Aurora.Core.Data.Abstractions;
 
 namespace Aurora.Core.Data.Tests
 {
