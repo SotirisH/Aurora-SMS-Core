@@ -6,6 +6,7 @@ namespace Aurora.Insurance.Server.Entity.Domain.Models.Entities
     {
         public DrivingLicence DrivingLicence { get; set; } = null!;
         public Guid AgentId { get; set; }
+
         /// <summary>
         ///     The agent that this customer belongs
         /// </summary>

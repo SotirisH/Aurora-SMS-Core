@@ -6,21 +6,20 @@ using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace Aurora.Insurance.Server.Entity.Infrastructure.Persistence
 {
-    
-    public class OrganizationConfiguration : IEntityTypeConfiguration< Organization>
+    public class OrganizationConfiguration : IEntityTypeConfiguration<Organization>
     {
-        public void Configure(EntityTypeBuilder< Organization> builder)
+        public void Configure(EntityTypeBuilder<Organization> builder)
         {
             builder.ToTable("Organization");
             builder.HasKey(p => p.OrganizationId);
             builder.HasOne(p => p.Broker)
                 .WithOne()
-                .HasPrincipalKey<Organization>(p=>p.BrokerId)
-                .HasForeignKey<Agent>(p=>p.ContactId)
+                .HasPrincipalKey<Organization>(p => p.BrokerId)
+                .HasForeignKey<Agent>(p => p.ContactId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }
-    
+
     public class ContactConfiguration : IEntityTypeConfiguration<Contact>
     {
         public void Configure(EntityTypeBuilder<Contact> builder)
@@ -46,8 +45,8 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Persistence
             builder.Ignore(p => p.AgentId);
             builder.HasMany(p => p.Agents)
                 .WithOne()
-                .HasPrincipalKey(p=>p.ContactId)
-                .HasForeignKey(p=>p.ContactId)
+                .HasPrincipalKey(p => p.ContactId)
+                .HasForeignKey(p => p.ContactId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }
@@ -59,8 +58,8 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Persistence
             builder.ToTable("Customer");
             builder.HasOne(p => p.Agent)
                 .WithMany()
-                .HasPrincipalKey(p=>p.ContactId)
-                .HasForeignKey(p=>p.AgentId);
+                .HasPrincipalKey(p => p.ContactId)
+                .HasForeignKey(p => p.AgentId);
             builder.HasOne(p => p.DrivingLicence).WithOne();
         }
     }
@@ -80,7 +79,7 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Persistence
 
             builder.HasOne(p => p.Customer)
                 .WithOne(p => p.DrivingLicence)
-                .HasPrincipalKey<DrivingLicence>(p=>p.ContactId)
+                .HasPrincipalKey<DrivingLicence>(p => p.ContactId)
                 .HasForeignKey<Customer>(p => p.ContactId);
         }
     }
