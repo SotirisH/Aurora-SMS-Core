@@ -14,6 +14,6 @@ namespace Aurora.Insurance.Server.Entity.Domain.Models.Entities
         /// <summary>
         ///     The default agent that is linked with the organization
         /// </summary>
-        public Agent Broker { get; set; }
+        public Agent Broker { get; set; } = null!;
     }
 }

@@ -70,7 +70,7 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
                     OrganizationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
@@ -81,8 +81,7 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
                         name: "FK_Contact_Organization_OrganizationId",
                         column: x => x.OrganizationId,
                         principalTable: "Organization",
-                        principalColumn: "OrganizationId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "OrganizationId");
                 });
 
             migrationBuilder.CreateTable(

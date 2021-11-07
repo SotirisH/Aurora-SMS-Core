@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
 {
     [DbContext(typeof(LocalDbContext))]
-    [Migration("20211105211624_InitialCreate")]
+    [Migration("20211107073510_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,7 +90,6 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("ModifiedBy")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -231,7 +230,7 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Migrations
                     b.HasOne("Aurora.Insurance.Server.Entity.Domain.Models.Entities.Organization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Organization");

@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using Aurora.Insurance.Server.Entity.Domain.Interfaces.Infrastructure;
 using Aurora.Insurance.Server.Entity.Domain.Models.Dtos;
@@ -14,21 +15,26 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Persistence.Operations
             _dbContext = dbContext;
         }
 
-        public async Task<Organization> CreateOne(NewOrganizationRequest organizationRequest)
+        public async Task<Organization> CreateOne(NewOrganizationRequest organizationRequest,
+            CancellationToken cancellationToken = default)
         {
             var broker = new Agent
             {
                 LastName = organizationRequest.Title,
                 EmailAddress = organizationRequest.EmailAddress,
-                TaxId = organizationRequest.TaxId
+                TaxId = organizationRequest.TaxId,
+                IsBroker = true
             };
             _dbContext.Agents.Add(broker);
             var newOrganization = new Organization
             {
-                Broker = broker
+                BrokerId = broker.AgentId
             };
+ 
             _dbContext.Organizations.Add(newOrganization);
-            await _dbContext.SaveChangesAsync();
+            broker.OrganizationId = newOrganization.OrganizationId;
+           
+            await _dbContext.SaveChangesAsync(cancellationToken);
             return newOrganization;
         }
     }

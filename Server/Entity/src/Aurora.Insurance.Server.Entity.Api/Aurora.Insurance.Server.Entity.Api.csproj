@@ -6,12 +6,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Aurora.Insurance.Server.Entity.Application\Aurora.Insurance.Server.Entity.Application.csproj" />
-      <ProjectReference Include="..\Aurora.Insurance.Server.Entity.Domain\Aurora.Insurance.Server.Entity.Domain.csproj" />
-      <ProjectReference Include="..\Aurora.Insurance.Server.Entity.Infrastructure\Aurora.Insurance.Server.Entity.Infrastructure.csproj" />
+        <ProjectReference Include="..\Aurora.Insurance.Server.Entity.Application\Aurora.Insurance.Server.Entity.Application.csproj" />
+        <ProjectReference Include="..\Aurora.Insurance.Server.Entity.Domain\Aurora.Insurance.Server.Entity.Domain.csproj" />
+        <ProjectReference Include="..\Aurora.Insurance.Server.Entity.Infrastructure\Aurora.Insurance.Server.Entity.Infrastructure.csproj" />
     </ItemGroup>
 </Project>

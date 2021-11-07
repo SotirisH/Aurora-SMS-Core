@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Aurora.Core.Data;
+using Aurora.Core.Data.Abstractions;
 
 namespace Aurora.Insurance.Server.Entity.Domain.Models.Entities
 {
-    public abstract class Contact : EntityBase
+    public abstract class Contact : AuditableEntityBase
     {
         public Guid ContactId { get; set; }
         public string? FirstName { get; set; }

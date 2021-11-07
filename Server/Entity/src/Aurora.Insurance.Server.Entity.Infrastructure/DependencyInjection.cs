@@ -1,4 +1,3 @@
-
 using Aurora.Insurance.Server.Entity.Domain.Interfaces.Infrastructure;
 using Aurora.Insurance.Server.Entity.Infrastructure.Persistence;
 using Aurora.Insurance.Server.Entity.Infrastructure.Persistence.Operations;

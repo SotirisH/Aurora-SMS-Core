@@ -17,13 +17,14 @@ namespace Aurora.Insurance.Server.Entity.Api.Controllers
         {
             _organizationServices = organizationServices;
         }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<ActionResult<Organization>> Post([FromBody] NewOrganizationRequest value)
+        public async Task<ActionResult<NewOrganizationResponse>> Post([FromBody] NewOrganizationRequest value)
         {
-            Organization result = await _organizationServices.CreateOne(value);
+            NewOrganizationResponse result = await _organizationServices.CreateOne(value);
             return Ok(result);
         }
     }

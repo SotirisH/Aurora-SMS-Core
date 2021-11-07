@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Aurora.Insurance.Server.Entity.Application;
 using Aurora.Insurance.Server.Entity.Infrastructure;
 using Microsoft.AspNetCore.Builder;
@@ -22,6 +23,8 @@ namespace Aurora.Insurance.Server.Entity.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+                // .AddJsonOptions(x =>
+                // x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);;
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1",

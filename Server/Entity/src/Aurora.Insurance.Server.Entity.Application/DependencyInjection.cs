@@ -1,4 +1,4 @@
-
+using Aurora.Insurance.Server.Entity.Application.Profiles;
 using Aurora.Insurance.Server.Entity.Application.Services;
 using Aurora.Insurance.Server.Entity.Domain.Interfaces.Application;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +10,7 @@ namespace Aurora.Insurance.Server.Entity.Application
         public static void RegisterApplicationServices(this IServiceCollection services)
         {
             services.AddTransient<IOrganizationServices, OrganizationServices>();
+            services.AddAutoMapper(typeof(OrganizationProfile));
         }
     }
 }

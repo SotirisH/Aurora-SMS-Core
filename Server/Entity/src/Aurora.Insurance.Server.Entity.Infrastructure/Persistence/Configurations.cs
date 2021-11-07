@@ -1,4 +1,4 @@
-using Aurora.Core.Data;
+using Aurora.Core.Data.Abstractions;
 using Aurora.Insurance.Server.Entity.Domain.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -33,7 +33,11 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Persistence
             builder.Property(p => p.FirstName).HasMaxLength(StandardStringLengths.DefaultString);
             builder.HasOne(p => p.Address);
             builder.HasMany(p => p.Phones);
-            builder.HasOne(p => p.Organization);
+            builder.HasOne(p=>p.Organization)
+                .WithMany()
+                .HasPrincipalKey(p => p.OrganizationId)
+                .HasForeignKey(p => p.OrganizationId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 
@@ -56,7 +60,7 @@ namespace Aurora.Insurance.Server.Entity.Infrastructure.Persistence
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
             builder.ToTable("Customer");
-            builder.HasOne(p => p.Agent)
+            builder.HasOne(p=>p.Agent)
                 .WithMany()
                 .HasPrincipalKey(p => p.ContactId)
                 .HasForeignKey(p => p.AgentId);
